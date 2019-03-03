@@ -42,15 +42,13 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
                 print(results)
                 for group in results.searchData {
                     
-                    for movie in group?.groupResults {
-                        self.movies = [movie]
-                        
-                        guard let movieName = movie?.name else { return }
-                        guard let poster = movie?.poster_url else { return }
-                        print(movieName,poster)
+                    if let group = group {
+                        for movie in group.groupResults {
+                            self.movies.append(movie)
+            
+                        }
                     }
-                }
-                
+               }
                 print(self.movies)
                 
             }   catch   {
