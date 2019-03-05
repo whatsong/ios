@@ -15,19 +15,29 @@ class SearchResultCell: UICollectionViewCell  {
         iv.backgroundColor = .red
         iv.widthAnchor.constraint(equalToConstant: 67).isActive = true
         iv.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        iv.layer.cornerRadius = 12
+        iv.layer.cornerRadius = 10
+        iv.clipsToBounds = true
+        iv.image = UIImage(named: "movie-poster")
         return iv
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "American Beauty"
+        label.font = UIFont(name: "Montserrat-Regular", size: 18)
+        label.textColor = UIColor.brandDarkGrey()
+        label.attributedText = NSAttributedString(string: "Placeholder", attributes: [
+            NSAttributedString.Key.kern: -0.8
+            ])
         return label
     }()
     
     let yearLabel: UILabel = {
         let label = UILabel()
-        label.text = "2001"
+        label.textColor = UIColor.brandLightGrey()
+        label.font = UIFont(name: "Montserrat-Regular", size: 16)
+        label.attributedText = NSAttributedString(string: "2019", attributes: [
+            NSAttributedString.Key.kern: -0.8
+            ])
         return label
     }()
     
@@ -37,9 +47,10 @@ class SearchResultCell: UICollectionViewCell  {
         
         let verticalStackView = UIStackView(arrangedSubviews: [titleLabel, yearLabel])
         verticalStackView.axis = .vertical
+        verticalStackView.spacing = 2
         
         let horizontalStackView = UIStackView(arrangedSubviews: [posterImageView, verticalStackView])
-        horizontalStackView.spacing = 12
+        horizontalStackView.spacing = 16
         horizontalStackView.alignment = .center
         
         addSubview(horizontalStackView)

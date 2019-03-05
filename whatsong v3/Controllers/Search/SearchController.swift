@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import SDWebImage
 
-class SearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
+class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate  {
     
     let cellId = "cellId"
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,39 +20,50 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView.backgroundColor = .white
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: cellId)
         
-        fetchTitles()
+        setupSearchBar()
+        fetchTitles(searchTerm: "Honey")
     }
     
     fileprivate var movies = [Title?]()
+    fileprivate func setupSearchBar()    {
+        navigationItem.searchController = self.searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+    }
     
-    func fetchTitles()  {
-        let urlString = "https://www.what-song.com/api/search?limit=10&type=movie&field=america"
-        guard let url = URL(string: urlString) else { return }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+    }
+    
+    func fetchTitles(searchTerm: String)  {
         
+        let urlString = "https://www.what-song.com/api/search?limit=10&type=movie&field=\(searchTerm)"
+        guard let url = URL(string: urlString) else { return }
+
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             // if error occurs
             if let err = err    {
                 print("Failed to fetch titles", err)
                 return
             }
-            
+
             // if success
             guard let data = data else { return }
-            
             do {
                 let results =  try JSONDecoder().decode(SearchData.self, from: data)
-                print(results)
                 for group in results.searchData {
-                    
+
                     if let group = group {
                         for movie in group.groupResults {
                             self.movies.append(movie)
-            
                         }
                     }
-               }
-                print(self.movies)
-                
+                }
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
             }   catch   {
                 print("Failed to decode JSON:", error)
             }
@@ -59,7 +72,15 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResultCell
-        cell.titleLabel.text = "American Psycho"
+        let movieResult = movies[indexPath.item]
+        cell.titleLabel.text = movieResult?.name
+        cell.yearLabel.text = movieResult?.year
+        let urlPrefix = "https://www.what-song.com"
+        let urlSuffix = movieResult?.poster ?? ""
+        let url = URL(string: urlPrefix + urlSuffix)
+        print(url)
+        cell.posterImageView.sd_setImage(with: url)
+        
         return cell
     }
     
@@ -70,5 +91,9 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 140)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
     }
 }

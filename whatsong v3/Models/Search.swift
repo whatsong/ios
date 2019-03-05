@@ -34,7 +34,7 @@ struct Title: Decodable {
     private enum CodingKeys: String, CodingKey {
         case name = "title"
         case year = "year"
-        case poster = "poster_url"
+        case poster = "poster"
 
     }
 }

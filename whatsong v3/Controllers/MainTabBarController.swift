@@ -12,13 +12,11 @@ class MainTabBarController: UITabBarController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let layout = UICollectionViewFlowLayout()
-        
+                
         viewControllers = [
-            createNavController(viewController: UIViewController(), title: "Movies", imageName: "apps"),
+            createNavController(viewController: MoviesController(), title: "Movies", imageName: "apps"),
             createNavController(viewController: UIViewController(), title: "Shows", imageName: "today_icon"),
-            createNavController(viewController: SearchController(collectionViewLayout: layout), title: "Search", imageName: "search")
+            createNavController(viewController: SearchController(), title: "Search", imageName: "search")
         ]
     }
     
