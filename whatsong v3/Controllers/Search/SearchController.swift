@@ -21,7 +21,6 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: cellId)
         
         setupSearchBar()
-        fetchTitles(searchTerm: "Honey")
     }
     
     fileprivate var movies = [Title?]()
@@ -34,40 +33,16 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-    }
-    
-    func fetchTitles(searchTerm: String)  {
-        
-        let urlString = "https://www.what-song.com/api/search?limit=10&type=movie&field=\(searchTerm)"
-        guard let url = URL(string: urlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-            // if error occurs
-            if let err = err    {
-                print("Failed to fetch titles", err)
-                return
-            }
-
-            // if success
-            guard let data = data else { return }
-            do {
-                let results =  try JSONDecoder().decode(SearchData.self, from: data)
-                for group in results.searchData {
-
-                    if let group = group {
-                        for movie in group.groupResults {
-                            self.movies.append(movie)
-                        }
-                    }
-                }
+        Service.shared.fetchTitles(searchTerm: searchText) { (titleArray, success) in
+            if success {
+                self.movies = titleArray
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-            }   catch   {
-                print("Failed to decode JSON:", error)
+            } else {
+                //show error
             }
-        }.resume()
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
