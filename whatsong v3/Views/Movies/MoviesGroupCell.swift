@@ -8,31 +8,27 @@
 
 import UIKit
 
-extension UILabel   {
-    convenience init(text: String, font: UIFont, color: UIColor) {
-        self.init(frame: .zero)
-        self.text = text
-        self.font = font
-        self.textColor = color
-    }
-}
-
 class MoviesGroupCell: UICollectionViewCell {
     
-    let sectionLabel = UILabel(text: "Heading", font: UIFont(name: "Montserrat-Regular", size: 22)!, color: UIColor.brandDarkGrey())
+    var sectionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Montserrat-SemiBold", size: 24)
+        label.textColor = .black
+        label.attributedText = NSAttributedString(string: "Latest Releases", attributes: [
+            NSAttributedString.Key.kern: -0.8
+            ])
+        return label
+    }()
     
-    let horizontalController = MoviesHorizontalController()
+    var horizontalController = MoviesHorizontalController()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = UIColor.purple
-        horizontalController.view.backgroundColor = .blue
-        
+                
         addSubview(sectionLabel)
         addSubview(horizontalController.view)
         
-        sectionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
+        sectionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 0))
         horizontalController.view.anchor(top: sectionLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
         
     }

@@ -12,12 +12,14 @@ class MainTabBarController: UITabBarController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         viewControllers = [
             createNavController(viewController: MoviesController(), title: "Movies", imageName: "apps"),
             createNavController(viewController: UIViewController(), title: "Shows", imageName: "today_icon"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search")
         ]
+        
+        setupFloatingPlayerView()
     }
     
     fileprivate func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController  {
@@ -29,6 +31,21 @@ class MainTabBarController: UITabBarController  {
         navController.tabBarItem.title = title
         navController.navigationBar.prefersLargeTitles = true
         
+        let attributes: [NSAttributedString.Key: AnyObject] = [
+            NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 28)!
+        ]
+        
+        navController.navigationBar.largeTitleTextAttributes = attributes
+        
         return navController
+    }
+    
+    fileprivate func setupFloatingPlayerView()    {
+        
+        let floatingPlayerView = SongFloatingPlayer.init()
+        floatingPlayerView.backgroundColor = .red
+        floatingPlayerView.frame = view.frame
+        
+        print("setting up players detail view")
     }
 }

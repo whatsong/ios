@@ -14,7 +14,7 @@ extension UIColor   {
     }
     
     static func brandLightGrey() -> UIColor {
-        return UIColor.hex("9B9B9B")
+        return UIColor.hex("A4A6B6")
     }
     
     static func hex(_ hex:String) -> UIColor {
