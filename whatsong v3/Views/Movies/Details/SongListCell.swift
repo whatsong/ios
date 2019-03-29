@@ -70,6 +70,10 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        songsArray = songsArray.sorted(by: { (firstSong, secondSong) -> Bool in
+            return firstSong.time_play! > secondSong.time_play!
+        })
+        
         print(songsArray.count)
         return songsArray.count
     }
@@ -109,7 +113,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let window: UIWindow? = UIApplication.shared.keyWindow
-        let songPlayerView = SongFloatingPlayer.init(frame: CGRect(x: 0, y: (window?.bounds.height)! - 150, width: (window?.bounds.width)!, height: 150))
+        let songPlayerView = SongFloatingPlayer.init(frame: CGRect(x: 0, y: (window?.bounds.height)! - 150, width: (window?.bounds.width)!, height: 100))
         let song = self.songsArray[indexPath.item]
         songPlayerView.song = song
         window?.addSubview(songPlayerView)
