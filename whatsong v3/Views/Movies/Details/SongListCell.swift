@@ -117,13 +117,26 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showFloatingPlayer(song: self.songsArray[indexPath.row])
+    }
+    
+    func showFloatingPlayer(song: Song) {
+        guard let delegate = UIApplication.shared.delegate else { return }
+        guard let window = delegate.window else { return }
+        let tabBarView = window?.rootViewController as! UITabBarController
+        for view in tabBarView.view.subviews {
+            if view is SongFloatingPlayer {
+                (view as! SongFloatingPlayer).player.replaceCurrentItem(with: nil)
+                view.removeFromSuperview()
+            }
+        }
         
-        let window: UIWindow? = UIApplication.shared.keyWindow
-        let songPlayerView = SongFloatingPlayer.init(frame: CGRect(x: 0, y: (window?.bounds.height)! - 150, width: (window?.bounds.width)!, height: 100))
-        let song = self.songsArray[indexPath.item]
+        let songPlayerView = SongFloatingPlayer()
+        songPlayerView.translatesAutoresizingMaskIntoConstraints = false
         songPlayerView.song = song
-        window?.addSubview(songPlayerView)
-
+        tabBarView.view.addSubview(songPlayerView)
+        songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor)
+        songPlayerView.constrainHeight(constant: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

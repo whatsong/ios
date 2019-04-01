@@ -224,7 +224,6 @@ class SongDetailPopup: UIView {
     }
     
     func setupBackgroundGradient()    {
-        
         let layer = CAGradientLayer()
         let view = self
         layer.colors = [UIColor(red: 80/255, green: 78/255, blue: 90/255, alpha: 0.97).cgColor, UIColor.black.cgColor]

@@ -18,8 +18,6 @@ class MainTabBarController: UITabBarController  {
             createNavController(viewController: UIViewController(), title: "Shows", imageName: "today_icon"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search")
         ]
-        
-        setupFloatingPlayerView()
     }
     
     fileprivate func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController  {
@@ -38,22 +36,5 @@ class MainTabBarController: UITabBarController  {
         navController.navigationBar.largeTitleTextAttributes = attributes
         
         return navController
-    }
-    
-    let floatingPlayerView: SongFloatingPlayer =  {
-        let view = SongFloatingPlayer()
-        view.backgroundColor = .red
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    fileprivate func setupFloatingPlayerView()    {
-        
-        view.addSubview(floatingPlayerView)
-        
-        floatingPlayerView.anchor(top: nil, leading: view.leadingAnchor, bottom: tabBar.topAnchor, trailing: view.trailingAnchor)
-        floatingPlayerView.constrainHeight(constant: 70)
-        
-        print("setting up players detail view")
     }
 }
