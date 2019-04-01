@@ -70,9 +70,14 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        
+        
+        
         songsArray = songsArray.sorted(by: { (firstSong, secondSong) -> Bool in
+            guard let timePlay0 = firstSong.time_play, let timePlay1 = secondSong.time_play else { return false }
             
-            return firstSong.time_play! < secondSong.time_play!
+            return timePlay0 > timePlay1
         })
         
         print(songsArray.count)
