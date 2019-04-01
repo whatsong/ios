@@ -40,11 +40,19 @@ class MainTabBarController: UITabBarController  {
         return navController
     }
     
+    let floatingPlayerView: SongFloatingPlayer =  {
+        let view = SongFloatingPlayer()
+        view.backgroundColor = .red
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     fileprivate func setupFloatingPlayerView()    {
         
-        let floatingPlayerView = SongFloatingPlayer.init()
-        floatingPlayerView.backgroundColor = .red
-        floatingPlayerView.frame = view.frame
+        view.addSubview(floatingPlayerView)
+        
+        floatingPlayerView.anchor(top: nil, leading: view.leadingAnchor, bottom: tabBar.topAnchor, trailing: view.trailingAnchor)
+        floatingPlayerView.constrainHeight(constant: 70)
         
         print("setting up players detail view")
     }
