@@ -88,7 +88,9 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SongCell
         cell.backgroundColor = .white
         let song = songsArray[indexPath.item]
-        cell.songTitle.text = song.title
+        cell.songTitle.attributedText = NSAttributedString(string: song.title, attributes: [
+            NSAttributedString.Key.kern: -0.8
+            ])
         cell.artistName.text = song.artist.name
         
         if song.time_play == nil {
