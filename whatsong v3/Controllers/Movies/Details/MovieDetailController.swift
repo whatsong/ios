@@ -10,7 +10,6 @@ import UIKit
 
 class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayout   {
     
-    //let movieDetailCellId = "movieDetailCellId"
     let songListCellId = "songListCellId"
     
     var songs: [Song] = []
@@ -32,7 +31,6 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                     }
-                print(data?.data)
                 }
             }
         }
@@ -56,14 +54,12 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: songListCellId, for: indexPath) as! SongListCell
         cell.songsArray = songs
-        //cell.songCount.text = String(songs.count)
         cell.collectionView.reloadData()
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
-//        return CGSize(width: view.frame.width, height: CGFloat(numberOfSongs * heightOfSongs) + CGFloat((numberOfSongs - 1) * 5))
         return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 150)
     }
     

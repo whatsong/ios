@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoviesRowCell: UICollectionViewCell   {
+class MoviesSingleCell: UICollectionViewCell   {
     
     let imageView = UIImageView(cornerRadius: 8)
     let titleLabel = UILabel(text: "American Psycho", font: UIFont(name: "Montserrat-Regular", size: 18)!, color: UIColor.brandDarkGrey())

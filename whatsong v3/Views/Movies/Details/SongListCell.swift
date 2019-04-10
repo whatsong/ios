@@ -70,17 +70,10 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        
-        
-        
         songsArray = songsArray.sorted(by: { (firstSong, secondSong) -> Bool in
             guard let timePlay0 = firstSong.time_play, let timePlay1 = secondSong.time_play else { return false }
-            
-            return timePlay0 > timePlay1
+            return timePlay0 < timePlay1
         })
-        
-        print(songsArray.count)
         return songsArray.count
     }
     
@@ -90,19 +83,14 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         let song = songsArray[indexPath.item]
         cell.songTitle.text = song.title
         cell.artistName.text = song.artist.name
+        cell.sceneDescription.text = song.scene_description
+
         
         if song.time_play == nil {
             cell.timeHeard.text = ""
             cell.minutesLabel.text = ""
         } else  {
             cell.timeHeard.text = "\(song.time_play ?? 0)"
-        }
-        
-        if (song.scene_description == nil) {
-            cell.sceneDescription.text = "Missing scene"
-
-        } else  {
-            cell.sceneDescription.text = song.scene_description
         }
         
         let moreButtonTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(moreButtonTap))
@@ -132,11 +120,11 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         }
         
         let songPlayerView = SongFloatingPlayer()
-        songPlayerView.translatesAutoresizingMaskIntoConstraints = false
         songPlayerView.song = song
         tabBarView.view.addSubview(songPlayerView)
         songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor)
-        songPlayerView.constrainHeight(constant: 70)
+        songPlayerView.constrainHeight(constant: 54)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

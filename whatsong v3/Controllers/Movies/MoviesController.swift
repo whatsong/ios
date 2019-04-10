@@ -14,14 +14,10 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor.backgroundGrey()
         collectionView.register(MoviesGroupCell.self, forCellWithReuseIdentifier: cellId)
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-//        navigationController?.navigationBar.shadowImage = UIImage()
         fetchData()
     }
-    
-    //var latestMovies: LatestMovies?
     
     var movieSections = [LatestMovies]()
 

@@ -47,12 +47,6 @@ class Service   {
             }.resume()
     }
     
-    
-    func fetchTitles()  {
-        
-
-    }
-    
     func fetchLatestMovies(completion: @escaping (LatestMovies?, Error?) -> ()) {
         let urlString = "https://www.what-song.com/api/recent-movies"
         fetchMovieSections(urlString: urlString, completion: completion)
@@ -92,6 +86,47 @@ class Service   {
             do  {
                 let movieData = try JSONDecoder().decode(MovieData.self, from: data!)
                 completion(movieData, nil)
+            } catch    {
+                completion(nil, error)
+            }
+            }.resume()
+    }
+    
+    func fetchLatestShows(completion: @escaping ([LatestShowsByDay]?, Error?) -> ()) {
+        
+        let urlString = "https://www.what-song.com/api/air-episodes"
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            //if error
+            if let error = error    {
+                completion(nil, error)
+                return
+            }
+            //success
+            guard let data = data else { return }
+            
+            do {
+                let showDays = try JSONDecoder().decode(LatestShowsData.self, from: data).data
+                completion(showDays, nil)
+            }   catch let jsonErr {
+                completion(nil, jsonErr)
+                print("Error serializing JSON", jsonErr)
+            }
+            }.resume()
+    }
+    
+    func fetchTvShowDetail(urlString: String, completion: @escaping (TvShowStruct?, Error?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+            if let err = err    {
+                completion(nil, err)
+                return
+            }
+            do  {
+                let tvShowData = try JSONDecoder().decode(TvShowStruct.self, from: data!)
+                completion(tvShowData, nil)
             } catch    {
                 completion(nil, error)
             }

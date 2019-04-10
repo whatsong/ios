@@ -17,6 +17,22 @@ extension UIColor   {
         return UIColor.hex("A4A6B6")
     }
     
+    static func brandPurple() -> UIColor  {
+        return UIColor.hex("5B3EF6")
+    }
+    
+    static func brandBlack() -> UIColor  {
+        return UIColor.hex("101026")
+    }
+    
+    static func brandBlue() -> UIColor  {
+        return UIColor.hex("4A90E2")
+    }
+    
+    static func backgroundGrey() -> UIColor  {
+        return UIColor.hex("F9F9F9")
+    }
+    
     static func hex(_ hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         

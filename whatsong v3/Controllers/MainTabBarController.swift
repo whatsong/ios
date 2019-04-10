@@ -15,7 +15,7 @@ class MainTabBarController: UITabBarController  {
         
         viewControllers = [
             createNavController(viewController: MoviesController(), title: "Movies", imageName: "apps"),
-            createNavController(viewController: UIViewController(), title: "Shows", imageName: "today_icon"),
+            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "today_icon"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search")
         ]
     }
@@ -24,10 +24,15 @@ class MainTabBarController: UITabBarController  {
         
         let navController = UINavigationController(rootViewController: viewController)
         viewController.navigationItem.title = title
-        viewController.view.backgroundColor = .white
+        
+        // I don't know what this line does!! For some reason though when I remove it, the ShowsController doesn't show anything.
+        viewController.view.backgroundColor = UIColor.black
+        
         navController.tabBarItem.image = UIImage(named: imageName)
         navController.tabBarItem.title = title
+        navController.navigationBar.shadowImage = UIImage()
         navController.navigationBar.prefersLargeTitles = true
+        navController.navigationBar.isTranslucent = false
         
         let attributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 28)!
