@@ -15,6 +15,8 @@ struct TvShowStruct: Decodable  {
 
 struct TvShowData: Decodable    {
     var tv_show: TvShowInfo?
+    var seasons: [Seasons]
+    var last_episodes: [TvLastEpisodes]
 }
 
 struct TvShowInfo: Decodable   {
@@ -30,8 +32,6 @@ struct TvShowInfo: Decodable   {
     var imdb_id: Int?
     var moviedb_id: Int?
 //    var theme_song: TvThemeSong?
-//    var last_episodes: [TvLastEpisodes]?
-//    var seasons: [Seasons]?
 //    var discussions: [TvDiscussions]?
 //    var Contributors: [TvContributors]?
 //    var PopularSongs: [TvPopularSongs]?
@@ -43,11 +43,14 @@ struct TvThemeSong: Decodable   {
 }
 
 struct TvLastEpisodes: Decodable    {
-    
+    var _id: Int
 }
 
 struct Seasons: Decodable   {
-    
+    var _id: Int
+    var season: Int
+    var episodes_count: Int?
+    var songs_count: Int?
 }
 
 struct TvDiscussions: Decodable {

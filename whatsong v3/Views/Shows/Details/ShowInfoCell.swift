@@ -21,7 +21,7 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         super.init(frame: frame)
     
         setupViews()
-        
+    
     }
     
     func setupViews()   {
@@ -99,7 +99,7 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         
         let label = UILabel()
         // this should get width of secondaryLabel. It was working with static array from top, but not sure what to do with this.
-        label.text = secondArray[indexPath.item]
+        //label.text = secondArray[indexPath.item]
         let labelWidth = label.intrinsicContentSize.width
         return CGSize(width: labelWidth + 35, height: 38)
         

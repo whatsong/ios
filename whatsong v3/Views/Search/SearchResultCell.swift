@@ -12,7 +12,7 @@ class SearchResultCell: UICollectionViewCell  {
     
     let posterImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .red
+        iv.backgroundColor = UIColor.brandLightGrey()
         iv.widthAnchor.constraint(equalToConstant: 67).isActive = true
         iv.heightAnchor.constraint(equalToConstant: 100).isActive = true
         iv.layer.cornerRadius = 10

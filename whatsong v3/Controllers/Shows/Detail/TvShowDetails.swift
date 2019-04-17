@@ -8,12 +8,15 @@
 
 import UIKit
 
-class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLayout    {
+class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLayout, SeasonCellDelegate    {
     
     let infoCellId = "cellId"
+    let latestEpisodeCellId = "latestEpisodesCellId"
+    let seasonsCellId = "seasonsCellId"
     
     var tvShowInfo: TvShowInfo?
     var popularSongs: [TvPopularSongs]? = []
+    var seasons: [Seasons] = []
     
     var showId: Int!    {
         didSet {
@@ -24,9 +27,10 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
                     print(err)
                 } else  {
                     
-                    guard let tvInfo = data?.data?.tv_show else { return }
-                    print(tvInfo)
-                    self.tvShowInfo = tvInfo
+                    guard let tvData = data?.data else { return }
+                    print(tvData)
+                    self.tvShowInfo = tvData.tv_show
+                    self.seasons = tvData.seasons
                     
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -41,22 +45,48 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
         super.viewDidLoad()
         
         collectionView.register(ShowInfoCell.self, forCellWithReuseIdentifier: infoCellId)
-    
+        collectionView?.register(LatestEpisodes.self, forCellWithReuseIdentifier: latestEpisodeCellId)
+        collectionView?.register(SeasonsList.self, forCellWithReuseIdentifier: seasonsCellId)
+
         collectionView.backgroundColor = UIColor.backgroundGrey()
         
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellId, for: indexPath) as! ShowInfoCell
-        cell.showInfo = tvShowInfo
+        if indexPath.item == 0  {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellId, for: indexPath) as! ShowInfoCell
+            cell.showInfo = tvShowInfo
+            cell.collectionView.reloadData()
+            return cell
+        } else if indexPath.item == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: latestEpisodeCellId, for: indexPath) as! LatestEpisodes
+            return cell
+        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: seasonsCellId, for: indexPath) as! SeasonsList
+        cell.seasonsArray = seasons
+        cell.seasonCellDelegate = self
+        cell.collectionView.reloadData()
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 68)
+        if indexPath.item == 0  {
+            return CGSize(width: view.frame.width, height: 68)
+        } else if indexPath.item == 1 {
+            return CGSize(width: view.frame.width, height: 90)
+        }
+        let height = CGFloat((self.seasons.count) * 60) + 50
+        return CGSize(width: view.frame.width, height: height)
+    }
+    
+    func didSelectSeason(for season: Seasons)  {
+        let seasonsController = TvShowSeason()
+        seasonsController.season = season
+        seasonsController.navigationItem.title = "Season \(season.season)"
+        self.navigationController?.pushViewController(seasonsController, animated: true)
     }
 }

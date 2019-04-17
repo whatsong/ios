@@ -10,9 +10,9 @@ import Foundation
 
 class Service   {
     
-    static let shared = Service()   //singleton
+    static let shared = Service() //singleton
     
-    func fetchTitles(searchTerm: String, completion:@escaping (_ resultArray: Array<Title>, _ success: Bool) -> Void)  {
+    func fetchTitles(searchTerm: String, completion: @escaping (_ resultArray: Array<Title>, _ success: Bool) -> Void)  {
         var titlesArray = Array<Title>()
         
         let urlString = "https://www.what-song.com/api/search?limit=10&type=movie&field=\(searchTerm)"
@@ -127,6 +127,40 @@ class Service   {
             do  {
                 let tvShowData = try JSONDecoder().decode(TvShowStruct.self, from: data!)
                 completion(tvShowData, nil)
+            } catch    {
+                completion(nil, error)
+            }
+            }.resume()
+    }
+    
+    func fetchTvShowSeason(urlString: String, completion: @escaping (TvShowSeasonStruct?, Error?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+            if let err = err    {
+                completion(nil, err)
+                return
+            }
+            do  {
+                let tvShowSeasonData = try JSONDecoder().decode(TvShowSeasonStruct.self, from: data!)
+                completion(tvShowSeasonData, nil)
+            } catch    {
+                completion(nil, error)
+            }
+            }.resume()
+    }
+    
+    func fetchTvShowEpisode(urlString: String, completion: @escaping (TvShowEpisodeModel?, Error?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+            if let err = err    {
+                completion(nil, err)
+                return
+            }
+            do  {
+                let tvShowEpisodeData = try JSONDecoder().decode(TvShowEpisodeModel.self, from: data!)
+                completion(tvShowEpisodeData, nil)
             } catch    {
                 completion(nil, error)
             }

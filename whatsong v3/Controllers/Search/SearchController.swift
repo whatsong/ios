@@ -13,12 +13,24 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     
     let cellId = "cellId"
     fileprivate let searchController = UISearchController(searchResultsController: nil)
+    fileprivate let enterSearchLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Please enter a search term above"
+        label.textAlignment = .center
+        label.font = UIFont(name: "Montserrat-Regular", size: 16)
+        label.textColor = UIColor.brandBlack()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.backgroundColor = .white
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: cellId)
+        
+        view.addSubview(enterSearchLabel)
+        enterSearchLabel.fillSuperview()
         
         setupSearchBar()
     }
@@ -32,17 +44,24 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
         searchController.searchBar.delegate = self
     }
     
+    var timer: Timer?
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        Service.shared.fetchTitles(searchTerm: searchText) { (titleArray, success) in
-            if success {
-                self.movies = titleArray
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+        
+        // invalidates timer from firing off search request aggresively. So now will only perform fetchTitles request after 0.5seconds instead of after every letter typed.
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            Service.shared.fetchTitles(searchTerm: searchText) { (titleArray, success) in
+                if success {
+                    self.movies = titleArray
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                } else {
+                    //show error
                 }
-            } else {
-                //show error
             }
-        }
+        })
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -60,7 +79,7 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(movies)
+        enterSearchLabel.isHidden = movies.count != 0
         return movies.count
     }
     
