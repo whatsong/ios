@@ -12,16 +12,18 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     
     let cellId = "cellId"
     
-    var showInfo: TvShowInfo?
+    var showInfo: TvShowInfo? {
+        didSet {
+            fillHeaderArrayAndSubtitleArray()
+        }
+    }
     
-//    let array = ["Music Supervisor", "Composer", "Network", "Songs"]
-//    let secondArray = ["Catherine Grieves", "Hans Zimmer", "Netflix", "127"]
+    var headerArray = [String]()
+    var subtitleArray = [String]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    
         setupViews()
-    
     }
     
     func setupViews()   {
@@ -43,6 +45,28 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         
         bottomLine.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
 
+    }
+    
+    func fillHeaderArrayAndSubtitleArray(){
+        if let showInfo = showInfo {
+            if showInfo.music_supervisor != nil {
+                headerArray.append("Music Supervisor")
+                subtitleArray.append(showInfo.music_supervisor!)
+            }
+            if showInfo.song_count != nil {
+                headerArray.append("# of Songs")
+                subtitleArray.append("\(showInfo.song_count!)")
+            }
+            if showInfo.network != nil {
+                headerArray.append("Network")
+                subtitleArray.append(showInfo.network!)
+            }
+            if showInfo.composer != nil {
+                headerArray.append("Composer")
+                subtitleArray.append(showInfo.composer!)
+            }
+        }
+        collectionView.reloadData()
     }
     
     let topLine: UIView = {
@@ -72,34 +96,25 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return headerArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! InfoSingleCell
-        
-        if indexPath.item == 0 {
-            cell.headingLabel.text = "Music Supervisor"
-            cell.secondaryLabel.text = showInfo?.music_supervisor
-        } else if indexPath.item == 1    {
-            cell.headingLabel.text = "# of Songs"
-            cell.secondaryLabel.text = "\(showInfo?.song_count ?? 0)"
-        } else if indexPath.item == 2   {
-            cell.headingLabel.text = "Network"
-            cell.secondaryLabel.text = showInfo?.network
-        } else if indexPath.item == 3   {
-            cell.headingLabel.text = "Composer"
-            cell.secondaryLabel.text = showInfo?.composer
-        }
-        
+        cell.headingLabel.text = headerArray[indexPath.row]
+        cell.secondaryLabel.text = subtitleArray[indexPath.row]
+ 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let label = UILabel()
-        // this should get width of secondaryLabel. It was working with static array from top, but not sure what to do with this.
-        //label.text = secondArray[indexPath.item]
+        if headerArray[indexPath.row].count > subtitleArray[indexPath.row].count {
+           label.text = headerArray[indexPath.row]
+        } else {
+            label.text = subtitleArray[indexPath.row]
+        }
         let labelWidth = label.intrinsicContentSize.width
         return CGSize(width: labelWidth + 35, height: 38)
         
