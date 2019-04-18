@@ -28,7 +28,6 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
                 } else  {
                     
                     guard let tvData = data?.data else { return }
-                    print(tvData)
                     self.tvShowInfo = tvData.tv_show
                     self.seasons = tvData.seasons
                     
@@ -37,7 +36,6 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
                     }
                 }
             }
-            print("this is my ID", showId)
         }
     }
     

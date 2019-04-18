@@ -15,8 +15,9 @@ struct TvShowEpisodeModel: Decodable    {
 
 struct TvShowEpisodeData: Decodable {
     var tv_show: TvShowInfo
-    var episode: TvShowEpisodes
+    //var episode: TvShowEpisodeInfo
     var CompleteListOfSongs: [Song]
 }
+
 
 

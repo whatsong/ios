@@ -37,7 +37,6 @@ class TvShowSeason: BaseCvController, UICollectionViewDelegateFlowLayout, Episod
             } else  {
                 
                 guard let seasonData = data?.data?.episodes else { return }
-                print(seasonData)
                 self.episodes = seasonData
                 
                 DispatchQueue.main.async {

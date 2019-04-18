@@ -14,7 +14,6 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     
     var songs: [Song] = []
     
-    let numberOfSongs = 5
     let heightOfSongs = 100
     
     var movieId: Int!    {
@@ -60,7 +59,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
-        return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 150)
+        return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 50)
     }
     
     
