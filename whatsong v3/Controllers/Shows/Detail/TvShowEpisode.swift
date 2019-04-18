@@ -8,18 +8,20 @@
 
 import UIKit
 
-class TvShowEpisode: BaseCvController   {
+class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout   {
     
-    let songsCellId = "songsCellId"
-
+    let songsCellId = "episodeCellId"
+    
     var episode: TvShowEpisodes?
-    var songs: [Song]? = []
+    var songs: [Song] = []
+    
+    let heightOfSongs = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.backgroundColor = UIColor.backgroundGrey()
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: songsCellId)
+        collectionView.register(SongListCell.self, forCellWithReuseIdentifier: songsCellId)
         
         if (episode != nil) {
             fetchEpisode()
@@ -27,7 +29,7 @@ class TvShowEpisode: BaseCvController   {
     }
     
     func fetchEpisode() {
-        let urlString = "https://www.what-song.com/api/episode-info?episodeID=\(episode?._id)"
+        let urlString = "https://www.what-song.com/api/episode-info?episodeID=\(episode?._id ?? 0)"
         
         Service.shared.fetchTvShowEpisode(urlString: urlString) { (data, err) in
             if let err = err {
@@ -35,8 +37,6 @@ class TvShowEpisode: BaseCvController   {
             } else  {
                 
                 guard let episodeData = data?.data else { return }
-                print(episodeData)
-                self.episode = episodeData.episode
                 self.songs = episodeData.CompleteListOfSongs
                 
                 DispatchQueue.main.async {
@@ -44,7 +44,20 @@ class TvShowEpisode: BaseCvController   {
                 }
             }
         }
-        
     }
     
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: songsCellId, for: indexPath) as! SongListCell
+        cell.songsArray = songs
+        cell.collectionView.reloadData()
+        return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 50)
+    }
 }
