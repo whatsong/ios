@@ -121,16 +121,32 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
             }
         }
         
-        let songPlayerView = SongFloatingPlayer()
+        let songPlayerView = SongFloatingPlayer(frame: CGRect(x: 0, y: 0, width: tabBarView.tabBar.frame.size.width, height: 54))
         songPlayerView.song = song
+//        window?.addSubview(songPlayerView)
+        
         tabBarView.view.addSubview(songPlayerView)
+//        songPlayerView.frame.size.height = 54
+//        songPlayerView.frame.size.width = 320
         
-        songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -54, right: 0))
+        songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -(tabBarView.tabBar.frame.size.height / 2), right: 0))
+        songPlayerView.setupViews()
         
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-            songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-            songPlayerView.layoutIfNeeded()
-        }, completion: nil)
+        UIView.transition(with: songPlayerView,
+                          duration: 0.7,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: tabBarView.tabBar.frame.size.height / 2, right: 0))
+                            songPlayerView.layoutIfNeeded()
+                            
+                        },
+                          completion: nil)
+        
+        
+        
+//        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: {
+        
+//        }, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
