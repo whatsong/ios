@@ -9,16 +9,6 @@
 import UIKit
 import AVKit
 
-extension AVPlayer {
-    var isNotPlaying: Bool {
-        if (self.rate != 0 && self.error == nil) {
-            return false
-        } else {
-            return true
-        }
-    }
-}
-
 class SongFloatingPlayer: UIView {
     
     var song: Song! {
@@ -26,7 +16,13 @@ class SongFloatingPlayer: UIView {
             songName.text = song.title
             artistName.text = song.artist.name
             
-            playSong()
+            if song.preview_url != nil  {
+                playSong()
+            }   else    {
+                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                playPauseButton.isEnabled = false
+                playPauseButton.adjustsImageWhenDisabled = false
+            }
         }
     }
     
@@ -35,21 +31,17 @@ class SongFloatingPlayer: UIView {
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
-        
-        if player.isNotPlaying {
-            playPauseButton.setImage(UIImage(named: "no-audio-icon"), for: .normal)
-        }
+
     }
     
     @objc func handlePlayPause()    {
         
         if player.timeControlStatus == .paused {
             player.play()
-            playPauseButton.setImage(UIImage(named: "pause-icon"), for: .normal)
+            playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         } else  {
             player.pause()
-            playPauseButton.setImage(UIImage(named: "play-icon"), for: .normal)
-
+            playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
     
@@ -62,17 +54,18 @@ class SongFloatingPlayer: UIView {
     let songName: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 13)
-        label.textColor = UIColor.white
+        label.textColor = UIColor.brandBlack()
         label.textAlignment = .center
         label.text = "White Hinterland"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     let artistName: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 13)
         label.textAlignment = .center
-        label.textColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 1)
+        label.textColor = UIColor.brandLightGrey()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -81,7 +74,7 @@ class SongFloatingPlayer: UIView {
         let iv = UIImageView()
         iv.image = UIImage(named: "heart-icon")?.withRenderingMode(.alwaysTemplate)
         iv.contentMode = .scaleToFill
-        iv.tintColor = .white
+        iv.tintColor = UIColor.brandBlack()
         iv.constrainHeight(constant: 24)
         iv.constrainWidth(constant: 26)
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -90,8 +83,9 @@ class SongFloatingPlayer: UIView {
 
     let playPauseButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "pause-icon"), for: .normal)
+        button.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = UIColor.brandBlack()
         button.contentMode = .scaleToFill
         button.constrainHeight(constant: 29)
         button.constrainWidth(constant: 29)
@@ -102,14 +96,22 @@ class SongFloatingPlayer: UIView {
     let timeSlider: UISlider = {
         let slider = UISlider()
         slider.setThumbImage(UIImage(), for: .normal)
-        slider.maximumTrackTintColor = UIColor(red: 176/255, green: 176/255, blue: 236/255, alpha: 1)
-        slider.minimumTrackTintColor = UIColor(red: 133/255, green: 133/255, blue: 215/255, alpha: 1)
+        slider.maximumTrackTintColor = UIColor.backgroundGrey()
+        slider.minimumTrackTintColor = UIColor.brandBlack()
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
     
+    let divider: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.backgroundGrey()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.constrainHeight(constant: 1)
+        return view
+    }()
+    
     func setupViews()   {
-        backgroundColor = UIColor.brandPurple()
+        backgroundColor = UIColor.white
         
         let stackView = UIStackView(arrangedSubviews: [songName, artistName])
         stackView.spacing = 1
@@ -120,6 +122,7 @@ class SongFloatingPlayer: UIView {
         addSubview(heartIcon)
         addSubview(playPauseButton)
         addSubview(timeSlider)
+        addSubview(divider)
         
         stackView.centerYInSuperview()
         stackView.anchor(top: nil, leading: heartIcon.trailingAnchor, bottom: nil, trailing: playPauseButton.leadingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
@@ -133,6 +136,7 @@ class SongFloatingPlayer: UIView {
         timeSlider.anchor(top: nil, leading: leadingAnchor, bottom: topAnchor, trailing: trailingAnchor)
         timeSlider.constrainHeight(constant: 2)
         
+        divider.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
         
     }
     

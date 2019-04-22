@@ -299,7 +299,6 @@
 			isa = PBXGroup;
 			children = (
 				BB637F432230DE15009FEFD7 /* MovieDetailCell.swift */,
-				BBEB4356223F6DF200D54998 /* SongListCell.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -408,6 +407,7 @@
 		BBEB435D224A24D000D54998 /* Song */ = {
 			isa = PBXGroup;
 			children = (
+				BBEB4356223F6DF200D54998 /* SongListCell.swift */,
 				BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */,
 				BBCA3EDC224C51E200037DCF /* SongFloatingPlayer.swift */,
 			);

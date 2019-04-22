@@ -22,7 +22,7 @@ class SongDetailPopup: UIView {
             if let urlString = urlString {
                 albumImage.sd_setImage(with: URL(string: urlString))
             }
-            playSong()
+            //playSong()
             
         }
     }

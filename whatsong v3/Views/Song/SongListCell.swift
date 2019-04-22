@@ -124,8 +124,13 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         let songPlayerView = SongFloatingPlayer()
         songPlayerView.song = song
         tabBarView.view.addSubview(songPlayerView)
+        
         songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor)
-        songPlayerView.constrainHeight(constant: 54)
+        
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+            songPlayerView.constrainHeight(constant: 54)
+            songPlayerView.layoutIfNeeded()
+        }, completion: nil)
         
     }
     
