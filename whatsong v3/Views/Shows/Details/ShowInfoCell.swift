@@ -48,6 +48,8 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     func fillHeaderArrayAndSubtitleArray(){
+        headerArray = []
+        subtitleArray = []
         if let showInfo = showInfo {
             if showInfo.music_supervisor != nil {
                 headerArray.append("Music Supervisor")
