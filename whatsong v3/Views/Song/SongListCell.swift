@@ -125,13 +125,12 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         songPlayerView.song = song
         tabBarView.view.addSubview(songPlayerView)
         
-        songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor)
+        songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -54, right: 0))
         
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-            songPlayerView.constrainHeight(constant: 54)
+            songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
             songPlayerView.layoutIfNeeded()
         }, completion: nil)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
