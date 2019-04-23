@@ -51,6 +51,14 @@ class SongFloatingPlayer: UIView {
         return avPlayer
     }()
     
+    let view: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.constrainHeight(constant: 54)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     let songName: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 13)
@@ -118,11 +126,14 @@ class SongFloatingPlayer: UIView {
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
+        addSubview(view)
         addSubview(stackView)
         addSubview(heartIcon)
         addSubview(playPauseButton)
         addSubview(timeSlider)
         addSubview(divider)
+        
+        view.fillSuperview()
         
         stackView.centerYInSuperview()
         stackView.anchor(top: nil, leading: heartIcon.trailingAnchor, bottom: nil, trailing: playPauseButton.leadingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))

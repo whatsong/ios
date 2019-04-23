@@ -220,7 +220,16 @@ class SongDetailPopup: UIView {
     }()
     
     @objc func dismissFunc()  {
-        self.removeFromSuperview()
+        
+        let window: UIWindow? = UIApplication.shared.keyWindow
+        let offsetY = (window?.frame.maxY)!
+        print(offsetY)
+        
+        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+            self.transform = .init(translationX: 0, y: 0)
+        }, completion: { _ in
+            self.removeFromSuperview()
+        })
     }
     
     func setupBackgroundGradient()    {

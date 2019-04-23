@@ -121,32 +121,18 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
             }
         }
         
-        let songPlayerView = SongFloatingPlayer(frame: CGRect(x: 0, y: 0, width: tabBarView.tabBar.frame.size.width, height: 54))
+        let songPlayerView = SongFloatingPlayer()
         songPlayerView.song = song
-//        window?.addSubview(songPlayerView)
+        tabBarView.view.insertSubview(songPlayerView, belowSubview: tabBarView.tabBar)
         
-        tabBarView.view.addSubview(songPlayerView)
-//        songPlayerView.frame.size.height = 54
-//        songPlayerView.frame.size.width = 320
+        songPlayerView.anchor(top: tabBarView.tabBar.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
-        songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -(tabBarView.tabBar.frame.size.height / 2), right: 0))
-        songPlayerView.setupViews()
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+            
+            songPlayerView.transform = .init(translationX: 0, y: -54)
+
+        }, completion: nil)
         
-        UIView.transition(with: songPlayerView,
-                          duration: 0.7,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            songPlayerView.anchor(top: nil, leading: tabBarView.view.leadingAnchor, bottom: tabBarView.tabBar.topAnchor, trailing: tabBarView.view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: tabBarView.tabBar.frame.size.height / 2, right: 0))
-                            songPlayerView.layoutIfNeeded()
-                            
-                        },
-                          completion: nil)
-        
-        
-        
-//        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [], animations: {
-        
-//        }, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -165,8 +151,14 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         var indexPath = getIndexPathFromRecognizer(gesture: gesture)
         
         let window: UIWindow? = UIApplication.shared.keyWindow
-        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: 0, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
+        let offsetY = (window?.frame.maxY)!
+
+        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
         window?.addSubview(songDetailView)
+        
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+            songDetailView.transform = .init(translationX: 0, y: -offsetY)
+        }, completion: nil)
         
         let song = self.songsArray[indexPath.item]
         songDetailView.song = song

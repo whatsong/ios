@@ -39,6 +39,10 @@ class MainTabBarController: UITabBarController  {
         navController.navigationBar.isTranslucent = false
         navController.navigationBar.tintColor = UIColor.brandPurple()
         
+        //back button
+        let customFont = UIFont(name: "Montserrat-Regular", size: 14)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont], for: .normal)
+        
         let attributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 28)!
         ]
