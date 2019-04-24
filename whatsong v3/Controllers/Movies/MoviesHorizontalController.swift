@@ -35,6 +35,7 @@ class MoviesHorizontalController: HorizontalSnappingController, UICollectionView
         let movie = latestMoviesArray?.data[indexPath.item]
         cell.titleLabel.text = movie?.title
         cell.yearLabel.text = movie?.year
+        cell.songCountLabel.text = "\(movie?.song_count ?? 0) songs"
         let urlPrefix = "https://www.what-song.com"
         let urlSuffix = movie?.poster ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
@@ -42,7 +43,7 @@ class MoviesHorizontalController: HorizontalSnappingController, UICollectionView
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width * 0.85, height: (view.frame.height - topBottomSpacing * 2 - lineSpacing * 2) / 3)
+        return CGSize(width: 120, height: (view.frame.height - topBottomSpacing * 2 - lineSpacing * 2) / 2)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

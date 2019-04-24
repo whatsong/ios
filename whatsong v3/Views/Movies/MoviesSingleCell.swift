@@ -10,31 +10,55 @@ import UIKit
 
 class MoviesSingleCell: UICollectionViewCell   {
     
-    let imageView = UIImageView(cornerRadius: 8)
-    let titleLabel = UILabel(text: "American Psycho", font: UIFont(name: "Montserrat-Regular", size: 18)!, color: UIColor.brandDarkGrey())
+    let bgView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 6
+        view.layer.shadowColor = UIColor.gray.cgColor
+        view.layer.shadowRadius = 4
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowOpacity = 0.7
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
-    let yearLabel = UILabel(text: "1999", font: UIFont(name: "Montserrat-Regular", size: 16)!, color: UIColor.brandLightGrey())
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = UIColor.brandLightGrey()
+        iv.constrainWidth(constant: 120)
+        iv.constrainHeight(constant: 160)
+        iv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        iv.layer.cornerRadius = 6
+        iv.clipsToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    let titleLabel = UILabel(text: "American Psycho", font: UIFont(name: "Montserrat-Regular", size: 12)!, color: UIColor.brandBlack())
+    let songCountLabel = UILabel(text: "12 songs", font: UIFont(name: "Montserrat-Regular", size: 10)!, color: UIColor.brandPurple())
+    let yearLabel = UILabel(text: "1999", font: UIFont(name: "Montserrat-Light", size: 10)!, color: UIColor.brandLightGrey())
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        imageView.constrainWidth(constant: 80)
-        imageView.constrainHeight(constant: 114)
-        imageView.backgroundColor = .red
+        titleLabel.numberOfLines = 1
         
-        titleLabel.numberOfLines = 0
+        addSubview(bgView)
+        addSubview(imageView)
         
-        let verticalStackView = UIStackView(arrangedSubviews: [titleLabel, yearLabel])
-        verticalStackView.axis = .vertical
-        verticalStackView.spacing = 2
+        bgView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        bgView.constrainWidth(constant: 120)
         
-        let stackView = UIStackView(arrangedSubviews: [imageView, verticalStackView])
-        stackView.spacing = 16
-        stackView.alignment = .center
+        imageView.anchor(top: bgView.topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil)
+        
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, songCountLabel, yearLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        
         addSubview(stackView)
-        stackView.fillSuperview()
-        
-        
+        stackView.anchor(top: imageView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 6, left: 8, bottom: 6, right: 8))
+
     }
     
     required init?(coder aDecoder: NSCoder) {

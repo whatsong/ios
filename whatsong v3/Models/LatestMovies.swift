@@ -17,5 +17,6 @@ struct LatestMovie: Decodable  {
     let title: String
     let year: String
     let poster: String?
+    var song_count: Int?
 }
 

@@ -32,7 +32,7 @@ class ShowsGroupCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout  
     var dayLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 16)
-        label.textColor = .black
+        label.textColor = UIColor.brandBlack()
         label.attributedText = NSAttributedString(string: "Monday", attributes: [
             NSAttributedString.Key.kern: -0.6
             ])

@@ -54,7 +54,7 @@ class ShowsSingleCell: UICollectionViewCell {
     var songCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 10)
-        label.textColor = UIColor.brandBlue()
+        label.textColor = UIColor.brandPurple()
         label.attributedText = NSAttributedString(string: "5 songs", attributes: [
             NSAttributedString.Key.kern: -0.3
             ])

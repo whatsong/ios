@@ -12,8 +12,8 @@ class MoviesGroupCell: UICollectionViewCell {
     
     var sectionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Montserrat-SemiBold", size: 24)
-        label.textColor = .black
+        label.font = UIFont(name: "Montserrat-Regular", size: 16)
+        label.textColor = UIColor.brandBlack()
         label.attributedText = NSAttributedString(string: "Latest Releases", attributes: [
             NSAttributedString.Key.kern: -0.8
             ])

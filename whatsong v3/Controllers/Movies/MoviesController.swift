@@ -77,7 +77,7 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         
         cell.horizontalController.collectionView.reloadData()
         cell.horizontalController.didSelectHandler = { [weak self] movie in
-            let controller = MovieDetailController()
+            let controller = MovieDetailController(movieId: movie._id)
             controller.movieId = movie._id
             controller.navigationItem.title = movie.title
 
@@ -87,10 +87,15 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 450)
+        return CGSize(width: view.frame.width, height: 500)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+        
     }
 }

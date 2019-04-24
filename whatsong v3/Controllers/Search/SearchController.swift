@@ -45,7 +45,7 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     }
     
     var timer: Timer?
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         // invalidates timer from firing off search request aggresively. So now will only perform fetchTitles request after 0.5seconds instead of after every letter typed.
@@ -85,6 +85,16 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 140)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieId = movies[indexPath.item]?.id
+        print(movieId)
+        let movieController = MovieDetailController(movieId: movieId!)
+        movieController.movieId = movieId
+        movieController.navigationItem.title = movies[indexPath.item]?.name
+
+        navigationController?.pushViewController(movieController, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

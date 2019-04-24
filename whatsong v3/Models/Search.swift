@@ -27,11 +27,13 @@ struct Group: Decodable  {
 }
 
 struct Title: Decodable {
+    let id: Int?
     let name: String?
     let year: String?
     let poster: String?
     
     private enum CodingKeys: String, CodingKey {
+        case id = "_id"
         case name = "title"
         case year = "year"
         case poster = "poster"

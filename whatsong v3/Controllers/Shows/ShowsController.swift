@@ -35,6 +35,7 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         guard let days = showDays else { return 0 }
         return days.count
     }

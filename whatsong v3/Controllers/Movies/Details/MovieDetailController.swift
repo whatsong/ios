@@ -11,10 +11,18 @@ import UIKit
 class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayout   {
     
     let songListCellId = "songListCellId"
-    
     var songs: [Song] = []
-    
     let heightOfSongs = 100
+    
+    // dependency injection constructor
+    init(movieId: Int?) {
+        self.movieId = movieId
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     var movieId: Int!    {
         didSet  {
