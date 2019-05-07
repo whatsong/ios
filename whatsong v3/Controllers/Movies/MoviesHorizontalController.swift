@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import SkeletonView
 
-class MoviesHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout  {
+class MoviesHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout, SkeletonCollectionViewDataSource  {
+    
     
     let cellId = "cellId"
     var latestMoviesArray: LatestMovies?
@@ -54,5 +56,9 @@ class MoviesHorizontalController: HorizontalSnappingController, UICollectionView
         if let movie = latestMoviesArray?.data[indexPath.item]  {
             didSelectHandler?(movie)
         }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return cellId
     }
 }

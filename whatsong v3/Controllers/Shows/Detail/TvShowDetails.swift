@@ -7,8 +7,30 @@
 //
 
 import UIKit
+import SkeletonView
 
 class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLayout, SeasonCellDelegate    {
+    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
+    func displayActivityIndicatorView() -> () {
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        //self.collectionView.backgroundColor = UIColor(white: 1, alpha: 0.8)
+        self.collectionView.addSubview(activityIndicator)
+        self.activityIndicator.center = collectionView.center
+        self.activityIndicator.style = .gray
+        self.activityIndicator.startAnimating()
+    }
+    
+    func hideActivityIndicatorView() -> () {
+        if !self.activityIndicator.isHidden{
+            DispatchQueue.main.async {
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            }
+        }
+    }
     
     let infoCellId = "cellId"
     let latestEpisodeCellId = "latestEpisodesCellId"
@@ -20,6 +42,8 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
     
     var showId: Int!    {
         didSet {
+            displayActivityIndicatorView()
+            view.showAnimatedSkeleton()
             let urlString = "https://www.what-song.com/api/tv-info?tvshowID=\(showId ?? 0)"
             Service.shared.fetchTvShowDetail(urlString: urlString) { (data, err) in
                 
@@ -33,6 +57,8 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
                     
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
+                        self.hideActivityIndicatorView()
+                        self.view.hideSkeleton()
                     }
                 }
             }

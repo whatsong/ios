@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SkeletonView
 
-class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    {
+class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout, SkeletonCollectionViewDataSource    {
     
     let cellId = "cellId"
     
@@ -22,13 +23,13 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
     var movieSections = [LatestMovies]()
 
     fileprivate func fetchData()    {
-        
         var section1: LatestMovies?
         var section2: LatestMovies?
         
         //Dispatch Group helps sync our data requests together.
         let dispatchGroup = DispatchGroup()
         
+        view.showAnimatedSkeleton()
         dispatchGroup.enter()
         Service.shared.fetchLatestMovies { (movieSectionData, err) in
             if let err =  err   {
@@ -57,6 +58,7 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
                 self.movieSections.append(section)
             }
             self.collectionView.reloadData()
+            self.view.hideSkeleton()
         }
     }
         
@@ -98,4 +100,9 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         return 20
         
     }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return cellId
+    }
+    
 }

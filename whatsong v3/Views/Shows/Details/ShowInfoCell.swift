@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource    {
     
@@ -105,6 +106,7 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! InfoSingleCell
         cell.headingLabel.text = headerArray[indexPath.row]
         cell.secondaryLabel.text = subtitleArray[indexPath.row]
+        //cell.hideSkeleton()
  
         return cell
     }
@@ -144,6 +146,9 @@ class InfoSingleCell: UICollectionViewCell  {
         
         let verticalStackView = VerticalStackView(arrangedSubviews: [headingLabel, secondaryLabel])
         
+        headingLabel.showAnimatedSkeleton()
+        secondaryLabel.showAnimatedSkeleton()
+
         
         addSubview(verticalStackView)
         addSubview(verticalDivider)
@@ -161,6 +166,7 @@ class InfoSingleCell: UICollectionViewCell  {
         label.font = UIFont(name: "Montserrat-Regular", size: 12)
         label.textColor = UIColor.brandLightGrey()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isSkeletonable = true
         return label
     }()
     
@@ -170,6 +176,7 @@ class InfoSingleCell: UICollectionViewCell  {
         label.font = UIFont(name: "Montserrat-Regular", size: 16)
         label.textColor = UIColor.brandBlack()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isSkeletonable = true
         return label
     }()
     

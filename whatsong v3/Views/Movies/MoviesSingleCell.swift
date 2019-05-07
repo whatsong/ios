@@ -18,6 +18,7 @@ class MoviesSingleCell: UICollectionViewCell   {
         view.layer.shadowRadius = 4
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowOpacity = 0.7
+        view.isSkeletonable = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -31,11 +32,13 @@ class MoviesSingleCell: UICollectionViewCell   {
         iv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         iv.layer.cornerRadius = 6
         iv.clipsToBounds = true
+        iv.isSkeletonable = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
     let titleLabel = UILabel(text: "American Psycho", font: UIFont(name: "Montserrat-Regular", size: 12)!, color: UIColor.brandBlack())
+    
     let songCountLabel = UILabel(text: "12 songs", font: UIFont(name: "Montserrat-Regular", size: 10)!, color: UIColor.brandPurple())
     let yearLabel = UILabel(text: "1999", font: UIFont(name: "Montserrat-Light", size: 10)!, color: UIColor.brandLightGrey())
     
@@ -43,6 +46,7 @@ class MoviesSingleCell: UICollectionViewCell   {
         super.init(frame: frame)
         
         titleLabel.numberOfLines = 1
+        
         
         addSubview(bgView)
         addSubview(imageView)

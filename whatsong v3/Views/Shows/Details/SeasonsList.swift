@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 protocol SeasonCellDelegate {
     func didSelectSeason(for season: Seasons)

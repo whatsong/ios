@@ -7,6 +7,7 @@ target 'whatsong v3' do
 
   # Pods for whatsong v3
    pod 'SDWebImage'
+   pod 'SkeletonView'
 
   target 'whatsong v3Tests' do
     inherit! :search_paths
