@@ -37,7 +37,8 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let days = showDays else { return 0 }
-        return days.count
+        showDays = days.filter({ !$0.tv_show_details!.isEmpty })
+        return showDays!.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -46,7 +47,7 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
         let date = cell.dayData?.released_date.toDate(stringFormat: "dd-MM-yyyy")
         cell.dateLabel.text = date?.toString(dateFormat: "MMM dd, yyyy")
         cell.dayLabel.text = date?.toString(dateFormat: "EEEE")
-        
+        cell.horizontalController.tvShows = []
         cell.horizontalController.tvShows = showDays?[indexPath.row].tv_show_details
         cell.horizontalController.didSelectHandler = { [weak self]
             show in
@@ -55,7 +56,6 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
             controller.navigationItem.title = show.tv_show.title
             self?.navigationController?.pushViewController(controller, animated: true)
         }
-        
         return cell
     }
     
