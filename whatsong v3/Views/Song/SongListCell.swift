@@ -105,19 +105,15 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
                 view.removeFromSuperview()
             }
         }
-        
         let songPlayerView = SongFloatingPlayer()
         songPlayerView.song = song
         tabBarView.view.insertSubview(songPlayerView, belowSubview: tabBarView.tabBar)
-        
-        songPlayerView.anchor(top: tabBarView.tabBar.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
+        if let mainWindow = window {
+            songPlayerView.anchor(top: tabBarView.tabBar.topAnchor, leading: mainWindow.leadingAnchor, bottom: nil, trailing: mainWindow.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        }
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-            
             songPlayerView.transform = .init(translationX: 0, y: -54)
-
         }, completion: nil)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
