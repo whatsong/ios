@@ -67,12 +67,13 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         collectionView.register(ShowInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         collectionView?.register(LatestEpisodes.self, forCellWithReuseIdentifier: latestEpisodeCellId)
         collectionView?.register(SeasonsList.self, forCellWithReuseIdentifier: seasonsCellId)
 
         collectionView.backgroundColor = UIColor.backgroundGrey()
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 30, right: 0)
         
     }
     

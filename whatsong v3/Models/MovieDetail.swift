@@ -23,6 +23,8 @@ struct MovieInfo: Decodable {
     let _id: Int
     let title: String
     let song_count: Int
+    let composer: String?
+    let music_supervisor: String?
 }
 
 struct Song: Decodable  {

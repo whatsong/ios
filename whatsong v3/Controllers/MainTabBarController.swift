@@ -16,7 +16,9 @@ class MainTabBarController: UITabBarController  {
         viewControllers = [
             createNavController(viewController: MoviesController(), title: "Movies", imageName: "apps"),
             createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon"),
-            createNavController(viewController: SearchController(), title: "Search", imageName: "search")
+            createNavController(viewController: SearchController(), title: "Search", imageName: "search"),
+            //createNavController(viewController: SpotifyController(), title: "User", imageName: "user")
+
         ]
     }
     
@@ -36,6 +38,7 @@ class MainTabBarController: UITabBarController  {
         
         navController.navigationBar.shadowImage = UIImage()
         navController.navigationBar.prefersLargeTitles = true
+        navController.navigationBar.barTintColor = UIColor.backgroundGrey()
         navController.navigationBar.isTranslucent = false
         navController.navigationBar.tintColor = UIColor.brandPurple()
         

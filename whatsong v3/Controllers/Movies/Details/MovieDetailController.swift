@@ -10,7 +10,10 @@ import UIKit
 
 class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayout   {
     
+    let infoCellId = "infoCellId"
     let songListCellId = "songListCellId"
+    
+    var movieInfo: MovieInfo?
     var songs: [Song] = []
     let heightOfSongs = 100
     
@@ -33,8 +36,12 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
                     print(err)
                 } else  {
                 
-                    guard let songs = data?.data.CompleteListOfSongs else { return }
-                    self.songs = songs
+                    guard let movieData = data?.data else { return }
+                    //guard let songs = data?.data.CompleteListOfSongs else { return }
+                    
+                    self.songs = movieData.CompleteListOfSongs
+                    self.movieInfo = movieData.movie
+                    
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                     }
@@ -46,28 +53,38 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        
-        collectionView.backgroundColor = .white
-        //collectionView.register(MovieDetailCell.self, forCellWithReuseIdentifier: movieDetailCellId)
         collectionView.register(SongListCell.self, forCellWithReuseIdentifier: songListCellId)
+        collectionView.register(MovieInfoCell.self, forCellWithReuseIdentifier: infoCellId)
+        
+        collectionView.backgroundColor = UIColor.backgroundGrey()
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 30, right: 0)
+
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellId, for: indexPath) as! MovieInfoCell
+            cell.movieInfo = movieInfo
+            cell.collectionView.reloadData()
+            return cell
+        } else  {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: songListCellId, for: indexPath) as! SongListCell
         cell.songsArray = songs
         cell.collectionView.reloadData()
         return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    
+        if indexPath.item == 0 {
+            return CGSize(width: view.frame.width, height: 68)
+        } else  {
         return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 50)
+        }
     }
     
     

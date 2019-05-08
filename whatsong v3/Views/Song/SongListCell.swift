@@ -16,21 +16,10 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     
     let heading: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Regular", size: 20)
-        label.textColor = UIColor.black
+        label.font = UIFont(name: "Montserrat-Regular", size: 14)
+        label.textColor = UIColor.brandLightGrey()
         label.attributedText = NSAttributedString(string: "List of Songs", attributes: [
-            NSAttributedString.Key.kern: -0.7
-            ])
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let seeAll: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Regular", size: 20)
-        label.textColor = UIColor.blue
-        label.attributedText = NSAttributedString(string: "See All", attributes: [
-            NSAttributedString.Key.kern: -0.7
+            NSAttributedString.Key.kern: -0.4
             ])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -51,20 +40,16 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
-        
         collectionView.register(SongCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
+        
+        //backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
 
         addSubview(heading)
-        addSubview(seeAll)
         addSubview(collectionView)
         
         heading.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 18, bottom: 0, right: 0))
-        
-        seeAll.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 18))
-        
+                
         collectionView.anchor(top: heading.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         
     }
@@ -250,9 +235,9 @@ class SongCell: UICollectionViewCell    {
     
     let moreButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "more-icon"), for: .normal)
+        button.setImage(UIImage(named: "more-button-border"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.constrainWidth(constant: 20)
+        button.constrainWidth(constant: 25)
         return button
     }()
     
