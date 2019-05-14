@@ -101,6 +101,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     
     func didSelectAlbum(for album: Album)  {
         let albumSongsController = AlbumController()
+        albumSongsController.songs = album.songs
         albumSongsController.navigationItem.title = "\(album.album.title)"
         navigationController?.pushViewController(albumSongsController, animated: true)
     }

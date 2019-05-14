@@ -11,6 +11,7 @@ import UIKit
 class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     
     let albumSongListCellId = "albumSongListCellId"
+    var songs: [Song] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +26,15 @@ class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumSongListCellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumSongListCellId, for: indexPath) as! AlbumSongList
+        cell.songsArray = self.songs
+        cell.collectionView.reloadData()
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 500)
+        let height = CGFloat((self.songs.count) * 60) + 50
+        return CGSize(width: view.frame.width, height: height)
     }
     
 }
