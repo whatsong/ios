@@ -35,23 +35,22 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }()
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
+        setupViews()
+    }
+    
+    func setupViews()   {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SongCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
         
-        //backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
-
         addSubview(heading)
         addSubview(collectionView)
         
         heading.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 18, bottom: 0, right: 0))
-                
-        collectionView.anchor(top: heading.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         
+        collectionView.anchor(top: heading.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -69,10 +68,13 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         cell.songTitle.attributedText = NSAttributedString(string: song.title, attributes: [
             NSAttributedString.Key.kern: -0.8
             ])
-        cell.artistName.text = song.artist.name
-        cell.sceneDescription.text = song.scene_description
+        cell.artistName.attributedText = NSAttributedString(string: song.artist.name, attributes: [
+            NSAttributedString.Key.kern: -0.6
+            ])
+        cell.sceneDescription.attributedText = NSAttributedString(string: song.scene_description ?? "", attributes: [
+            NSAttributedString.Key.kern: -0.3
+            ])
 
-        
         if song.time_play == nil {
             cell.timeHeard.text = ""
             cell.minutesLabel.text = ""

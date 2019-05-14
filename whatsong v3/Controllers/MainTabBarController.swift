@@ -14,11 +14,9 @@ class MainTabBarController: UITabBarController  {
         super.viewDidLoad()
         
         viewControllers = [
-            createNavController(viewController: MoviesController(), title: "Movies", imageName: "apps"),
-            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon"),
-            createNavController(viewController: SearchController(), title: "Search", imageName: "search"),
-            //createNavController(viewController: SpotifyController(), title: "User", imageName: "user")
-
+            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-no-text"),
+            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon-no-text"),
+            createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-no-text"),
         ]
     }
     
@@ -28,10 +26,16 @@ class MainTabBarController: UITabBarController  {
         viewController.navigationItem.title = title
         
         // I don't know what this line does!! For some reason though when I remove it, the ShowsController doesn't show anything.
-        viewController.view.backgroundColor = UIColor.black
+        viewController.view.backgroundColor = UIColor.backgroundGrey()
         
         navController.tabBarItem.image = UIImage(named: imageName)
         navController.tabBarItem.title = title
+        
+        let tabBarAttributes: [NSAttributedString.Key: AnyObject] = [
+            NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 10)!
+            ]
+
+        navController.tabBarItem.setTitleTextAttributes(tabBarAttributes, for: .normal)
         navController.tabBarController?.tabBar.isTranslucent = false
         self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = .white
@@ -44,7 +48,7 @@ class MainTabBarController: UITabBarController  {
         
         //back button
         let customFont = UIFont(name: "Montserrat-Regular", size: 14)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
         
         let attributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 28)!

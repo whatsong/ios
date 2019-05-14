@@ -16,6 +16,8 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout, Sk
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = UIColor.backgroundGrey()
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+
         collectionView.register(MoviesGroupCell.self, forCellWithReuseIdentifier: cellId)
         fetchData()
     }

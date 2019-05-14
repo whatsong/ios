@@ -106,7 +106,6 @@ class ShowInfoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! InfoSingleCell
         cell.headingLabel.text = headerArray[indexPath.row]
         cell.secondaryLabel.text = subtitleArray[indexPath.row]
-        //cell.hideSkeleton()
  
         return cell
     }

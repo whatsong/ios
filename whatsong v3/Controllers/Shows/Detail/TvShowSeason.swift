@@ -19,7 +19,8 @@ class TvShowSeason: BaseCvController, UICollectionViewDelegateFlowLayout, Episod
         super.viewDidLoad()
         
         collectionView.register(Episodes.self, forCellWithReuseIdentifier: episodesCellId)
-        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+
         collectionView.backgroundColor = UIColor.backgroundGrey()
         
         if (season != nil) {

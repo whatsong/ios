@@ -17,6 +17,7 @@ struct MovieDetails: Decodable {
     let poster: String?
     let banner: String?
     let CompleteListOfSongs: [Song]
+    let albums: [Album]
 }
 
 struct MovieInfo: Decodable {
@@ -42,4 +43,30 @@ struct Song: Decodable  {
 struct Artist: Decodable    {
     let _id: Int
     let name: String
+}
+
+struct Album: Decodable {
+    let album: AlbumInfo
+    let songs: [AlbumSongs]
+}
+
+struct AlbumInfo: Decodable   {
+    let _id: Int
+    let title: String?
+    let thumbnail: String?
+    let itunes_url: String?
+    let time_released: String?
+    let trackCount: String?
+    let length: Int?
+    
+}
+
+struct AlbumSongs: Decodable    {
+    let _id: Int?
+    let played_time: Int?
+    let title: String?
+    let artist: Artist
+    let preview_url: String?
+    let itunes_url: String?
+    let track_number: Int?
 }

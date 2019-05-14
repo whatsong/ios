@@ -17,6 +17,7 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
         super.viewDidLoad()
         
         collectionView.backgroundColor = UIColor.backgroundGrey()
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         collectionView.register(ShowsGroupCell.self, forCellWithReuseIdentifier: cellId)
         
         fetchData()

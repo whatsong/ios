@@ -71,7 +71,8 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
         collectionView.register(ShowInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         collectionView?.register(LatestEpisodes.self, forCellWithReuseIdentifier: latestEpisodeCellId)
         collectionView?.register(SeasonsList.self, forCellWithReuseIdentifier: seasonsCellId)
-
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
+        
         collectionView.backgroundColor = UIColor.backgroundGrey()
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 30, right: 0)
         
