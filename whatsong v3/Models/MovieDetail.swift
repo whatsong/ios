@@ -37,6 +37,7 @@ struct Song: Decodable  {
     let spotifyImg300: String?
     let preview_url: String?
     let spotifyPreviewUrl: String?
+    let track_number: Int?
     
 }
 
@@ -61,10 +62,10 @@ struct AlbumInfo: Decodable   {
     
 }
 
-//struct AlbumSongs: Decodable    {
-//    let _id: Int?
+//struct AlbumSong: Decodable    {
+//    let _id: Int
 //    let played_time: Int?
-//    let title: String?
+//    let title: String
 //    let artist: Artist
 //    let preview_url: String?
 //    let itunes_url: String?
