@@ -11,7 +11,9 @@ import UIKit
 class LoginController: UIViewController {
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let defaultSession = URLSession(configuration: .default)
 
+    var dataTask: URLSessionDataTask?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +41,7 @@ class LoginController: UIViewController {
         tf.backgroundColor = .white
         tf.autocapitalizationType = .none
         tf.textColor = UIColor.brandBlack()
+        tf.text = "tomm098"
         tf.placeholder = "Username"
         tf.borderStyle = .roundedRect
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
@@ -50,6 +53,7 @@ class LoginController: UIViewController {
         tf.isSecureTextEntry = true
         tf.backgroundColor = .white
         tf.placeholder = "Password"
+        tf.text = "bubbles"
         tf.borderStyle = .roundedRect
         tf.textColor = UIColor.brandBlack()
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
@@ -97,49 +101,32 @@ class LoginController: UIViewController {
         }
     }
     
-    @objc func handleLogin()  {
-        
-        let url = URL(string: "https://www.what-song.com/api/sign-in")
-        var request = URLRequest(url: url!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "content-type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        let postString = [
-            "login": usernameInput.text,
-            "password": passwordInput.text
-            ] as! [String: String]
-        
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: postString, options: .prettyPrinted)
-            print(request.httpBody)
-        }   catch let error {
-            print("JSON error:", error.localizedDescription)
-            displayAlert(userMessage: "Http body could not be set on request")
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            if error != nil {
-                self.displayAlert(userMessage: "Could not perform request")
-                print("error: ", error)
-                return
-            }
-            do  {
-                let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
-                
-                if let parsedJson = json    {
-                    print(parsedJson)
-                }   else    {
-                    self.displayAlert(userMessage: "JSON is empty")
+    @objc func handleLogin() {
+        dataTask?.cancel()
+        if var urlComponents = URLComponents(string: "https://www.what-song.com/api/sign-in") {
+            urlComponents.query = "login=\(usernameInput.text!)&password=\(passwordInput.text!)"
+            guard let url = urlComponents.url else { return }
+            dataTask = defaultSession.dataTask(with: url) { data, response, error in
+                defer { self.dataTask = nil }
+                if let error = error {
+                } else if let data = data,
+                    let response = response as? HTTPURLResponse,
+                    response.statusCode == 200 {
+                    
+                    do  {
+                        let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                        print(json)
+                    } catch {
+                        print("Catched error is: ", error)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.present(MainTabBarController(), animated: true, completion: nil)
+                    }
                 }
-            } catch {
-                print("Catched error is: ", error)
             }
+            dataTask?.resume()
         }
-        task.resume()
-        self.present(MainTabBarController(), animated: true, completion: nil)
     }
     
     func displayActivityIndicatorView() -> () {
