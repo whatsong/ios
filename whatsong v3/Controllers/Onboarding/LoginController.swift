@@ -41,7 +41,6 @@ class LoginController: UIViewController {
         tf.backgroundColor = .white
         tf.autocapitalizationType = .none
         tf.textColor = UIColor.brandBlack()
-        tf.text = "tomm098"
         tf.placeholder = "Username"
         tf.borderStyle = .roundedRect
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
@@ -53,7 +52,6 @@ class LoginController: UIViewController {
         tf.isSecureTextEntry = true
         tf.backgroundColor = .white
         tf.placeholder = "Password"
-        tf.text = "bubbles"
         tf.borderStyle = .roundedRect
         tf.textColor = UIColor.brandBlack()
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
@@ -66,7 +64,7 @@ class LoginController: UIViewController {
         button.isEnabled = false
         button.setTitle("Login", for: .normal)
         button.layer.cornerRadius = 4
-        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
         return button
     }()
     
@@ -101,27 +99,32 @@ class LoginController: UIViewController {
         }
     }
     
-    @objc func handleLogin() {
+    @objc func loginAction() {
+        handleLogin { (loginModel, error) in
+            if let model = loginModel {
+                DAKeychain.shared["accessToken"] = model.data.accessToken.value
+                DispatchQueue.main.async {
+                    self.present(MainTabBarController(), animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func handleLogin(completion: @escaping (LoginModel?, Error?) -> ()) {
         dataTask?.cancel()
         if var urlComponents = URLComponents(string: "https://www.what-song.com/api/sign-in") {
             urlComponents.query = "login=\(usernameInput.text!)&password=\(passwordInput.text!)"
             guard let url = urlComponents.url else { return }
             dataTask = defaultSession.dataTask(with: url) { data, response, error in
                 defer { self.dataTask = nil }
-                if let error = error {
-                } else if let data = data,
+                if let data = data,
                     let response = response as? HTTPURLResponse,
                     response.statusCode == 200 {
-                    
                     do  {
-                        let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                        print(json)
+                        let loginData = try JSONDecoder().decode(LoginModel.self, from: data)
+                        completion(loginData, nil)
                     } catch {
-                        print("Catched error is: ", error)
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.present(MainTabBarController(), animated: true, completion: nil)
+                        completion(nil, error)
                     }
                 }
             }
