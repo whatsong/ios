@@ -31,7 +31,7 @@ class LoginController: UIViewController {
     let loginHeading: UILabel = {
         let label = UILabel()
         label.text = "Login"
-        label.font = UIFont(name: "Montserrat-Regular", size: 28)
+        label.font = UIFont(name: "Montserrat-SemiBold", size: 28)
         label.textColor = UIColor.brandBlack()
         return label
     }()
@@ -159,7 +159,5 @@ class LoginController: UIViewController {
             alertController.addAction(action)
             self.present(alertController, animated: true, completion: nil)
         }
-        
     }
-    
 }
