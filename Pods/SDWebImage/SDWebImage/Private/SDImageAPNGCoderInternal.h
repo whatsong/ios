@@ -7,11 +7,11 @@
  */
 
 #import "SDWebImageCompat.h"
+#import "SDImageAPNGCoder.h"
 
-#if !__has_feature(objc_arc)
-    #error SDWebImage is ARC only. Either turn on ARC for the project or use -fobjc-arc flag
-#endif
+@interface SDImageAPNGCoder ()
 
-#if !OS_OBJECT_USE_OBJC
-    #error SDWebImage need ARC for dispatch object
-#endif
+- (float)sd_frameDurationAtIndex:(NSUInteger)index source:(nonnull CGImageSourceRef)source;
+- (NSUInteger)sd_imageLoopCountWithSource:(nonnull CGImageSourceRef)source;
+
+@end

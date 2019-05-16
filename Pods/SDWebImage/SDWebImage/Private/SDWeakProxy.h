@@ -6,12 +6,14 @@
  * file that was distributed with this source code.
  */
 
+#import <Foundation/Foundation.h>
 #import "SDWebImageCompat.h"
 
-#if !__has_feature(objc_arc)
-    #error SDWebImage is ARC only. Either turn on ARC for the project or use -fobjc-arc flag
-#endif
+@interface SDWeakProxy : NSProxy
 
-#if !OS_OBJECT_USE_OBJC
-    #error SDWebImage need ARC for dispatch object
-#endif
+@property (nonatomic, weak, readonly, nullable) id target;
+
+- (nonnull instancetype)initWithTarget:(nonnull id)target;
++ (nonnull instancetype)proxyWithTarget:(nonnull id)target;
+
+@end

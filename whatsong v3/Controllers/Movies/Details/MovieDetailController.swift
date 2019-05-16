@@ -66,7 +66,11 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if albums.count != 0 {
         return 3
+        }   else    {
+            return 2
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -75,7 +79,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
             cell.movieInfo = movieInfo
             cell.collectionView.reloadData()
             return cell
-        } else if indexPath.item == 1 {
+        } else if indexPath.item == 1 && albums.count != 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumsListCellId, for: indexPath) as! AlbumsList
             cell.albumsArray = albums
             cell.albumCellDelegate = self
@@ -92,7 +96,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.item == 0 {
             return CGSize(width: view.frame.width, height: 68)
-        } else if indexPath.item == 1 {
+        } else if indexPath.item == 1 && albums.count != 0 {
             return CGSize(width: view.frame.width, height: CGFloat(albums.count * 100) + 40)
         } else  {
             return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 36)
@@ -101,8 +105,8 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     
     func didSelectAlbum(for album: Album)  {
         let albumSongsController = AlbumController()
-        albumSongsController.songs = album.songs
-        albumSongsController.navigationItem.title = "\(album.album.title)"
+        albumSongsController.albumSongs = album.songs
+        albumSongsController.navigationItem.title = "\(album.album.title ?? "Title Unknown")"
         navigationController?.pushViewController(albumSongsController, animated: true)
     }
 }

@@ -154,13 +154,6 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
 
 class SongCell: UICollectionViewCell    {
     
-    let bg: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     let timeHeard: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 14)
@@ -184,7 +177,7 @@ class SongCell: UICollectionViewCell    {
     let songTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 18)
-        label.textColor = UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: 1)
+        label.textColor = UIColor.brandBlack()
         label.attributedText = NSAttributedString(string: "White Hinterland", attributes: [
             NSAttributedString.Key.kern: -0.8
             ])
@@ -194,8 +187,8 @@ class SongCell: UICollectionViewCell    {
     
     let artistName: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Light", size: 15)
-        label.textColor = UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: 1)
+        label.font = UIFont(name: "Montserrat-Light", size: 16)
+        label.textColor = UIColor.brandDarkGrey()
         label.attributedText = NSAttributedString(string: "Kairos", attributes: [
             NSAttributedString.Key.kern: -0.8
             ])
@@ -239,8 +232,7 @@ class SongCell: UICollectionViewCell    {
         return button
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    func setupViews()   {
         
         let verticalTimeStackView = VerticalStackView(arrangedSubviews: [timeHeard, minutesLabel])
         verticalTimeStackView.axis = .vertical
@@ -253,13 +245,19 @@ class SongCell: UICollectionViewCell    {
         stackView.spacing = 16
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         addSubview(stackView)
         addSubview(divider)
         
         stackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 18, bottom: 0, right: 18))
         divider.anchor(top: nil, leading: leadingAnchor, bottom: stackView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
         divider.constrainHeight(constant: 1)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupViews()
         
     }
     
