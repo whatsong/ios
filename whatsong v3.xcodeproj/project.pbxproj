@@ -44,6 +44,11 @@
 		BB193C6E222F501C000EB8DB /* MoviesSingleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB193C6D222F501C000EB8DB /* MoviesSingleCell.swift */; };
 		BB193C70222F511F000EB8DB /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB193C6F222F511F000EB8DB /* UILabel.swift */; };
 		BB193C72222F5F5F000EB8DB /* LatestMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB193C71222F5F5F000EB8DB /* LatestMovies.swift */; };
+		BB1BF56A228CEB30009FBC91 /* OpenSwipingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1BF569228CEB30009FBC91 /* OpenSwipingController.swift */; };
+		BB1BF56C228CEF7D009FBC91 /* SwipedPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1BF56B228CEF7D009FBC91 /* SwipedPageCell.swift */; };
+		BB1BF56E228FC39C009FBC91 /* FatFrank.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB1BF56D228FC39C009FBC91 /* FatFrank.otf */; };
+		BB1BF57022928161009FBC91 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1BF56F22928161009FBC91 /* UIViewController.swift */; };
+		BB1BF57222928B57009FBC91 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1BF57122928B57009FBC91 /* SignUpController.swift */; };
 		BB637F3E2230AFFE009FEFD7 /* MovieDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB637F3D2230AFFE009FEFD7 /* MovieDetailController.swift */; };
 		BB637F412230D97B009FEFD7 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB637F402230D97B009FEFD7 /* MovieDetail.swift */; };
 		BB637F462230E7FE009FEFD7 /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB637F452230E7FE009FEFD7 /* VerticalStackView.swift */; };
@@ -134,6 +139,11 @@
 		BB193C6D222F501C000EB8DB /* MoviesSingleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesSingleCell.swift; sourceTree = "<group>"; };
 		BB193C6F222F511F000EB8DB /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		BB193C71222F5F5F000EB8DB /* LatestMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestMovies.swift; sourceTree = "<group>"; };
+		BB1BF569228CEB30009FBC91 /* OpenSwipingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSwipingController.swift; sourceTree = "<group>"; };
+		BB1BF56B228CEF7D009FBC91 /* SwipedPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipedPageCell.swift; sourceTree = "<group>"; };
+		BB1BF56D228FC39C009FBC91 /* FatFrank.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FatFrank.otf; sourceTree = "<group>"; };
+		BB1BF56F22928161009FBC91 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		BB1BF57122928B57009FBC91 /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		BB637F3D2230AFFE009FEFD7 /* MovieDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailController.swift; sourceTree = "<group>"; };
 		BB637F402230D97B009FEFD7 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		BB637F452230E7FE009FEFD7 /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
@@ -274,6 +284,7 @@
 		BB193C5E222E28F7000EB8DB /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				BB1BF56D228FC39C009FBC91 /* FatFrank.otf */,
 				BB193C4F222E28F1000EB8DB /* Montserrat-Black.otf */,
 				BB193C52222E28F2000EB8DB /* Montserrat-Bold.otf */,
 				BB193C51222E28F2000EB8DB /* Montserrat-ExtraBold.otf */,
@@ -320,6 +331,17 @@
 				BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		BB1BF568228CEA88009FBC91 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				BB1BF569228CEB30009FBC91 /* OpenSwipingController.swift */,
+				BB1BF56B228CEF7D009FBC91 /* SwipedPageCell.swift */,
+				BB0CC22022890005008BC023 /* LoginController.swift */,
+				BB1BF57122928B57009FBC91 /* SignUpController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		BB637F3F2230B003009FEFD7 /* Details */ = {
@@ -403,8 +425,8 @@
 				BB193C61222E99D6000EB8DB /* Movies */,
 				BBCA3EE02254ECC100037DCF /* Shows */,
 				BB193C64222E9B47000EB8DB /* Search */,
+				BB1BF568228CEA88009FBC91 /* Onboarding */,
 				BB7D7092221BA31000CE8A9F /* MainTabBarController.swift */,
-				BB0CC22022890005008BC023 /* LoginController.swift */,
 				BB193C69222EAB11000EB8DB /* BaseCvController.swift */,
 				BBF751F8222FC9FC00640C92 /* HorizontalSnappingController.swift */,
 				BB0CC2192282812D008BC023 /* SpotifyController.swift */,
@@ -471,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				BBEDA28F221C07A8007610DF /* UIView.swift */,
+				BB1BF56F22928161009FBC91 /* UIViewController.swift */,
 				BB193C5F222E2A61000EB8DB /* UIColor.swift */,
 				BB193C6F222F511F000EB8DB /* UILabel.swift */,
 				BB637F452230E7FE009FEFD7 /* VerticalStackView.swift */,
@@ -609,6 +632,7 @@
 				BB193C5D222E28F2000EB8DB /* Montserrat-SemiBold.otf in Resources */,
 				BB193C57222E28F2000EB8DB /* Montserrat-Black.otf in Resources */,
 				BB193C56222E28F2000EB8DB /* Montserrat-Light.otf in Resources */,
+				BB1BF56E228FC39C009FBC91 /* FatFrank.otf in Resources */,
 				BB193C5B222E28F2000EB8DB /* Montserrat-Regular.otf in Resources */,
 				BB193C5C222E28F2000EB8DB /* Montserrat-Hairline.otf in Resources */,
 				BB193C5A222E28F2000EB8DB /* Montserrat-Bold.otf in Resources */,
@@ -737,6 +761,7 @@
 				96489686228E1D2700D8BCEE /* Keychain.swift in Sources */,
 				BBCA3EEE225C5E8700037DCF /* TvShowDetails.swift in Sources */,
 				BB1661E32266F7D30077C2B0 /* TvShowEpisode.swift in Sources */,
+				BB1BF57022928161009FBC91 /* UIViewController.swift in Sources */,
 				BBCA3EEB2256E78000037DCF /* Date.swift in Sources */,
 				BB1661E722670F840077C2B0 /* TvShowEpisodeModel.swift in Sources */,
 				BBEDA28C221BDD9F007610DF /* SearchResultCell.swift in Sources */,
@@ -768,8 +793,11 @@
 				BB1661DE22656C510077C2B0 /* Episodes.swift in Sources */,
 				BBCA3EE52255723600037DCF /* ShowsHorizontalController.swift in Sources */,
 				96489684228E0C3800D8BCEE /* LoginModel.swift in Sources */,
+				BB1BF57222928B57009FBC91 /* SignUpController.swift in Sources */,
 				BBCA3EE72255745B00037DCF /* ShowsSingleCell.swift in Sources */,
 				BB1661E52267085D0077C2B0 /* Episode.swift in Sources */,
+				BB1BF56A228CEB30009FBC91 /* OpenSwipingController.swift in Sources */,
+				BB1BF56C228CEF7D009FBC91 /* SwipedPageCell.swift in Sources */,
 				BB0CC223228A6A97008BC023 /* AlbumController.swift in Sources */,
 				BB637F3E2230AFFE009FEFD7 /* MovieDetailController.swift in Sources */,
 				BB7D7096221BB2D600CE8A9F /* SearchController.swift in Sources */,

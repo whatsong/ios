@@ -31,6 +31,7 @@ class MainTabBarController: UITabBarController  {
         navController.tabBarItem.image = UIImage(named: imageName)
         navController.tabBarItem.title = title
         
+        
         let tabBarAttributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 10)!
             ]
@@ -50,8 +51,9 @@ class MainTabBarController: UITabBarController  {
         let customFont = UIFont(name: "Montserrat-Regular", size: 14)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
         
-        let attributes: [NSAttributedString.Key: AnyObject] = [
-            NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 28)!
+        let attributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 28)!,
+            NSAttributedString.Key.kern: -0.6
         ]
         
         navController.navigationBar.largeTitleTextAttributes = attributes

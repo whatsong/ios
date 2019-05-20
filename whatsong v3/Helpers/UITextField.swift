@@ -9,11 +9,11 @@
 import UIKit
 
 extension UITextField {
-    func setBottomBorder() {
+    func setBottomBorder(color: UIColor) {
         self.borderStyle = .none
-        self.layer.backgroundColor = UIColor.clear.cgColor
+        //self.layer.backgroundColor = UIColor.backgroundGrey().cgColor
         self.layer.masksToBounds = false
-        self.layer.shadowColor = UIColor(red: 124/255, green: 125/255, blue: 146/255, alpha: 1).cgColor
+        self.layer.shadowColor = color.cgColor
         self.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         self.layer.shadowOpacity = 1.0
         self.layer.shadowRadius = 0.0

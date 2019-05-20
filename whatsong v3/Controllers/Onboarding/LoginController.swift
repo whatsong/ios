@@ -30,41 +30,64 @@ class LoginController: UIViewController {
     
     let loginHeading: UILabel = {
         let label = UILabel()
-        label.text = "Login"
-        label.font = UIFont(name: "Montserrat-Regular", size: 28)
+        label.text = "Log in"
+        label.font = UIFont(name: "FatFrank", size: 28)
         label.textColor = UIColor.brandBlack()
         return label
     }()
     
     let usernameInput: UITextField = {
         let tf = UITextField()
-        tf.backgroundColor = .white
+        tf.backgroundColor = UIColor.backgroundGrey()
         tf.autocapitalizationType = .none
         tf.textColor = UIColor.brandBlack()
-        tf.placeholder = "Username"
-        tf.borderStyle = .roundedRect
+        tf.font = UIFont(name: "Montserrat-Regular", size: 16)
+        let attributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.brandBlack(),
+            NSAttributedString.Key.font : UIFont(name: "Montserrat-Regular", size: 16)!,
+            NSAttributedString.Key.kern: -0.2
+            ]
+        tf.attributedPlaceholder = NSAttributedString(string: "Username", attributes: attributes)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.setBottomBorder(color: .brandBlack())
         return tf
     }()
     
     let passwordInput: UITextField = {
         let tf = UITextField()
         tf.isSecureTextEntry = true
-        tf.backgroundColor = .white
-        tf.placeholder = "Password"
-        tf.borderStyle = .roundedRect
+        tf.backgroundColor = UIColor.backgroundGrey()
         tf.textColor = UIColor.brandBlack()
+        tf.font = UIFont(name: "Montserrat-Regular", size: 16)
+        let attributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.brandBlack(),
+            NSAttributedString.Key.font : UIFont(name: "Montserrat-Regular", size: 16)!,
+            NSAttributedString.Key.kern: -0.2
+        ]
+        tf.attributedPlaceholder = NSAttributedString(string: "Password", attributes: attributes)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.setBottomBorder(color: .brandBlack())
         return tf
     }()
     
     let loginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.brandPurple()
+        button.backgroundColor = UIColor(red: 243/255, green: 204/255, blue: 224/255, alpha: 1)
         button.isEnabled = false
-        button.setTitle("Login", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
+        button.setTitle("Log in", for: .normal)
         button.layer.cornerRadius = 4
         button.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
+        return button
+    }()
+    
+    let dismissButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "back-icon"), for: .normal)
+        button.backgroundColor = .clear
+        button.setTitleColor(UIColor.brandDarkGrey(), for: .normal)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -77,13 +100,16 @@ class LoginController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.constrainHeight(constant: 160)
-        stackView.spacing = 10
+        stackView.spacing = 14
         
+        view.addSubview(dismissButton)
         view.addSubview(loginHeading)
         view.addSubview(stackView)
         
-        loginHeading.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 20, bottom: 0, right: 0))
-        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 40, right: 20))
+        dismissButton.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 80, left: 20, bottom: 0, right: 0))
+        loginHeading.anchor(top: dismissButton.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 0))
+        stackView.anchor(top: loginHeading.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 40, left: 20, bottom: 0, right: 20))
+        
         
     }
     
@@ -92,10 +118,11 @@ class LoginController: UIViewController {
         
         if isFormValid {
             loginButton.isEnabled = true
-            loginButton.backgroundColor = UIColor.brandPurple()
+            loginButton.backgroundColor = UIColor.brandPink()
         } else  {
             loginButton.isEnabled = false
-            loginButton.backgroundColor = UIColor.brandLightGrey()
+            loginButton.backgroundColor = UIColor(red: 243/255, green: 204/255, blue: 224/255, alpha: 1)
+            
         }
     }
     
@@ -138,6 +165,10 @@ class LoginController: UIViewController {
         }
     }
     
+    @objc func handleDismiss()    {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func displayActivityIndicatorView() -> () {
         UIApplication.shared.beginIgnoringInteractionEvents()
         self.view.backgroundColor = UIColor(white: 1, alpha: 0.8)
@@ -168,7 +199,5 @@ class LoginController: UIViewController {
             alertController.addAction(action)
             self.present(alertController, animated: true, completion: nil)
         }
-        
     }
-    
 }
