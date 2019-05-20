@@ -101,11 +101,17 @@ class LoginController: UIViewController {
     
     @objc func loginAction() {
         handleLogin { (loginModel, error) in
+            if error != nil {
+                // show error allert
+                return
+            }
             if let model = loginModel {
                 DAKeychain.shared["accessToken"] = model.data.accessToken.value
                 DispatchQueue.main.async {
                     self.present(MainTabBarController(), animated: true, completion: nil)
                 }
+            } else {
+                
             }
         }
     }
@@ -117,15 +123,15 @@ class LoginController: UIViewController {
             guard let url = urlComponents.url else { return }
             dataTask = defaultSession.dataTask(with: url) { data, response, error in
                 defer { self.dataTask = nil }
-                if let data = data,
-                    let response = response as? HTTPURLResponse,
-                    response.statusCode == 200 {
+                if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     do  {
                         let loginData = try JSONDecoder().decode(LoginModel.self, from: data)
                         completion(loginData, nil)
                     } catch {
                         completion(nil, error)
                     }
+                } else {
+                    completion(nil, error)
                 }
             }
             dataTask?.resume()
