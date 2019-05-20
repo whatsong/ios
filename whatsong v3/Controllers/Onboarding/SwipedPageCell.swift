@@ -14,18 +14,19 @@ class SwipedPageCell: UICollectionViewCell  {
         
         setupViews()
         
-        backgroundColor = .backgroundGrey()
+        backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
         
     }
     
-    let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "logo-with-text")
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.constrainHeight(constant: 100)
-        iv.constrainWidth(constant: 196)
-        return iv
+    let logoText: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "whatsong", attributes: [
+            NSAttributedString.Key.kern: -1.0
+            ])
+        label.font = UIFont(name: "FatFrank", size: 40)
+        label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
+        label.textAlignment = .center
+        return label
     }()
     
     let subheading: UILabel = {
@@ -33,28 +34,26 @@ class SwipedPageCell: UICollectionViewCell  {
         label.attributedText = NSAttributedString(string: "Find music from the latest movies and television shows", attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
-        label.font = UIFont(name: "Montserrat-Regular", size: 16)
-        label.textColor = UIColor.brandLightGrey()
+        label.font = UIFont(name: "Montserrat-SemiBold", size: 16)
+        label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
         label.numberOfLines = 0
         label.textAlignment = .center
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     func setupViews()   {
         
-        addSubview(imageView)
-        addSubview(subheading)
+        let verticalStackView = VerticalStackView(arrangedSubviews: [logoText, subheading])
+        verticalStackView.spacing = 10
         
-        imageView.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 200, left: 0, bottom: 0, right: 0))
-        imageView.centerXInSuperview()
+        addSubview(verticalStackView)
         
-        subheading.anchor(top: imageView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 40, left: 60, bottom: 0, right: 60))
-        subheading.centerXInSuperview()
+        verticalStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
+        verticalStackView.centerYInSuperview()
+        verticalStackView.centerXInSuperview()
         
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

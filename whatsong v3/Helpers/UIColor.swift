@@ -22,7 +22,7 @@ extension UIColor   {
     }
     
     static func brandBlack() -> UIColor  {
-        return UIColor.hex("101026")
+        return UIColor.hex("292D33")
     }
     
     static func brandBlue() -> UIColor  {
@@ -30,7 +30,11 @@ extension UIColor   {
     }
     
     static func backgroundGrey() -> UIColor  {
-        return UIColor.hex("F9F9F9")
+        return UIColor.hex("F4F4F4")
+    }
+    
+    static func brandPink() -> UIColor  {
+        return UIColor.hex("F12E90")
     }
     
     static func hex(_ hex:String) -> UIColor {

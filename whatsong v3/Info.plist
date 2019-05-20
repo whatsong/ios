@@ -27,6 +27,7 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>FatFrank.otf</string>
 		<string>Montserrat-Regular.otf</string>
 		<string>Montserrat-SemiBold.otf</string>
 		<string>Montserrat-Bold.otf</string>
@@ -52,20 +53,20 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>spotify</string>
-    </array>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLName</key>
-            <string>com.tomandrew.whatsong-v3</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>WhatSong</string>
-            </array>
-        </dict>
-    </array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>spotify</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.tomandrew.whatsong-v3</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>WhatSong</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
