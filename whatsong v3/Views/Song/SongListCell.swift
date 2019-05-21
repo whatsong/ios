@@ -157,8 +157,7 @@ class SongCell: UICollectionViewCell    {
     let timeHeard: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 14)
-        label.textColor = UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: 1)
-        label.text = "12"
+        label.textColor = UIColor.brandLightGrey()
         label.constrainWidth(constant: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -166,8 +165,8 @@ class SongCell: UICollectionViewCell    {
     
     let minutesLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Regular", size: 8)
-        label.textColor = UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: 1)
+        label.font = UIFont(name: "Montserrat-Regular", size: 14)
+        label.textColor = UIColor.brandLightGrey()
         label.text = "min"
         label.constrainWidth(constant: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -208,14 +207,6 @@ class SongCell: UICollectionViewCell    {
         return label
     }()
     
-    let emptyScene: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Light", size: 13)
-        label.backgroundColor = UIColor.brandLightGrey()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     let divider: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 0.1)
@@ -227,21 +218,17 @@ class SongCell: UICollectionViewCell    {
     let moreButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "more-button-border"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.constrainWidth(constant: 25)
         return button
     }()
     
     func setupViews()   {
         
-        let verticalTimeStackView = VerticalStackView(arrangedSubviews: [timeHeard, minutesLabel])
-        verticalTimeStackView.axis = .vertical
-        
         let verticalStackView = VerticalStackView(arrangedSubviews: [songTitle, artistName, sceneDescription])
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 3
         
-        let stackView = UIStackView(arrangedSubviews: [verticalTimeStackView, verticalStackView, moreButton])
+        let stackView = UIStackView(arrangedSubviews: [verticalStackView, moreButton])
         stackView.spacing = 16
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false

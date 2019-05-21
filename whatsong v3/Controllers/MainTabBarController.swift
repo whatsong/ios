@@ -17,6 +17,7 @@ class MainTabBarController: UITabBarController  {
             createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-no-text"),
             createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon-no-text"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-no-text"),
+            createNavController(viewController: ProfileController(), title: "Profile", imageName: "more-icon")
         ]
     }
     
