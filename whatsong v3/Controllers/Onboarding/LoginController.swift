@@ -127,9 +127,16 @@ class LoginController: UIViewController {
     }
     
     @objc func loginAction() {
-        handleLogin { (loginModel, error) in
+        handleLogin { (loginModel, error, errorMessage) in
             if error != nil {
+                
+                self.displayAlert(userMessage: error!.localizedDescription)
                 // show error allert
+                return
+            }
+            if errorMessage != nil {
+                self.displayAlert(userMessage: errorMessage!)
+                
                 return
             }
             if let model = loginModel {
@@ -143,7 +150,7 @@ class LoginController: UIViewController {
         }
     }
     
-    func handleLogin(completion: @escaping (LoginModel?, Error?) -> ()) {
+    func handleLogin(completion: @escaping (LoginModel?, Error?, String?) -> ()) {
         dataTask?.cancel()
         if var urlComponents = URLComponents(string: "https://www.what-song.com/api/sign-in") {
             urlComponents.query = "login=\(usernameInput.text!)&password=\(passwordInput.text!)"
@@ -153,12 +160,12 @@ class LoginController: UIViewController {
                 if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     do  {
                         let loginData = try JSONDecoder().decode(LoginModel.self, from: data)
-                        completion(loginData, nil)
+                        completion(loginData, nil, nil)
                     } catch {
-                        completion(nil, error)
+                        completion(nil, error, nil)
                     }
                 } else {
-                    completion(nil, error)
+                    completion(nil, error, "Wrong login or password")
                 }
             }
             dataTask?.resume()
@@ -193,7 +200,7 @@ class LoginController: UIViewController {
             
             let action = UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
+                    alertController.dismiss(animated: true, completion: nil)
                 }
             })
             alertController.addAction(action)
