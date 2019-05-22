@@ -40,10 +40,9 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout   
         collectionView.register(UserInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         
         collectionView.backgroundColor = .red
-        
-//        if Auth.auth().currentUser != nil   {
-//            setupLogOutButton()
-//        }
+        if DAKeychain.shared["accessToken"] != nil {
+            setupLogOutButton()
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -63,20 +62,14 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout   
     }
     
     fileprivate func setupLogOutButton()    {
-        
-//        guard let currentLoggedInUser = Auth.auth().currentUser?.uid else { return }
-//
-//        if currentLoggedInUser == userId {
-//            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .done, target: self, action: #selector(handleLogOut))
-//        } else  {
-//            return
-//        }
+        self.navigationController?.navigationBar.isHidden = false
+        if let navigationController = navigationController {
+            navigationController.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log", style: .done, target: self, action: #selector(handleLogOut))
+        }
     }
     
     @objc func handleLogOut() {
-        
-        print("handlingLogOut")
-        
+        DAKeychain.shared["accessToken"] = nil
     }
 }
 

@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = OpenSwipingController()
+        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
+            window?.rootViewController = MainTabBarController()
+        } else {
+            window?.rootViewController = OpenSwipingController()
+        }
         
         return true
     }
