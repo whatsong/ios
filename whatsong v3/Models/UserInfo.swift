@@ -10,12 +10,12 @@ import Foundation
 
 struct UserData: Decodable  {
     var data: UserInfo
-    var successs: Bool
+//    var successs: Bool
 }
 
 struct UserInfo: Decodable  {
-    var _id: Int
-    var username: String
+    var _id: Int?
+    var username: String?
     var first_name: String?
     var last_name: String?
     var photo: String?

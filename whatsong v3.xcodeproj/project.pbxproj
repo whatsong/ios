@@ -10,7 +10,6 @@
 		3EC0155890E531458E58846C /* Pods_whatsong_v3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46E02381DEC88006DBE4745 /* Pods_whatsong_v3Tests.framework */; };
 		96489684228E0C3800D8BCEE /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96489683228E0C3800D8BCEE /* LoginModel.swift */; };
 		96489686228E1D2700D8BCEE /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96489685228E1D2700D8BCEE /* Keychain.swift */; };
-		96F7BFDE2296C69500B54BBA /* FullUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F7BFDD2296C69500B54BBA /* FullUserInfo.swift */; };
 		AD4DFD7463EE8455359641C7 /* Pods_whatsong_v3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECEE79AFB406162BCDA692D /* Pods_whatsong_v3UITests.framework */; };
 		BB0CC21822826B4A008BC023 /* MovieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0CC21722826B4A008BC023 /* MovieInfoCell.swift */; };
 		BB0CC21A2282812D008BC023 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0CC2192282812D008BC023 /* SpotifyController.swift */; };
@@ -107,7 +106,6 @@
 		93F53D530C2B0E4E8671F333 /* Pods-whatsong v3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.release.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3/Pods-whatsong v3.release.xcconfig"; sourceTree = "<group>"; };
 		96489683228E0C3800D8BCEE /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		96489685228E1D2700D8BCEE /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
-		96F7BFDD2296C69500B54BBA /* FullUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullUserInfo.swift; sourceTree = "<group>"; };
 		B46E02381DEC88006DBE4745 /* Pods_whatsong_v3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB0CC21722826B4A008BC023 /* MovieInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCell.swift; sourceTree = "<group>"; };
 		BB0CC2192282812D008BC023 /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
@@ -514,7 +512,6 @@
 			isa = PBXGroup;
 			children = (
 				BB193C71222F5F5F000EB8DB /* LatestMovies.swift */,
-				96F7BFDD2296C69500B54BBA /* FullUserInfo.swift */,
 				BB1BF5752293AB44009FBC91 /* UserInfo.swift */,
 				96489683228E0C3800D8BCEE /* LoginModel.swift */,
 				BB637F402230D97B009FEFD7 /* MovieDetail.swift */,
@@ -765,7 +762,6 @@
 				BB0CC21F2283D12E008BC023 /* AlbumsList.swift in Sources */,
 				BB1661D6225EB81A0077C2B0 /* LatestEpisodes.swift in Sources */,
 				BB0CC225228A8060008BC023 /* AlbumSongList.swift in Sources */,
-				96F7BFDE2296C69500B54BBA /* FullUserInfo.swift in Sources */,
 				BB1661DB22654FB40077C2B0 /* TvShowSeason.swift in Sources */,
 				BB193C6C222EB2CD000EB8DB /* MoviesHorizontalController.swift in Sources */,
 				96489686228E1D2700D8BCEE /* Keychain.swift in Sources */,

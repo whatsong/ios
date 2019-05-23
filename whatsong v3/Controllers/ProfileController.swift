@@ -12,28 +12,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout   
     
     let infoCellId = "infoCellId"
     var userInfo: UserInfo?
-    
-    var userId: Int!    {
-        didSet {
-            let urlString = "https://www.what-song.com/api/me"
-            Service.shared.fetchUserInfo(urlString: urlString) { (data, err) in
-                
-                if let err = err {
-                    print(err)
-                } else  {
-                    
-                    guard let userData = data?.data else { return }
-                    self.userInfo = userData
-                    print(self.userInfo)
-                    
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                }
-            }
-        }
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +22,18 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout   
         if DAKeychain.shared["accessToken"] != nil {
             setupLogOutButton()
         }
+        
+        Service.shared.getCurrentUserInfo { (userData, success) in
+            if success {
+                self.userInfo = userData?.data
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            } else {
+                
+            }
+        }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
