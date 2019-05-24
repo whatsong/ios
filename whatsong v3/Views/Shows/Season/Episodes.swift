@@ -76,7 +76,6 @@ class Episodes: UICollectionViewCell, UICollectionViewDelegate, UICollectionView
         dateFormatter.dateFormat = "MMM d, yyyy" //Specify your format that you want
         let strDate = dateFormatter.string(from: date)
 
-
         cell.dateLabel.text = strDate
         return cell
     }
@@ -94,6 +93,7 @@ class Episodes: UICollectionViewCell, UICollectionViewDelegate, UICollectionView
             episodeCellDelegate?.didSelectEpisode(for: (episodesArray?[indexPath.item])!)
         }
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -138,7 +138,6 @@ class LoginController: UIViewController {
                     self.present(MainTabBarController(), animated: true, completion: nil)
                 }
             } else {
-                
             }
         }
     }

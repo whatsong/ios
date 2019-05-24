@@ -9,7 +9,7 @@
 import UIKit
 import SkeletonView
 
-class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLayout, SeasonCellDelegate    {
+class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLayout, SeasonCellDelegate, LatestEpisodeCellDelegate    {
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -39,6 +39,7 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
     var tvShowInfo: TvShowInfo?
     var popularSongs: [TvPopularSongs]? = []
     var seasons: [Seasons] = []
+    var latestEpisodes: [TvShowEpisodes] = []
     
     var showId: Int!    {
         didSet {
@@ -54,6 +55,7 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
                     guard let tvData = data?.data else { return }
                     self.tvShowInfo = tvData.tv_show
                     self.seasons = tvData.seasons
+                    self.latestEpisodes = tvData.last_episodes
                     
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -90,6 +92,9 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
             return cell
         } else if indexPath.item == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: latestEpisodeCellId, for: indexPath) as! LatestEpisodes
+            cell.latestEpisodes = latestEpisodes
+            cell.latestEpisodeCellDelegate = self
+            cell.collectionView.reloadData()
             return cell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: seasonsCellId, for: indexPath) as! SeasonsList
@@ -103,7 +108,7 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
         if indexPath.item == 0  {
             return CGSize(width: view.frame.width, height: 68)
         } else if indexPath.item == 1 {
-            return CGSize(width: view.frame.width, height: 90)
+            return CGSize(width: view.frame.width, height: 80)
         }
         let height = CGFloat((self.seasons.count) * 60) + 50
         return CGSize(width: view.frame.width, height: height)
@@ -114,5 +119,12 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
         seasonsController.season = season
         seasonsController.navigationItem.title = "Season \(season.season)"
         self.navigationController?.pushViewController(seasonsController, animated: true)
+    }
+    
+    func didSelectLatestEpisode(for episode: TvShowEpisodes)  {
+        let episodeController = TvShowEpisode()
+        episodeController.episode = episode
+        episodeController.navigationItem.title = "Ep #\(episode.number) • \(episode.name)"
+        self.navigationController?.pushViewController(episodeController, animated: true)
     }
 }

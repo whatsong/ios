@@ -22,5 +22,5 @@ struct TvShowEpisodes: Decodable    {
     var name: String
     var date_released: Int
     var number: Int
-    var songs_count: Int
+    var songs_count: Int?
 }

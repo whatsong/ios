@@ -52,7 +52,7 @@ class AlbumSongList: SongListCell   {
         cell.songTitle.attributedText = NSAttributedString(string: song.title, attributes: [
             NSAttributedString.Key.kern: -0.8
             ])
-        cell.artistName.attributedText = NSAttributedString(string: song.artist.name, attributes: [
+        cell.albumArtistName.attributedText = NSAttributedString(string: song.artist.name, attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
         

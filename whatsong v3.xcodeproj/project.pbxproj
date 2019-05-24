@@ -25,7 +25,7 @@
 		BB1661DE22656C510077C2B0 /* Episodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1661DD22656C510077C2B0 /* Episodes.swift */; };
 		BB1661E02266C0B70077C2B0 /* TvShowEpisodesBySeason.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1661DF2266C0B70077C2B0 /* TvShowEpisodesBySeason.swift */; };
 		BB1661E32266F7D30077C2B0 /* TvShowEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1661E22266F7D30077C2B0 /* TvShowEpisode.swift */; };
-		BB1661E52267085D0077C2B0 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1661E42267085D0077C2B0 /* Episode.swift */; };
+		BB1661E52267085D0077C2B0 /* EpisodeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1661E42267085D0077C2B0 /* EpisodeInfoCell.swift */; };
 		BB1661E722670F840077C2B0 /* TvShowEpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1661E622670F840077C2B0 /* TvShowEpisodeModel.swift */; };
 		BB193C4D222D4B92000EB8DB /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB193C4C222D4B92000EB8DB /* Service.swift */; };
 		BB193C56222E28F2000EB8DB /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB193C4E222E28F1000EB8DB /* Montserrat-Light.otf */; };
@@ -122,7 +122,7 @@
 		BB1661DD22656C510077C2B0 /* Episodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episodes.swift; sourceTree = "<group>"; };
 		BB1661DF2266C0B70077C2B0 /* TvShowEpisodesBySeason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowEpisodesBySeason.swift; sourceTree = "<group>"; };
 		BB1661E22266F7D30077C2B0 /* TvShowEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowEpisode.swift; sourceTree = "<group>"; };
-		BB1661E42267085D0077C2B0 /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		BB1661E42267085D0077C2B0 /* EpisodeInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeInfoCell.swift; sourceTree = "<group>"; };
 		BB1661E622670F840077C2B0 /* TvShowEpisodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowEpisodeModel.swift; sourceTree = "<group>"; };
 		BB193C4C222D4B92000EB8DB /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		BB193C4E222E28F1000EB8DB /* Montserrat-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.otf"; sourceTree = "<group>"; };
@@ -271,7 +271,7 @@
 		BB1661E12266F4C30077C2B0 /* Episode */ = {
 			isa = PBXGroup;
 			children = (
-				BB1661E42267085D0077C2B0 /* Episode.swift */,
+				BB1661E42267085D0077C2B0 /* EpisodeInfoCell.swift */,
 			);
 			path = Episode;
 			sourceTree = "<group>";
@@ -802,7 +802,7 @@
 				96489684228E0C3800D8BCEE /* LoginModel.swift in Sources */,
 				BB1BF57222928B57009FBC91 /* SignUpController.swift in Sources */,
 				BBCA3EE72255745B00037DCF /* ShowsSingleCell.swift in Sources */,
-				BB1661E52267085D0077C2B0 /* Episode.swift in Sources */,
+				BB1661E52267085D0077C2B0 /* EpisodeInfoCell.swift in Sources */,
 				BB1BF56A228CEB30009FBC91 /* OpenSwipingController.swift in Sources */,
 				BB1BF56C228CEF7D009FBC91 /* SwipedPageCell.swift in Sources */,
 				BB0CC223228A6A97008BC023 /* AlbumController.swift in Sources */,

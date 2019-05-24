@@ -35,9 +35,12 @@ struct Song: Decodable  {
     let time_play: Int?
     let scene_description: String?
     let spotifyImg300: String?
+    let spotifyImg640: String?
     let preview_url: String?
     let spotifyPreviewUrl: String?
     let track_number: Int?
+    let spotify_uri: String?
+    let youtube_id: String?
     
 }
 

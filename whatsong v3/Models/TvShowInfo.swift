@@ -16,7 +16,7 @@ struct TvShowStruct: Decodable  {
 struct TvShowData: Decodable    {
     var tv_show: TvShowInfo?
     var seasons: [Seasons]
-    var last_episodes: [TvLastEpisodes]
+    var last_episodes: [TvShowEpisodes]
 }
 
 struct TvShowInfo: Decodable   {

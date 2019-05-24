@@ -18,18 +18,34 @@ class SongDetailPopup: UIView {
             artistName.text = song.artist.name
             timePlayed.text = "\(String(describing: song.time_play))"
             sceneDescription.text = song.scene_description
-            let urlString = song.spotifyImg300
-            if let urlString = urlString {
-                albumImage.sd_setImage(with: URL(string: urlString))
-            }            
+            
+            if song.preview_url != nil  {
+                print("iTunes preview exists")
+            }   else    {
+                playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
+                playPauseButton.isEnabled = false
+                playPauseButton.adjustsImageWhenDisabled = false
+            }
+            
+            if song.spotify_uri == nil  {
+                spotifyButton.isEnabled = false
+                spotifyButton.alpha = 0.3
+                spotifyIcon.alpha = 0.3
+            }
+            
+            if song.youtube_id == nil   {
+                youtubeButton.isEnabled = false
+                youtubeButton.alpha = 0.3
+                youtubeIcon.alpha = 0.3
+            }
+            
+            let imageUrlString = song.spotifyImg640
+            guard let url = imageUrlString else { return }
+            
+            if imageUrlString != nil {
+                albumImage.sd_setImage(with: URL(string: url))
+            }
         }
-    }
-    
-    fileprivate func playSong()  {
-        guard let url = URL(string: song.preview_url ?? "") else { return }
-        let playerItem = AVPlayerItem(url: url)
-        player.replaceCurrentItem(with: playerItem)
-        player.play()
     }
     
     let player: AVPlayer = {
@@ -38,12 +54,20 @@ class SongDetailPopup: UIView {
         return avPlayer
     }()
     
+    fileprivate func playSong()  {
+        guard let url = URL(string: song.preview_url ?? "") else { return }
+        let playerItem = AVPlayerItem(url: url)
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
+    }
+    
     func setupViews()   {
         
         setupBackgroundGradient()
         
         addSubview(dismissButton)
         addSubview(albumImage)
+        addSubview(playPauseButton)
         addSubview(songName)
         addSubview(artistName)
         addSubview(heartIcon)
@@ -59,10 +83,12 @@ class SongDetailPopup: UIView {
         
         dismissButton.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 20, right: 20))
         
-        albumImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 60, left: 0, bottom: 0, right: 0))
-        albumImage.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-        albumImage.constrainHeight(constant: 150)
-        albumImage.constrainWidth(constant: 150)
+        albumImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        albumImage.constrainHeight(constant: frame.width)
+        albumImage.constrainWidth(constant: frame.width)
+        
+        playPauseButton.centerXInSuperview()
+        playPauseButton.anchor(top: albumImage.topAnchor, leading: nil, bottom: albumImage.bottomAnchor, trailing: nil)
         
         songName.anchor(top: albumImage.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 28, left: 30, bottom: 0, right: 0))
         songName.constrainWidth(constant: frame.width * 0.70)
@@ -104,10 +130,20 @@ class SongDetailPopup: UIView {
     
     let albumImage: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "album-cover")
+        iv.image = UIImage(named: "album-placeholder")
         iv.contentMode = .scaleToFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
+    }()
+    
+    let playPauseButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "play-button-large"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = UIColor.brandBlack()
+        button.contentMode = .scaleToFill
+        button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+        return button
     }()
     
     let songName: UILabel = {
@@ -130,7 +166,8 @@ class SongDetailPopup: UIView {
     
     let heartIcon: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "heart-icon")
+        iv.image = UIImage(named: "heart-icon")?.withRenderingMode(.alwaysTemplate)
+        iv.tintColor = .white
         iv.contentMode = .scaleToFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
@@ -196,7 +233,7 @@ class SongDetailPopup: UIView {
         button.setTitle("Spotify", for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
-        //button.addTarget(self, action: #selector(dismissFunc), for: .touchUpInside)
+        button.addTarget(self, action: #selector(openWithSpotify), for: .touchUpInside)
         return button
     }()
     
@@ -213,9 +250,21 @@ class SongDetailPopup: UIView {
         button.setTitle("Youtube", for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
-        //button.addTarget(self, action: #selector(dismissFunc), for: .touchUpInside)
+        button.addTarget(self, action: #selector(openWithYoutube), for: .touchUpInside)
         return button
     }()
+    
+    @objc func handlePlayPause()    {
+        
+        if player.timeControlStatus == .paused {
+            playSong()
+            player.play()
+            playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
+        } else  {
+            player.pause()
+            playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+        }
+    }
     
     @objc func dismissFunc()  {
         
@@ -228,6 +277,36 @@ class SongDetailPopup: UIView {
         }, completion: { _ in
             self.removeFromSuperview()
         })
+    }
+    
+    @objc func openWithYoutube()  {
+        let youtubeId = song.youtube_id
+        let appUrl = URL(string: "youtube://\(youtubeId ?? "")")
+        let webUrl = URL(string: "https://youtube.com/watch?v=\(youtubeId ?? "")")
+        
+        let application = UIApplication.shared
+        
+        if application.canOpenURL(appUrl!)   {
+            application.open(appUrl!)
+        }   else    {
+            application.open(webUrl!)
+        }
+    }
+    
+    func isSpotifyInstalled() -> Bool  {
+        return UIApplication.shared.canOpenURL(NSURL(string:"spotify:")! as URL)
+    }
+    
+    @objc func openWithSpotify()  {
+        if isSpotifyInstalled() {
+            let url = URL(string: song.spotify_uri ?? "")
+            UIApplication.shared.open(url!)
+        } else {
+            var str = song.spotify_uri!
+            str = str.replacingOccurrences(of: "spotify:track:", with: "", options: [.anchored], range: nil)
+            let fullString = "https://open.spotify.com/track/" + str
+            UIApplication.shared.open(URL(string: fullString)!)
+        }
     }
     
     func setupBackgroundGradient()    {
