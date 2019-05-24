@@ -74,6 +74,28 @@ class Service   {
             }.resume()
     }
     
+    func getCurrentUserInfo(completion: @escaping(UserData?, _ success: Bool) -> ()) {
+        if let token = DAKeychain.shared["accessToken"] {
+            var request = URLRequest(url:URL(string:"https://www.what-song.com/api/me")!)
+            request.addValue("\(token)", forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            //http get
+            URLSession.shared.dataTask(with: request){ data, response, error in
+                guard(error == nil) else {
+                    completion(nil, false)
+                    return
+                }
+                do{
+                    let parseResult = try JSONDecoder().decode(UserData.self, from: data!)
+                    completion(parseResult, true)
+                } catch {
+                    completion(nil, false)
+                }
+                }.resume()
+        } else {
+            completion(nil, false)
+        }
+    }
     
     func fetchMovieDetail(urlString: String, completion: @escaping (MovieData?, Error?) -> Void) {
         guard let url = URL(string: urlString) else { return }
@@ -161,23 +183,6 @@ class Service   {
             do  {
                 let tvShowEpisodeData = try JSONDecoder().decode(TvShowEpisodeModel.self, from: data!)
                 completion(tvShowEpisodeData, nil)
-            } catch    {
-                completion(nil, error)
-            }
-            }.resume()
-    }
-    
-    func fetchUserInfo(urlString: String, completion: @escaping (UserData?, Error?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
-            if let err = err    {
-                completion(nil, err)
-                return
-            }
-            do  {
-                let userData = try JSONDecoder().decode(UserData.self, from: data!)
-                completion(userData, nil)
             } catch    {
                 completion(nil, error)
             }

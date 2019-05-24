@@ -12,38 +12,28 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout   
     
     let infoCellId = "infoCellId"
     var userInfo: UserInfo?
-    
-    var userId: Int!    {
-        didSet {
-            let urlString = "https://www.what-song.com/api/me"
-            Service.shared.fetchUserInfo(urlString: urlString) { (data, err) in
-                
-                if let err = err {
-                    print(err)
-                } else  {
-                    
-                    guard let userData = data?.data else { return }
-                    self.userInfo = userData
-                    print(self.userInfo)
-                    
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                }
-            }
-        }
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.register(UserInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         
         collectionView.backgroundColor = .red
+        if DAKeychain.shared["accessToken"] != nil {
+            setupLogOutButton()
+        }
         
-//        if Auth.auth().currentUser != nil   {
-//            setupLogOutButton()
-//        }
+        Service.shared.getCurrentUserInfo { (userData, success) in
+            if success {
+                self.userInfo = userData?.data
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            } else {
+                
+            }
+        }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -63,20 +53,14 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout   
     }
     
     fileprivate func setupLogOutButton()    {
-        
-//        guard let currentLoggedInUser = Auth.auth().currentUser?.uid else { return }
-//
-//        if currentLoggedInUser == userId {
-//            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .done, target: self, action: #selector(handleLogOut))
-//        } else  {
-//            return
-//        }
+        self.navigationController?.navigationBar.isHidden = false
+        if let navigationController = navigationController {
+            navigationController.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log", style: .done, target: self, action: #selector(handleLogOut))
+        }
     }
     
     @objc func handleLogOut() {
-        
-        print("handlingLogOut")
-        
+        DAKeychain.shared["accessToken"] = nil
     }
 }
 
