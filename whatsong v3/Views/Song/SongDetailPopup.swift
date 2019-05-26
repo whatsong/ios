@@ -47,20 +47,7 @@ class SongDetailPopup: UIView {
             }
         }
     }
-    
-    let player: AVPlayer = {
-        let avPlayer = AVPlayer()
-        avPlayer.automaticallyWaitsToMinimizeStalling = false
-        return avPlayer
-    }()
-    
-    fileprivate func playSong()  {
-        guard let url = URL(string: song.preview_url ?? "") else { return }
-        let playerItem = AVPlayerItem(url: url)
-        player.replaceCurrentItem(with: playerItem)
-        player.play()
-    }
-    
+        
     func setupViews()   {
         
         setupBackgroundGradient()
@@ -254,14 +241,25 @@ class SongDetailPopup: UIView {
         return button
     }()
     
-    @objc func handlePlayPause()    {
-        
-        if player.timeControlStatus == .paused {
-            playSong()
-            player.play()
+    @objc func handlePlayPause() {
+        if SongFloatingPlayer.tabBarContainPlayer() {
+            let currentViewPlayer = SongFloatingPlayer.getCurrentPlayerFromTabBar()
+            if SongPlayer.shared.player.timeControlStatus == .paused {
+                currentViewPlayer?.playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            } else  {
+                currentViewPlayer?.playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            }
+        }
+        if SongPlayer.shared.playerUrl != song.preview_url {
+            SongPlayer.shared.playSong(song: song.preview_url)
+            playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
+            return
+        }
+        if SongPlayer.shared.player.timeControlStatus == .paused {
+            SongPlayer.shared.player.play()
             playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
         } else  {
-            player.pause()
+            SongPlayer.shared.player.pause()
             playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
         }
     }
@@ -315,7 +313,19 @@ class SongDetailPopup: UIView {
         layer.colors = [UIColor(red: 80/255, green: 78/255, blue: 90/255, alpha: 0.97).cgColor, UIColor.black.cgColor]
         layer.frame = view.bounds
         view.layer.addSublayer(layer)
-        
+    }
+    
+    func setPlayPauseOnAppearing() {
+        if SongPlayer.shared.playerUrl == song.preview_url {
+            if SongPlayer.shared.player.timeControlStatus == .paused {
+                playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+                
+            } else  {
+                playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
+            }
+        } else {
+            playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+        }
     }
     
     override init(frame: CGRect) {
@@ -328,3 +338,4 @@ class SongDetailPopup: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

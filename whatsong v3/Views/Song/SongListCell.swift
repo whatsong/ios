@@ -97,18 +97,23 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         showFloatingPlayer(song: self.songsArray[indexPath.row])
     }
     
-    func showFloatingPlayer(song: Song) {
+    func showFloatingPlayer(song: Song, shouldPlay: Bool = true) {
         guard let delegate = UIApplication.shared.delegate else { return }
         guard let window = delegate.window else { return }
         let tabBarView = window?.rootViewController as! UITabBarController
-        for view in tabBarView.view.subviews {
-            if view is SongFloatingPlayer {
-                (view as! SongFloatingPlayer).player.replaceCurrentItem(with: nil)
-                view.removeFromSuperview()
+        if SongFloatingPlayer.tabBarContainPlayer() {
+            let playerView = SongFloatingPlayer.getCurrentPlayerFromTabBar()
+            playerView?.song = song
+            if shouldPlay {
+                playerView?.playSong()
             }
+            return
         }
         let songPlayerView = SongFloatingPlayer()
         songPlayerView.song = song
+        if shouldPlay{
+            songPlayerView.playSong()
+        }
         tabBarView.view.insertSubview(songPlayerView, belowSubview: tabBarView.tabBar)
         if let mainWindow = window {
             songPlayerView.anchor(top: tabBarView.tabBar.topAnchor, leading: mainWindow.leadingAnchor, bottom: nil, trailing: mainWindow.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -116,6 +121,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
             songPlayerView.transform = .init(translationX: 0, y: -54)
         }, completion: nil)
+        songPlayerView.setPlayPauseOnAppearing()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -138,13 +144,14 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
 
         let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
         window?.addSubview(songDetailView)
-        
+        showFloatingPlayer(song: songsArray[indexPath.item], shouldPlay: false)
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
             songDetailView.transform = .init(translationX: 0, y: -offsetY)
-        }, completion: nil)
+        }, completion: nil )
         
         let song = self.songsArray[indexPath.item]
         songDetailView.song = song
+        songDetailView.setPlayPauseOnAppearing()
     }
     
     required init?(coder aDecoder: NSCoder) {
