@@ -10,6 +10,7 @@
 		3EC0155890E531458E58846C /* Pods_whatsong_v3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46E02381DEC88006DBE4745 /* Pods_whatsong_v3Tests.framework */; };
 		96489684228E0C3800D8BCEE /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96489683228E0C3800D8BCEE /* LoginModel.swift */; };
 		96489686228E1D2700D8BCEE /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96489685228E1D2700D8BCEE /* Keychain.swift */; };
+		96C53B15229ACE75006937CB /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C53B14229ACE75006937CB /* SongPlayer.swift */; };
 		AD4DFD7463EE8455359641C7 /* Pods_whatsong_v3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECEE79AFB406162BCDA692D /* Pods_whatsong_v3UITests.framework */; };
 		BB0CC21822826B4A008BC023 /* MovieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0CC21722826B4A008BC023 /* MovieInfoCell.swift */; };
 		BB0CC21A2282812D008BC023 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0CC2192282812D008BC023 /* SpotifyController.swift */; };
@@ -106,6 +107,7 @@
 		93F53D530C2B0E4E8671F333 /* Pods-whatsong v3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.release.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3/Pods-whatsong v3.release.xcconfig"; sourceTree = "<group>"; };
 		96489683228E0C3800D8BCEE /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		96489685228E1D2700D8BCEE /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		96C53B14229ACE75006937CB /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
 		B46E02381DEC88006DBE4745 /* Pods_whatsong_v3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB0CC21722826B4A008BC023 /* MovieInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCell.swift; sourceTree = "<group>"; };
 		BB0CC2192282812D008BC023 /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				BB193C4C222D4B92000EB8DB /* Service.swift */,
+				96C53B14229ACE75006937CB /* SongPlayer.swift */,
 				96489685228E1D2700D8BCEE /* Keychain.swift */,
 			);
 			path = Service;
@@ -782,6 +785,7 @@
 				BBCA3EF0225CB7F400037DCF /* TvShowInfo.swift in Sources */,
 				BB193C6E222F501C000EB8DB /* MoviesSingleCell.swift in Sources */,
 				BB7D7093221BA31000CE8A9F /* MainTabBarController.swift in Sources */,
+				96C53B15229ACE75006937CB /* SongPlayer.swift in Sources */,
 				BBF751F9222FC9FC00640C92 /* HorizontalSnappingController.swift in Sources */,
 				BB637F462230E7FE009FEFD7 /* VerticalStackView.swift in Sources */,
 				BB193C6A222EAB11000EB8DB /* BaseCvController.swift in Sources */,

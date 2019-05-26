@@ -16,9 +16,7 @@ class SongFloatingPlayer: UIView {
             songName.text = song.title
             artistName.text = song.artist.name
             
-            if song.preview_url != nil  {
-                playSong()
-            }   else    {
+            if song.preview_url == nil {
                 playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
                 playPauseButton.isEnabled = false
                 playPauseButton.adjustsImageWhenDisabled = false
@@ -26,30 +24,20 @@ class SongFloatingPlayer: UIView {
         }
     }
     
-    fileprivate func playSong()  {
-        guard let url = URL(string: song.preview_url ?? "") else { return }
-        let playerItem = AVPlayerItem(url: url)
-        player.replaceCurrentItem(with: playerItem)
-        player.play()
-
+    func playSong(){
+        SongPlayer.shared.playSong(song: self.song.preview_url)
     }
     
-    @objc func handlePlayPause()    {
+    @objc func handlePlayPause() {
         
-        if player.timeControlStatus == .paused {
-            player.play()
+        if SongPlayer.shared.player.timeControlStatus == .paused {
+            SongPlayer.shared.player.play()
             playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         } else  {
-            player.pause()
+            SongPlayer.shared.player.pause()
             playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
-    
-    let player: AVPlayer = {
-        let avPlayer = AVPlayer()
-        avPlayer.automaticallyWaitsToMinimizeStalling = false
-        return avPlayer
-    }()
     
     let view: UIView = {
         let view = UIView()
@@ -89,6 +77,28 @@ class SongFloatingPlayer: UIView {
         return iv
     }()
 
+    let viewButton:UIButton = {
+        
+        let button = UIButton()
+        button.setTitle("", for: .normal)
+        button.addTarget(self, action: #selector(showSongInfoPopup), for: .touchUpInside)
+        button.backgroundColor = UIColor.clear
+        return button
+    }()
+    
+    @objc func showSongInfoPopup() {
+        let window: UIWindow? = UIApplication.shared.keyWindow
+        let offsetY = (window?.frame.maxY)!
+        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
+        window?.addSubview(songDetailView)
+        
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+            songDetailView.transform = .init(translationX: 0, y: -offsetY)
+        }, completion: nil)
+        songDetailView.song = song
+        songDetailView.setPlayPauseOnAppearing()
+    }
+    
     let playPauseButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -128,13 +138,15 @@ class SongFloatingPlayer: UIView {
         
         addSubview(view)
         addSubview(stackView)
+        addSubview(viewButton)
         addSubview(heartIcon)
         addSubview(playPauseButton)
         addSubview(timeSlider)
         addSubview(divider)
         
         view.fillSuperview()
-        
+        viewButton.translatesAutoresizingMaskIntoConstraints = false
+        viewButton.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
         stackView.centerYInSuperview()
         stackView.anchor(top: nil, leading: heartIcon.trailingAnchor, bottom: nil, trailing: playPauseButton.leadingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
         
@@ -153,7 +165,7 @@ class SongFloatingPlayer: UIView {
     
     fileprivate func observePlayerCurrentTime() {
         let interval = CMTimeMake(value: 1, timescale: 2)
-        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
+        SongPlayer.shared.player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
             let totalSeconds = CMTimeGetSeconds(time)
             
             self.updateTimeSlider()
@@ -162,8 +174,8 @@ class SongFloatingPlayer: UIView {
     }
     
     fileprivate func updateTimeSlider()    {
-        let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
-        let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
+        let currentTimeSeconds = CMTimeGetSeconds(SongPlayer.shared.player.currentTime())
+        let durationSeconds = CMTimeGetSeconds(SongPlayer.shared.player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
         let percentage = currentTimeSeconds / durationSeconds
         
         self.timeSlider.value = Float(percentage)
@@ -179,5 +191,41 @@ class SongFloatingPlayer: UIView {
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    class func tabBarContainPlayer() -> Bool {
+        guard let delegate = UIApplication.shared.delegate else { return false }
+        guard let window = delegate.window else { return false }
+        let tabBarView = window?.rootViewController as! UITabBarController
+        for view in tabBarView.view.subviews {
+            if view is SongFloatingPlayer {
+                return true
+            }
+        }
+        return false
+    }
+
+    class func getCurrentPlayerFromTabBar() -> SongFloatingPlayer? {
+        guard let delegate = UIApplication.shared.delegate else { return nil }
+        guard let window = delegate.window else { return nil }
+        let tabBarView = window?.rootViewController as! UITabBarController
+        for view in tabBarView.view.subviews {
+            if view is SongFloatingPlayer {
+                return view as? SongFloatingPlayer
+            }
+        }
+        return nil
+    }
+    
+    func setPlayPauseOnAppearing() {
+        if SongPlayer.shared.playerUrl == song.preview_url {
+            if SongPlayer.shared.player.timeControlStatus == .paused {
+                playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            } else  {
+                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            }
+        } else {
+            playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        }
     }
 }
