@@ -54,6 +54,8 @@
 		BB637F3E2230AFFE009FEFD7 /* MovieDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB637F3D2230AFFE009FEFD7 /* MovieDetailController.swift */; };
 		BB637F412230D97B009FEFD7 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB637F402230D97B009FEFD7 /* MovieDetail.swift */; };
 		BB637F462230E7FE009FEFD7 /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB637F452230E7FE009FEFD7 /* VerticalStackView.swift */; };
+		BB666943229AAE3E002654A7 /* MoviesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB666942229AAE3E002654A7 /* MoviesHeader.swift */; };
+		BB666945229AAF70002654A7 /* MoviesHeaderHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB666944229AAF70002654A7 /* MoviesHeaderHorizontalController.swift */; };
 		BB7D7065221BA2CD00CE8A9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7D7064221BA2CD00CE8A9F /* AppDelegate.swift */; };
 		BB7D706C221BA2CF00CE8A9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB7D706B221BA2CF00CE8A9F /* Assets.xcassets */; };
 		BB7D707A221BA2CF00CE8A9F /* whatsong_v3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7D7079221BA2CF00CE8A9F /* whatsong_v3Tests.swift */; };
@@ -151,6 +153,8 @@
 		BB637F3D2230AFFE009FEFD7 /* MovieDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailController.swift; sourceTree = "<group>"; };
 		BB637F402230D97B009FEFD7 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		BB637F452230E7FE009FEFD7 /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
+		BB666942229AAE3E002654A7 /* MoviesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesHeader.swift; sourceTree = "<group>"; };
+		BB666944229AAF70002654A7 /* MoviesHeaderHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesHeaderHorizontalController.swift; sourceTree = "<group>"; };
 		BB7D7061221BA2CD00CE8A9F /* whatsong v3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "whatsong v3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB7D7064221BA2CD00CE8A9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB7D706B221BA2CF00CE8A9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 			children = (
 				BB193C62222E99E2000EB8DB /* MoviesController.swift */,
 				BB193C6B222EB2CD000EB8DB /* MoviesHorizontalController.swift */,
+				BB666944229AAF70002654A7 /* MoviesHeaderHorizontalController.swift */,
 				BB637F3F2230B003009FEFD7 /* Details */,
 			);
 			path = Movies;
@@ -324,6 +329,7 @@
 			children = (
 				BB193C65222EA1D7000EB8DB /* MoviesGroupCell.swift */,
 				BB193C6D222F501C000EB8DB /* MoviesSingleCell.swift */,
+				BB666942229AAE3E002654A7 /* MoviesHeader.swift */,
 				BB637F422230DE0B009FEFD7 /* Details */,
 			);
 			path = Movies;
@@ -784,6 +790,7 @@
 				BB7D7093221BA31000CE8A9F /* MainTabBarController.swift in Sources */,
 				BBF751F9222FC9FC00640C92 /* HorizontalSnappingController.swift in Sources */,
 				BB637F462230E7FE009FEFD7 /* VerticalStackView.swift in Sources */,
+				BB666943229AAE3E002654A7 /* MoviesHeader.swift in Sources */,
 				BB193C6A222EAB11000EB8DB /* BaseCvController.swift in Sources */,
 				BBEDA293221C13C9007610DF /* Search.swift in Sources */,
 				BB1661E02266C0B70077C2B0 /* TvShowEpisodesBySeason.swift in Sources */,
@@ -809,6 +816,7 @@
 				BB637F3E2230AFFE009FEFD7 /* MovieDetailController.swift in Sources */,
 				BB7D7096221BB2D600CE8A9F /* SearchController.swift in Sources */,
 				BBCA3EE92256CC0100037DCF /* LatestShows.swift in Sources */,
+				BB666945229AAF70002654A7 /* MoviesHeaderHorizontalController.swift in Sources */,
 				BBCA3EDF2254E85500037DCF /* ShowsController.swift in Sources */,
 				BB1661D3225D667E0077C2B0 /* ShowInfoCell.swift in Sources */,
 				BB1BF5762293AB44009FBC91 /* UserInfo.swift in Sources */,

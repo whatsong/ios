@@ -26,6 +26,7 @@ class MainTabBarController: UITabBarController  {
         let navController = UINavigationController(rootViewController: viewController)
         viewController.navigationItem.title = title
         
+        
         // I don't know what this line does!! For some reason though when I remove it, the ShowsController doesn't show anything.
         viewController.view.backgroundColor = UIColor.backgroundGrey()
         
