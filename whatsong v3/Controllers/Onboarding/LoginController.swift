@@ -12,6 +12,7 @@ class LoginController: UIViewController {
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let defaultSession = URLSession(configuration: .default)
+    var popupAlert: UIView!
 
     var dataTask: URLSessionDataTask?
     
@@ -131,7 +132,7 @@ class LoginController: UIViewController {
             if error != nil {
                 
                 self.displayAlert(userMessage: error!.localizedDescription)
-                // show error allert
+                // show error alert
                 return
             }
             if errorMessage != nil {
@@ -142,7 +143,14 @@ class LoginController: UIViewController {
             if let model = loginModel {
                 DAKeychain.shared["accessToken"] = model.data.accessToken.value
                 DispatchQueue.main.async {
-                    self.present(MainTabBarController(), animated: true, completion: nil)
+                    //reset app state after successful login
+                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+                    mainTabBarController.setupLoggedInViewControllers()
+
+                        self.view.window?.rootViewController?.dismiss(animated: true, completion: {
+                        // completion handler after successful login
+                            self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged in")
+                    })
                 }
             } else {
             }

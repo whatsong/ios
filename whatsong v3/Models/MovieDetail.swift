@@ -41,6 +41,7 @@ struct Song: Decodable  {
     let track_number: Int?
     let spotify_uri: String?
     let youtube_id: String?
+    let is_favorited: Bool?
     
 }
 

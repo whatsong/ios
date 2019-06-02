@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoviesHeaderHorizontalController: BaseCvController, UICollectionViewDelegateFlowLayout  {
+class MoviesHeaderHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout  {
     
     let cellId = "cellId"
     
@@ -16,9 +16,12 @@ class MoviesHeaderHorizontalController: BaseCvController, UICollectionViewDelega
         super.viewDidLoad()
         
         collectionView.register(MoviesHeaderCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
+        
         }
     }
     
@@ -32,6 +35,10 @@ class MoviesHeaderHorizontalController: BaseCvController, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        return CGSize(width: view.frame.width * 0.85, height: view.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 40)
     }
 }

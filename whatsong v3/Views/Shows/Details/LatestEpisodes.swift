@@ -69,6 +69,7 @@ class LatestEpisodes: UICollectionViewCell, UICollectionViewDelegate, UICollecti
         
         if latestEpisodeCellDelegate != nil {
             latestEpisodeCellDelegate?.didSelectLatestEpisode(for: (latestEpisodes[indexPath.item]))
+            print(latestEpisodes[indexPath.item])
         }
     }
 

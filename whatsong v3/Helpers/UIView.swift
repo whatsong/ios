@@ -111,3 +111,44 @@ extension UIView {
 struct AnchoredConstraints {
     var top, leading, bottom, trailing, width, height: NSLayoutConstraint?
 }
+
+extension UIView    {
+    func userLoggedIn() -> Bool    {
+        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func showAlert(bgColor: UIColor, text: String) {
+        let statusBarHeight = (UIApplication.shared.keyWindow?.safeAreaInsets.top)!
+        let offset = statusBarHeight + CGFloat(24)
+        
+        let popupAlert = UIView(frame: CGRect(x: 0, y: -(offset), width: frame.width, height: offset))
+        popupAlert.backgroundColor = bgColor
+        
+        let labelText = UILabel()
+        labelText.text = text
+        labelText.textColor = .white
+        labelText.font = UIFont(name: "Montserrat-Regular", size: 14)
+        
+        let window = (UIApplication.shared.delegate as! AppDelegate).window!
+        
+        window.addSubview(popupAlert)
+        popupAlert.addSubview(labelText)
+        labelText.centerXInSuperview()
+        labelText.anchor(top: nil, leading: nil, bottom: popupAlert.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+        
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            popupAlert.transform = .init(translationX: 0, y: offset)
+        }) { (_) in
+            UIView.animate(withDuration: 0.4, delay: 4, options: .curveEaseIn, animations: {
+                popupAlert.transform = .init(translationX: 0, y: -(offset))
+                
+            }, completion: { (_) in
+                popupAlert.removeFromSuperview()
+            })
+        }
+    }
+}

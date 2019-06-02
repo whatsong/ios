@@ -37,6 +37,18 @@ extension UIColor   {
         return UIColor.hex("F12E90")
     }
     
+    static func brandLightPink() -> UIColor {
+        return UIColor.hex("BCACF0")
+    }
+    
+    static func brandSuccess() -> UIColor {
+        return UIColor.hex("41F090")
+    }
+    
+    static func brandWarning() -> UIColor   {
+        return UIColor.hex("FEC76B")
+    }
+    
     static func hex(_ hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         

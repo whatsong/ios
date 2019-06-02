@@ -14,14 +14,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                
+        
+        
         window = UIWindow()
         window?.makeKeyAndVisible()
-        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
-            window?.rootViewController = MainTabBarController()
-        } else {
-            window?.rootViewController = OpenSwipingController()
-        }
+        window?.rootViewController = MainTabBarController()
+
+        
+//        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
+//            window?.rootViewController = MainTabBarController()
+//            
+//        } else {
+//            window?.rootViewController = OpenSwipingController()
+//        }
         
         return true
     }
@@ -47,7 +52,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

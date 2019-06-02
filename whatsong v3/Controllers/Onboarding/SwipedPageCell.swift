@@ -31,7 +31,7 @@ class SwipedPageCell: UICollectionViewCell  {
     
     let subheading: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Find music from the latest movies and television shows", attributes: [
+        label.attributedText = NSAttributedString(string: "Discover music from the latest movies and television shows", attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
         label.font = UIFont(name: "Montserrat-SemiBold", size: 16)

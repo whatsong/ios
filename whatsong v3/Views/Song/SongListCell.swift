@@ -193,8 +193,8 @@ class SongCell: UICollectionViewCell    {
     
     let artistName: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Light", size: 16)
-        label.textColor = UIColor.brandDarkGrey()
+        label.font = UIFont(name: "Montserrat-Regular", size: 15)
+        label.textColor = UIColor.brandLightGrey()
         label.attributedText = NSAttributedString(string: "Kairos", attributes: [
             NSAttributedString.Key.kern: -0.8
             ])

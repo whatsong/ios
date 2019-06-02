@@ -21,7 +21,8 @@ class SongDetailPopup: UIView {
             
             if song.preview_url != nil  {
                 print("iTunes preview exists")
-            }   else    {
+            }   else if song.preview_url == nil   {
+                print("7")
                 playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
                 playPauseButton.isEnabled = false
                 playPauseButton.adjustsImageWhenDisabled = false
@@ -253,14 +254,19 @@ class SongDetailPopup: UIView {
         if SongPlayer.shared.playerUrl != song.preview_url {
             SongPlayer.shared.playSong(song: song.preview_url)
             playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
+            print("11")
             return
         }
         if SongPlayer.shared.player.timeControlStatus == .paused {
             SongPlayer.shared.player.play()
             playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
+            print("12")
+
         } else  {
             SongPlayer.shared.player.pause()
             playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+            print("13")
+
         }
     }
     
@@ -317,14 +323,27 @@ class SongDetailPopup: UIView {
     
     func setPlayPauseOnAppearing() {
         if SongPlayer.shared.playerUrl == song.preview_url {
-            if SongPlayer.shared.player.timeControlStatus == .paused {
+            if SongPlayer.shared.player.timeControlStatus == .paused && ((song?.preview_url) != nil) {
                 playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+                print("8")
                 
-            } else  {
+            } else if song.preview_url == nil   {
+                playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
+                print("9")
+            } else {
                 playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
+                print("10")
+
             }
         } else {
-            playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+            if SongPlayer.shared.player.timeControlStatus == .paused && song.preview_url == nil    {
+                print("14")
+                playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
+
+            }   else    {
+                playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+                print("15")
+            }
         }
     }
     

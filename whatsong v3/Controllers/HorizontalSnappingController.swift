@@ -31,8 +31,7 @@ class SnappingLayout: UICollectionViewFlowLayout    {
         }
         let parent = super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
         
-        //let itemWidth = collectionView.frame.width * 0.75
-        let itemWidth = CGFloat(120)
+        let itemWidth = collectionView.frame.width * 0.85
         let itemSpace = itemWidth + minimumInteritemSpacing
         var pageNumber = round(collectionView.contentOffset.x / itemSpace)
         

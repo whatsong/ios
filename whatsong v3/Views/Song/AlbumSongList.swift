@@ -39,7 +39,6 @@ class AlbumSongList: SongListCell   {
             guard let trackNumber0 = firstSong.track_number, let trackNumber1 = secondSong.track_number else { return false }
             return trackNumber0 < trackNumber1
         })
-
         
         return songsArray.count
     }

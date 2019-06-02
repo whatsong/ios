@@ -9,8 +9,7 @@
 import UIKit
 import SkeletonView
 
-class MoviesHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout, SkeletonCollectionViewDataSource  {
-    
+class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDelegateFlowLayout, SkeletonCollectionViewDataSource  {
     
     let cellId = "cellId"
     var latestMoviesArray: LatestMovies?

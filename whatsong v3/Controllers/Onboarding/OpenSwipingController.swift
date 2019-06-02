@@ -145,7 +145,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     }
     
     @objc func handleSkip()   {
-        self.present(MainTabBarController(), animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

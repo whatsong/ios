@@ -17,14 +17,28 @@ class SongFloatingPlayer: UIView {
             artistName.text = song.artist.name
             
             if song.preview_url == nil {
+                print("4")
                 playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
                 playPauseButton.isEnabled = false
                 playPauseButton.adjustsImageWhenDisabled = false
+                SongPlayer.shared.player.pause()
+            }   else if song.preview_url != nil {
+                print("5")
+                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                playPauseButton.isEnabled = true
+            }
+            if song.is_favorited == false   {
+                heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
+                print("not favorited")
+            } else if song.is_favorited == true {
+                heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+                print("favorited")
+
             }
         }
     }
     
-    func playSong(){
+    func playSong() {
         SongPlayer.shared.playSong(song: self.song.preview_url)
     }
     
@@ -66,15 +80,15 @@ class SongFloatingPlayer: UIView {
         return label
     }()
     
-    let heartIcon: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "heart-icon")?.withRenderingMode(.alwaysTemplate)
-        iv.contentMode = .scaleToFill
-        iv.tintColor = UIColor.brandBlack()
-        iv.constrainHeight(constant: 24)
-        iv.constrainWidth(constant: 26)
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+    let heartIcon: UIButton    =   {
+        let button = UIButton()
+        button.setImage(UIImage(named: "heart-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor.brandBlack()
+        button.constrainHeight(constant: 28)
+        button.constrainWidth(constant: 31)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleLikeSong), for: .touchUpInside)
+        return button
     }()
 
     let viewButton:UIButton = {
@@ -163,6 +177,22 @@ class SongFloatingPlayer: UIView {
         
     }
     
+    @objc func handleLikeSong() {
+        
+        if userLoggedIn() && song.is_favorited == false  {
+            print("trying to like song")
+            heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+            showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
+            
+        } else if userLoggedIn() && song.is_favorited == true {
+            print("trying to unlike song")
+            heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
+            
+        } else  {
+            showAlert(bgColor: UIColor.brandWarning(), text: "You must be logged in to save a song")
+        }
+    }
+    
     fileprivate func observePlayerCurrentTime() {
         let interval = CMTimeMake(value: 1, timescale: 2)
         SongPlayer.shared.player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
@@ -218,14 +248,18 @@ class SongFloatingPlayer: UIView {
     }
     
     func setPlayPauseOnAppearing() {
+        
         if SongPlayer.shared.playerUrl == song.preview_url {
             if SongPlayer.shared.player.timeControlStatus == .paused {
-                playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                print("1")
             } else  {
                 playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                print("2")
             }
         } else {
-            playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            print("3")
         }
     }
 }

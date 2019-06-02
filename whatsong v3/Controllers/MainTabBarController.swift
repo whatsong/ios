@@ -10,15 +10,48 @@ import UIKit
 
 class MainTabBarController: UITabBarController  {
     
+    var profileController: UIViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if userLoggedIn()  {
+            setupLoggedInViewControllers()
+        }   else    {
+            setupLoggedOutViewControllers()
+            perform(#selector(showLoginController), with: nil, afterDelay: 0.01)
+        }
+    }
+    
+    func setupLoggedInViewControllers() {
         viewControllers = [
             createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-no-text"),
             createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon-no-text"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-no-text"),
             createNavController(viewController: ProfileController(), title: "Profile", imageName: "more-icon")
         ]
+    }
+    
+    func setupLoggedOutViewControllers() {
+        viewControllers = [
+            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-no-text"),
+            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon-no-text"),
+            createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-no-text"),
+            createNavController(viewController: ProfileLoggedOutController(), title: "Profile", imageName: "more-icon")
+        ]
+    }
+    
+    @objc func showLoginController()   {
+        let loginController = OpenSwipingController()
+        present(loginController, animated: true, completion: nil)
+    }
+    
+    func userLoggedIn() -> Bool    {
+        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
+            return true
+        } else {
+            return false
+        }
     }
     
     fileprivate func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController  {
@@ -32,17 +65,28 @@ class MainTabBarController: UITabBarController  {
         
         navController.tabBarItem.image = UIImage(named: imageName)
         navController.tabBarItem.title = title
+        navController.tabBarItem.imageInsets = UIEdgeInsets(top: 3, left: 0, bottom: -3, right: 0)
         
-        
+        //tab bar attributes
         let tabBarAttributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 10)!
             ]
 
         navController.tabBarItem.setTitleTextAttributes(tabBarAttributes, for: .normal)
         navController.tabBarController?.tabBar.isTranslucent = false
+        
+        //tab bar, remove line and set shadow
+        tabBar.shadowImage = UIImage()
+        tabBar.backgroundImage = UIImage()
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+        tabBar.layer.shadowRadius = 3
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowOpacity = 0.3
+        
         self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = .white
         
+        // nav controller, remove line and set attributes
         navController.navigationBar.shadowImage = UIImage()
         navController.navigationBar.prefersLargeTitles = true
         navController.navigationBar.barTintColor = UIColor.backgroundGrey()

@@ -17,3 +17,16 @@ class BaseCvController: UICollectionViewController  {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+class BaseHorizontalCvController: UICollectionViewController  {
+    init() {
+        let layout = UICollectionViewFlowLayout()
+        super.init(collectionViewLayout: layout)
+        layout.scrollDirection = .horizontal
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

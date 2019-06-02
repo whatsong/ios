@@ -97,6 +97,25 @@ class Service   {
         }
     }
     
+    
+    func fetchCurrentUserSongs(urlString: String, completion: @escaping (SongLibrary?, Error?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+            if let err = err    {
+                completion(nil, err)
+                return
+            }
+            do  {
+                let userSongsData = try JSONDecoder().decode(SongLibrary.self, from: data!)
+                completion(userSongsData, nil)
+            } catch    {
+                completion(nil, error)
+            }
+            }.resume()
+    }
+    
+    
     func fetchMovieDetail(urlString: String, completion: @escaping (MovieData?, Error?) -> Void) {
         guard let url = URL(string: urlString) else { return }
 
