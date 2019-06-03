@@ -47,6 +47,30 @@ class Service   {
             }.resume()
     }
     
+    func addTofavourite(songId: String?, completion: @escaping (_ result: Bool) -> Void) {
+        if let songId = songId {
+            var request = URLRequest(url:URL(string:"http://www.api.what-song.com/#/user/add_favorite_song")!)
+            request.addValue("\(songId)", forHTTPHeaderField: "songID")
+            request.httpMethod = "GET"
+            //http get
+            URLSession.shared.dataTask(with: request){ data, response, error in
+                guard(error == nil) else {
+                    completion(false)
+                    return
+                }
+                if let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                    completion(true)
+
+                } else {
+                    completion(false)
+                }
+                
+                }.resume()
+        } else {
+            completion(false)
+        }
+    }
+    
     func fetchLatestMovies(completion: @escaping (LatestMovies?, Error?) -> ()) {
         let urlString = "https://www.what-song.com/api/recent-movies"
         fetchMovieSections(urlString: urlString, completion: completion)
