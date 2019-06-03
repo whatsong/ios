@@ -14,7 +14,6 @@ protocol LatestEpisodeCellDelegate {
 
 class LatestEpisodes: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
     
-    
     let cellId = "cellId"
     var latestEpisodes: [TvShowEpisodes] = []
     var latestEpisodeCellDelegate: LatestEpisodeCellDelegate?

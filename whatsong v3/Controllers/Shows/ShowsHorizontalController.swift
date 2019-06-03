@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ShowsHorizontalController: UICollectionViewController, UICollectionViewDelegateFlowLayout   {
     
@@ -40,6 +41,7 @@ class ShowsHorizontalController: UICollectionViewController, UICollectionViewDel
         cell.songCountLabel.text = "\(show?.song_count ?? 0) songs"
         let url =  URL(string: show?.poster ?? "")
         cell.posterImageView.sd_setImage(with: url)
+        cell.posterImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         return cell
     }
     

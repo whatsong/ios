@@ -32,6 +32,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     
     var movieId: Int!    {
         didSet  {
+            startActivityIndicator()
             let urlString = "https://www.what-song.com/api/movie-info?movieID=\(movieId ?? 0)"
             Service.shared.fetchMovieDetail(urlString: urlString) { (data, err) in
                 
@@ -48,6 +49,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
                     
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
+                        self.stopActivityIndicator()
                     }
                 }
             }
@@ -99,7 +101,11 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
         } else if indexPath.item == 1 && albums.count != 0 {
             return CGSize(width: view.frame.width, height: CGFloat(albums.count * 100) + 40)
         } else  {
+            if songs.count > 0 {
             return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 36)
+            }   else    {
+                return CGSize(width: view.frame.width, height: 136)
+            }
         }
     }
     

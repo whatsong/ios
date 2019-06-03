@@ -45,6 +45,8 @@ class SongDetailPopup: UIView {
             
             if imageUrlString != nil {
                 albumImage.sd_setImage(with: URL(string: url))
+                albumImage.sd_imageIndicator = SDWebImageActivityIndicator.gray
+
             }
         }
     }

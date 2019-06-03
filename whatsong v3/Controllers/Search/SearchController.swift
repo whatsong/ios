@@ -28,6 +28,8 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
         
         collectionView.backgroundColor = .white
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
+        collectionView.backgroundColor = UIColor.backgroundGrey()
         
         view.addSubview(enterSearchLabel)
         enterSearchLabel.fillSuperview()
@@ -56,6 +58,7 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
                     self.movies = titleArray
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
+                        self.stopActivityIndicator()
                     }
                 } else {
                     //show error
@@ -67,13 +70,19 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResultCell
         let movieResult = movies[indexPath.item]
-        cell.titleLabel.text = movieResult?.name
+        cell.titleLabel.attributedText = NSAttributedString(string: movieResult?.name ?? "", attributes: [
+            NSAttributedString.Key.kern: -0.6
+            ])
         cell.yearLabel.text = movieResult?.year
+        cell.yearLabel.attributedText = NSAttributedString(string: movieResult?.year ?? "", attributes: [
+            NSAttributedString.Key.kern: -0.6
+            ])
         let urlPrefix = "https://www.what-song.com"
         let urlSuffix = movieResult?.poster ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
         print(url)
         cell.posterImageView.sd_setImage(with: url)
+        cell.posterImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         
         return cell
     }
@@ -84,7 +93,7 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 140)
+        return CGSize(width: view.frame.width, height: 100)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

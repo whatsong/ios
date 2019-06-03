@@ -13,9 +13,9 @@ class SearchResultCell: UICollectionViewCell  {
     let posterImageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = UIColor.brandLightGrey()
-        iv.widthAnchor.constraint(equalToConstant: 67).isActive = true
-        iv.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        iv.layer.cornerRadius = 10
+        iv.widthAnchor.constraint(equalToConstant: 51).isActive = true
+        iv.heightAnchor.constraint(equalToConstant: 76).isActive = true
+        iv.layer.cornerRadius = 8
         iv.clipsToBounds = true
         iv.image = UIImage(named: "movie-poster")
         return iv
@@ -24,7 +24,7 @@ class SearchResultCell: UICollectionViewCell  {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 18)
-        label.textColor = UIColor.brandDarkGrey()
+        label.textColor = UIColor.brandBlack()
         label.attributedText = NSAttributedString(string: "Placeholder", attributes: [
             NSAttributedString.Key.kern: -0.8
             ])
@@ -56,7 +56,7 @@ class SearchResultCell: UICollectionViewCell  {
         addSubview(horizontalStackView)
         horizontalStackView.fillSuperview(padding: .init(top: 12, left: 20, bottom: 12, right: 20))
       
-        backgroundColor = .green
+        backgroundColor = .white
         
     }
     

@@ -34,8 +34,8 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout   {
     }
     
     func fetchEpisode() {
+        startActivityIndicator()
         let urlString = "https://www.what-song.com/api/episode-info?episodeID=\(episode?._id ?? 0)"
-        
         Service.shared.fetchTvShowEpisode(urlString: urlString) { (data, err) in
             if let err = err {
                 print(err)
@@ -46,6 +46,7 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout   {
                 
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    self.stopActivityIndicator()
                 }
             }
         }
@@ -72,7 +73,11 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout   {
         if indexPath.item == 0  {
             return CGSize(width: view.frame.width, height: 68)
         }   else    {
-            return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 50)
+            if songs.count > 0 {
+                return CGSize(width: view.frame.width, height: CGFloat(songs.count * heightOfSongs) + 36)
+            }   else    {
+                return CGSize(width: view.frame.width, height: 136)
+            }
         }
     }
 }

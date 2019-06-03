@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SkeletonView
+import SDWebImage
 
-class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDelegateFlowLayout, SkeletonCollectionViewDataSource  {
+class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDelegateFlowLayout  {
     
     let cellId = "cellId"
     var latestMoviesArray: LatestMovies?
@@ -41,6 +41,8 @@ class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDe
         let urlSuffix = movie?.poster ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
         cell.imageView.sd_setImage(with: url)
+        cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -55,9 +57,5 @@ class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDe
         if let movie = latestMoviesArray?.data[indexPath.item]  {
             didSelectHandler?(movie)
         }
-    }
-    
-    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return cellId
     }
 }

@@ -27,13 +27,18 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         collectionView.register(UserInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         collectionView.register(UserStatsCell.self, forCellWithReuseIdentifier: statsCellId)
         collectionView.register(UserLibraryCell.self, forCellWithReuseIdentifier: libraryCellId)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
         
         collectionView.backgroundColor = UIColor.backgroundGrey()
         
         if DAKeychain.shared["accessToken"] != nil {
             setupLogOutButton()
         }
-        
+        fetchSongs()
+        fetchUserInfo()
+    }
+    
+    func fetchUserInfo()    {
         Service.shared.getCurrentUserInfo { (userData, success) in
             if success {
                 self.userInfo = userData?.data
@@ -41,10 +46,11 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
                     self.collectionView.reloadData()
                 }
             } else {
-                
             }
         }
-        
+    }
+    
+    func fetchSongs()    {
         let urlString = "https://www.what-song.com/api/list-of-songs-favorited?username=tomm098"
         Service.shared.fetchCurrentUserSongs(urlString: urlString) { (data, err) in
             if let err = err {
@@ -53,7 +59,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
                 guard let userLibraryData = data else { return }
                 self.userLibrary = userLibraryData
                 self.userSongs = userLibraryData.data
-                
+        
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }

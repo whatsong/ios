@@ -9,6 +9,7 @@
 import UIKit
 
 class BaseCvController: UICollectionViewController  {
+    
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
@@ -16,6 +17,7 @@ class BaseCvController: UICollectionViewController  {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 class BaseHorizontalCvController: UICollectionViewController  {

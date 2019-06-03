@@ -64,6 +64,7 @@
 		BB66695322A0A72B002654A7 /* LibrarySongsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB66695222A0A72B002654A7 /* LibrarySongsController.swift */; };
 		BB66695522A0AF65002654A7 /* UserSongs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB66695422A0AF65002654A7 /* UserSongs.swift */; };
 		BB66695822A0B735002654A7 /* LibrarySongs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB66695722A0B735002654A7 /* LibrarySongs.swift */; };
+		BB66695A22A4B86F002654A7 /* UIActivityViewIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB66695922A4B86F002654A7 /* UIActivityViewIndicator.swift */; };
 		BB7D7065221BA2CD00CE8A9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7D7064221BA2CD00CE8A9F /* AppDelegate.swift */; };
 		BB7D706C221BA2CF00CE8A9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB7D706B221BA2CF00CE8A9F /* Assets.xcassets */; };
 		BB7D707A221BA2CF00CE8A9F /* whatsong_v3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7D7079221BA2CF00CE8A9F /* whatsong_v3Tests.swift */; };
@@ -171,6 +172,7 @@
 		BB66695222A0A72B002654A7 /* LibrarySongsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySongsController.swift; sourceTree = "<group>"; };
 		BB66695422A0AF65002654A7 /* UserSongs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSongs.swift; sourceTree = "<group>"; };
 		BB66695722A0B735002654A7 /* LibrarySongs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySongs.swift; sourceTree = "<group>"; };
+		BB66695922A4B86F002654A7 /* UIActivityViewIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityViewIndicator.swift; sourceTree = "<group>"; };
 		BB7D7061221BA2CD00CE8A9F /* whatsong v3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "whatsong v3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB7D7064221BA2CD00CE8A9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB7D706B221BA2CF00CE8A9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 				BB637F452230E7FE009FEFD7 /* VerticalStackView.swift */,
 				BBCA3EDA224AF65F00037DCF /* UITextField.swift */,
 				BBCA3EEA2256E78000037DCF /* Date.swift */,
+				BB66695922A4B86F002654A7 /* UIActivityViewIndicator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -865,6 +868,7 @@
 				BB1661E52267085D0077C2B0 /* EpisodeInfoCell.swift in Sources */,
 				BB1BF56A228CEB30009FBC91 /* OpenSwipingController.swift in Sources */,
 				BB1BF56C228CEF7D009FBC91 /* SwipedPageCell.swift in Sources */,
+				BB66695A22A4B86F002654A7 /* UIActivityViewIndicator.swift in Sources */,
 				BB66695522A0AF65002654A7 /* UserSongs.swift in Sources */,
 				BB66695822A0B735002654A7 /* LibrarySongs.swift in Sources */,
 				BB0CC223228A6A97008BC023 /* AlbumController.swift in Sources */,

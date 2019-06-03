@@ -54,38 +54,56 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        songsArray = songsArray.sorted(by: { (firstSong, secondSong) -> Bool in
-            guard let timePlay0 = firstSong.time_play, let timePlay1 = secondSong.time_play else { return false }
-            return timePlay0 < timePlay1
-        })
-        return songsArray.count
+        if songsArray.count > 0 {
+            songsArray = songsArray.sorted(by: { (firstSong, secondSong) -> Bool in
+                guard let timePlay0 = firstSong.time_play, let timePlay1 = secondSong.time_play else { return false }
+                return timePlay0 < timePlay1
+            })
+            return songsArray.count
+        } else  {
+            return 1
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SongCell
-        cell.backgroundColor = .white
-        let song = songsArray[indexPath.item]
-        cell.songTitle.attributedText = NSAttributedString(string: song.title, attributes: [
-            NSAttributedString.Key.kern: -0.8
-            ])
-        cell.artistName.attributedText = NSAttributedString(string: song.artist.name, attributes: [
-            NSAttributedString.Key.kern: -0.6
-            ])
-        cell.sceneDescription.attributedText = NSAttributedString(string: song.scene_description ?? "", attributes: [
-            NSAttributedString.Key.kern: -0.3
-            ])
+        if songsArray.count == 0 {
+            cell.artistName.isHidden = true
+            cell.moreButton.isHidden = true
+            cell.sceneDescription.isHidden = true
+            cell.songTitle.text = "This title has no credited songs yet. Please check back later."
+            cell.songTitle.numberOfLines = 2
+            cell.songTitle.textAlignment = .center
+        } else {
+            cell.backgroundColor = .white
+            let song = songsArray[indexPath.item]
+            cell.songTitle.attributedText = NSAttributedString(string: song.title, attributes: [
+                NSAttributedString.Key.kern: -0.8
+                ])
+            cell.songTitle.textAlignment = .left
+            cell.songTitle.numberOfLines = 1
+            cell.artistName.attributedText = NSAttributedString(string: song.artist.name, attributes: [
+                NSAttributedString.Key.kern: -0.6
+                ])
+            cell.artistName.isHidden = false
+            cell.sceneDescription.attributedText = NSAttributedString(string: song.scene_description ?? "", attributes: [
+                NSAttributedString.Key.kern: -0.3
+                ])
+            cell.sceneDescription.isHidden = false
 
-        if song.time_play == nil {
-            cell.timeHeard.text = ""
-            cell.minutesLabel.text = ""
-        } else  {
-            cell.timeHeard.text = "\(song.time_play ?? 0)"
+            if song.time_play == nil {
+                cell.timeHeard.text = ""
+                cell.minutesLabel.text = ""
+            } else  {
+                cell.timeHeard.text = "\(song.time_play ?? 0)"
+            }
+            
+            let moreButtonTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(moreButtonTap))
+            cell.moreButton.isUserInteractionEnabled = true
+            cell.moreButton.addGestureRecognizer(moreButtonTapRecognizer)
+            cell.moreButton.isHidden = false
         }
-        
-        let moreButtonTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(moreButtonTap))
-        cell.moreButton.isUserInteractionEnabled = true
-        cell.moreButton.addGestureRecognizer(moreButtonTapRecognizer)
-        
         return cell
     }
     
@@ -184,9 +202,6 @@ class SongCell: UICollectionViewCell    {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 18)
         label.textColor = UIColor.brandBlack()
-        label.attributedText = NSAttributedString(string: "White Hinterland", attributes: [
-            NSAttributedString.Key.kern: -0.8
-            ])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -195,9 +210,6 @@ class SongCell: UICollectionViewCell    {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 15)
         label.textColor = UIColor.brandLightGrey()
-        label.attributedText = NSAttributedString(string: "Kairos", attributes: [
-            NSAttributedString.Key.kern: -0.8
-            ])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -207,9 +219,6 @@ class SongCell: UICollectionViewCell    {
         label.font = UIFont(name: "Montserrat-Light", size: 14)
         label.textColor = UIColor.brandLightGrey()
         label.numberOfLines = 2
-        label.attributedText = NSAttributedString(string: "0:02 First song as the helicopter flies over somewhere in Mexico for a mission.", attributes: [
-            NSAttributedString.Key.kern: -0.8
-            ])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -246,6 +255,24 @@ class SongCell: UICollectionViewCell    {
         stackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 18, bottom: 0, right: 18))
         divider.anchor(top: nil, leading: leadingAnchor, bottom: stackView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
         divider.constrainHeight(constant: 1)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupViews()
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class NoSongsCell:  UICollectionViewCell    {
+    
+    func setupViews()   {
+        
     }
     
     override init(frame: CGRect) {

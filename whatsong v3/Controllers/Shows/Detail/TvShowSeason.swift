@@ -29,9 +29,8 @@ class TvShowSeason: BaseCvController, UICollectionViewDelegateFlowLayout, Episod
     }
     
     func fetchEpisodes()    {
-        
+        startActivityIndicator()
         let urlString = "https://www.what-song.com/api/season-info?seasonID=\(season?._id ?? 0)"
-        
         Service.shared.fetchTvShowSeason(urlString: urlString) { (data, err) in
             if let err = err {
                 print(err)
@@ -42,6 +41,7 @@ class TvShowSeason: BaseCvController, UICollectionViewDelegateFlowLayout, Episod
                 
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    self.stopActivityIndicator()
                 }
             }
         }
