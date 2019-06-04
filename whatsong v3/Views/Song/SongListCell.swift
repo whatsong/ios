@@ -72,7 +72,9 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
             cell.artistName.isHidden = true
             cell.moreButton.isHidden = true
             cell.sceneDescription.isHidden = true
-            cell.songTitle.text = "This title has no credited songs yet. Please check back later."
+            cell.songTitle.attributedText = NSAttributedString(string: "This title has no credited songs. Please check back later.", attributes: [
+                NSAttributedString.Key.kern: -0.8
+                ])
             cell.songTitle.numberOfLines = 2
             cell.songTitle.textAlignment = .center
         } else {

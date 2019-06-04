@@ -10,7 +10,7 @@ import Foundation
 
 class Service   {
     
-    static let shared = Service() //singleton
+    static let shared = Service()
     
     func fetchTitles(searchTerm: String, completion: @escaping (_ resultArray: Array<Title>, _ success: Bool) -> Void)  {
         var titlesArray = Array<Title>()
@@ -53,25 +53,12 @@ class Service   {
     }
     
     func fetchRecentlyAdded(completion: @escaping (LatestMovies?, Error?) -> ()) {
-        let urlString = "https://www.what-song.com/api/recently/added/movie"
+        let urlString = "https://www.what-song.com/api/popular-movies"
         fetchMovieSections(urlString: urlString, completion: completion)
     }
     
     func fetchMovieSections(urlString: String, completion: @escaping (LatestMovies?, Error?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
-            if let err = err    {
-                completion(nil, err)
-                return
-            }
-            do  {
-                let movieSectionData = try JSONDecoder().decode(LatestMovies.self, from: data!)
-                completion(movieSectionData, nil)
-            } catch    {
-                completion(nil, error)
-            }
-            }.resume()
+        fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
     func getCurrentUserInfo(completion: @escaping(UserData?, _ success: Bool) -> ()) {
@@ -85,7 +72,7 @@ class Service   {
                     completion(nil, false)
                     return
                 }
-                do{
+                do {
                     let parseResult = try JSONDecoder().decode(UserData.self, from: data!)
                     completion(parseResult, true)
                 } catch {
@@ -97,111 +84,51 @@ class Service   {
         }
     }
     
-    
     func fetchCurrentUserSongs(urlString: String, completion: @escaping (SongLibrary?, Error?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
-            if let err = err    {
-                completion(nil, err)
-                return
-            }
-            do  {
-                let userSongsData = try JSONDecoder().decode(SongLibrary.self, from: data!)
-                completion(userSongsData, nil)
-            } catch    {
-                completion(nil, error)
-            }
-            }.resume()
+        fetchGenericJSONData(urlString: urlString, completion: completion)
     }
-    
     
     func fetchMovieDetail(urlString: String, completion: @escaping (MovieData?, Error?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
-            if let err = err    {
-                completion(nil, err)
-                return
-            }
-            do  {
-                let movieData = try JSONDecoder().decode(MovieData.self, from: data!)
-                completion(movieData, nil)
-            } catch    {
-                completion(nil, error)
-            }
-            }.resume()
+        fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
-    func fetchLatestShows(completion: @escaping ([LatestShowsByDay]?, Error?) -> ()) {
-        
+    func fetchLatestShows(completion: @escaping (LatestShowsData?, Error?) -> ()) {
         let urlString = "https://www.what-song.com/api/air-episodes"
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            //if error
-            if let error = error    {
-                completion(nil, error)
-                return
-            }
-            //success
-            guard let data = data else { return }
-            
-            do {
-                let showDays = try JSONDecoder().decode(LatestShowsData.self, from: data).data
-                completion(showDays, nil)
-            }   catch let jsonErr {
-                completion(nil, jsonErr)
-                print("Error serializing JSON", jsonErr)
-            }
-            }.resume()
+        fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
     func fetchTvShowDetail(urlString: String, completion: @escaping (TvShowStruct?, Error?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
-            if let err = err    {
-                completion(nil, err)
-                return
-            }
-            do  {
-                let tvShowData = try JSONDecoder().decode(TvShowStruct.self, from: data!)
-                completion(tvShowData, nil)
-            } catch    {
-                completion(nil, error)
-            }
-            }.resume()
+        fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
     func fetchTvShowSeason(urlString: String, completion: @escaping (TvShowSeasonStruct?, Error?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
-            if let err = err    {
-                completion(nil, err)
-                return
-            }
-            do  {
-                let tvShowSeasonData = try JSONDecoder().decode(TvShowSeasonStruct.self, from: data!)
-                completion(tvShowSeasonData, nil)
-            } catch    {
-                completion(nil, error)
-            }
-            }.resume()
+        fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
     func fetchTvShowEpisode(urlString: String, completion: @escaping (TvShowEpisodeModel?, Error?) -> Void) {
+        fetchGenericJSONData(urlString: urlString, completion: completion)
+    }
+    
+    func fetchFeaturedMovies(completion: @escaping (FeaturedMoviesData?, Error?) -> Void)  {
+        let urlString = "https://www.what-song.com/api/movies/featured"
+        fetchGenericJSONData(urlString: urlString, completion: completion)
+    }
+    
+    func fetchFeaturedShows(completion: @escaping (FeaturedShowsData?, Error?) -> Void)  {
+        let urlString = "https://www.what-song.com/api/tv_shows/featured"
+        fetchGenericJSONData(urlString: urlString, completion: completion)
+    }
+    
+    func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
         guard let url = URL(string: urlString) else { return }
-        
         URLSession.shared.dataTask(with: url) { (data, resp, err) in
             if let err = err    {
                 completion(nil, err)
                 return
             }
             do  {
-                let tvShowEpisodeData = try JSONDecoder().decode(TvShowEpisodeModel.self, from: data!)
-                completion(tvShowEpisodeData, nil)
+                let objects = try JSONDecoder().decode(T.self, from: data!)
+                completion(objects, nil)
             } catch    {
                 completion(nil, error)
             }

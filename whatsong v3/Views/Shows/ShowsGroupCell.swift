@@ -49,9 +49,9 @@ class ShowsGroupCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout  
         addSubview(dayLabel)
         addSubview(horizontalController.view)
         
-        dateLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 30, bottom: 0, right: 0))
+        dateLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 0))
         
-        dayLabel.anchor(top: dateLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 30, bottom: 0, right: 0))
+        dayLabel.anchor(top: dateLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 20, bottom: 0, right: 0))
         
         horizontalController.view.anchor(top: dayLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         

@@ -253,6 +253,7 @@ class SongDetailPopup: UIView {
                 currentViewPlayer?.playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
+        
         if SongPlayer.shared.playerUrl != song.preview_url {
             SongPlayer.shared.playSong(song: song.preview_url)
             playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)

@@ -25,19 +25,19 @@ class MainTabBarController: UITabBarController  {
     
     func setupLoggedInViewControllers() {
         viewControllers = [
-            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-no-text"),
-            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon-no-text"),
-            createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-no-text"),
-            createNavController(viewController: ProfileController(), title: "Profile", imageName: "more-icon")
+            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-text"),
+            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "shows-icon-text"),
+            createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-text"),
+            createNavController(viewController: ProfileController(), title: "Profile", imageName: "profile-icon-text")
         ]
     }
     
     func setupLoggedOutViewControllers() {
         viewControllers = [
-            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-no-text"),
-            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "tv-icon-no-text"),
-            createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-no-text"),
-            createNavController(viewController: ProfileLoggedOutController(), title: "Profile", imageName: "more-icon")
+            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-text"),
+            createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "shows-icon-text"),
+            createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-text"),
+            createNavController(viewController: ProfileLoggedOutController(), title: "Profile", imageName: "profile-icon-text")
         ]
     }
     
@@ -64,8 +64,8 @@ class MainTabBarController: UITabBarController  {
         viewController.view.backgroundColor = UIColor.backgroundGrey()
         
         navController.tabBarItem.image = UIImage(named: imageName)
-        navController.tabBarItem.title = title
-        navController.tabBarItem.imageInsets = UIEdgeInsets(top: 3, left: 0, bottom: -3, right: 0)
+        //navController.tabBarItem.title = title
+        navController.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
         
         //tab bar attributes
         let tabBarAttributes: [NSAttributedString.Key: AnyObject] = [
@@ -84,7 +84,8 @@ class MainTabBarController: UITabBarController  {
         tabBar.layer.shadowOpacity = 0.3
         
         self.tabBar.isTranslucent = false
-        self.tabBar.barTintColor = .white
+        self.tabBar.barTintColor = .brandBlack()
+        self.tabBar.tintColor = .white
         
         // nav controller, remove line and set attributes
         navController.navigationBar.shadowImage = UIImage()

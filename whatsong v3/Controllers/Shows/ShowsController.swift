@@ -11,7 +11,10 @@ import UIKit
 class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     
     let cellId = "cellId"
+    let headerId = "headerCellId"
     var showDays: [LatestShowsByDay]? = []
+    var headerShows = [TvShowInfo]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +22,9 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
         collectionView.backgroundColor = UIColor.backgroundGrey()
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         collectionView.register(ShowsGroupCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(ShowsHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
         fetchData()
-        
     }
     
     fileprivate func fetchData() {
@@ -31,8 +34,33 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
                 print("failed to fetch shows", error)
                 return
             }
-            self.showDays = showDays
+            self.showDays = showDays?.data
         }
+        Service.shared.fetchFeaturedShows { (shows, error) in
+            if let error = error    {
+                print("failed to fetch featured shows", error)
+                return
+            }
+            self.headerShows = shows?.data ?? []
+        }
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ShowsHeader
+        header.showsHeaderHorizontalController.headerShows = self.headerShows
+        header.showsHeaderHorizontalController.didSelectHandler = { [weak self] show in
+            let controller = TvShowDetailsController()
+            controller.showId = show._id
+            controller.navigationItem.title = show.title
+            self?.navigationController?.pushViewController(controller, animated: true)
+        }
+        header.showsHeaderHorizontalController.collectionView.reloadData()
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 260)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

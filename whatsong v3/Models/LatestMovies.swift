@@ -15,7 +15,7 @@ struct LatestMovies: Decodable  {
 struct LatestMovie: Decodable  {
     let _id: Int
     let title: String
-    let year: String
+    let year: String?
     let poster: String?
     var song_count: Int?
     
