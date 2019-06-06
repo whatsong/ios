@@ -187,10 +187,8 @@ class SongFloatingPlayer: UIView {
                     DispatchQueue.main.async {
                         self.heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
                         self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
+                        self.song.is_favorited = true
                     }
-                    
-                    
-                    self.song.is_favorited = true
                 }
             }
             
@@ -200,10 +198,8 @@ class SongFloatingPlayer: UIView {
                     DispatchQueue.main.async {
                         self.heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
                         self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully deleted song from library")
+                        self.song.is_favorited = false
                     }
-                    
-                    
-                    self.song.is_favorited = false
                 }
             }
         } else  {

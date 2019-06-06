@@ -49,14 +49,20 @@ class Service   {
     
     func addTofavourite(songId: String?, completion: @escaping (_ result: Bool) -> Void) {
         if let songId = songId {
-            var request = URLRequest(url:URL(string:"http://www.api.what-song.com/#/user/add_favorite_song")!)
-            request.addValue("\(songId)", forHTTPHeaderField: "songID")
+            var request = URLRequest(url:URL(string:"https://www.what-song.com/api/add_favorite_song?songID=\(songId)")!)
+            request.addValue(DAKeychain.shared["accessToken"]!, forHTTPHeaderField: "Authorization")
             request.httpMethod = "GET"
             //http get
             URLSession.shared.dataTask(with: request){ data, response, error in
                 guard(error == nil) else {
                     completion(false)
                     return
+                }
+                if let data = data {
+                    let dataString = String(data: data, encoding: .utf8)
+                    print(dataString)
+                    
+                    
                 }
                 if let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     completion(true)
