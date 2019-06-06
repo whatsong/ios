@@ -16,17 +16,17 @@ class SongFloatingPlayer: UIView {
             songName.text = song.title
             artistName.text = song.artist.name
             
-            if song.preview_url == nil {
-                print("4")
-                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-                playPauseButton.isEnabled = false
-                playPauseButton.adjustsImageWhenDisabled = false
-                SongPlayer.shared.player.pause()
-            }   else if song.preview_url != nil {
-                print("5")
-                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-                playPauseButton.isEnabled = true
-            }
+//            if song.preview_url == nil {
+//                print("4")
+//                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//                playPauseButton.isEnabled = false
+//                playPauseButton.adjustsImageWhenDisabled = false
+//                SongPlayer.shared.player.pause()
+//            }   else if song.preview_url != nil {
+//                print("5")
+//                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//                playPauseButton.isEnabled = true
+//            }
             if song.is_favorited == false   {
                 heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
                 print("not favorited")
@@ -38,18 +38,41 @@ class SongFloatingPlayer: UIView {
         }
     }
     
+    func doesPreviewExist()   {
+        // 1 -- Check if spotify preview exists. If it does, play from here.
+        
+        // 2 -- If it does not, check iTunes preview. If it exists, play from here.
+        // - if itunesURL == "" show warning
+        // - if iTunesURL does not exist
+        // For iTunes, we must also check if error
+    }
+    
     func playSong() {
-        SongPlayer.shared.playSong(song: self.song.preview_url)
+        
+        let spotifyPreview = song.spotifyPreviewUrl
+        let iTunesPreview = song.preview_url
+        
+        if spotifyPreview != nil && spotifyPreview != "0"   {
+            SongPlayer.shared.playSong(song: spotifyPreview)
+            print("playing from spotify")
+        } else if iTunesPreview != "" && iTunesPreview != nil {
+            SongPlayer.shared.playSong(song: iTunesPreview)
+            print("playing from iTunes")
+        } else  {
+            self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample")
+        }
     }
     
     @objc func handlePlayPause() {
         
-        if SongPlayer.shared.player.timeControlStatus == .paused {
+         if SongPlayer.shared.player.timeControlStatus == .paused {
             SongPlayer.shared.player.play()
             playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            print("10")
         } else  {
             SongPlayer.shared.player.pause()
             playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            print("20")
         }
     }
     
@@ -263,7 +286,7 @@ class SongFloatingPlayer: UIView {
     
     func setPlayPauseOnAppearing() {
         
-        if SongPlayer.shared.playerUrl == song.preview_url {
+        if SongPlayer.shared.playerUrl == song.preview_url || SongPlayer.shared.playerUrl == song.spotifyPreviewUrl {
             if SongPlayer.shared.player.timeControlStatus == .paused {
                 playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
                 print("1")

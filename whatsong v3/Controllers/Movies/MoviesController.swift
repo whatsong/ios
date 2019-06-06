@@ -4,7 +4,7 @@
 //
 //  Created by Tom Andrew on 5/3/19.
 //  Copyright © 2019 Tom Andrew. All rights reserved.
-//
+
 
 import UIKit
 
@@ -12,6 +12,15 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
     
     let cellId = "cellId"
     let headerId = "headerId"
+    
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView()
+        aiv.color = UIColor.brandLightGrey()
+        aiv.startAnimating()
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +30,14 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         collectionView.register(MoviesGroupCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(MoviesHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.fillSuperview()
+        
         fetchData()
     }
     
     var movieSections = [LatestMovies]()
+    var headerMovies = [MovieInfo]()
 
     fileprivate func fetchData()    {
         var section1: LatestMovies?
@@ -33,7 +46,7 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         //Dispatch Group helps sync our data requests together.
         let dispatchGroup = DispatchGroup()
         
-        startActivityIndicator()
+        //startActivityIndicator()
         dispatchGroup.enter()
         Service.shared.fetchLatestMovies { (movieSectionData, err) in
             if let err =  err   {
@@ -53,8 +66,20 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
             dispatchGroup.leave()
             section2 = movieSectionData
         }
+        
+        dispatchGroup.enter()
+        Service.shared.fetchFeaturedMovies { (movies, err) in
+            if let err = err    {
+                print("Failed to fetch featured movies:", err)
+            }
+            dispatchGroup.leave()
+            self.headerMovies = movies?.data ?? []
+        }
+        
+        // completion
         dispatchGroup.notify(queue: .main) {
             print("completed your dispatch")
+            self.activityIndicatorView.stopAnimating()
             if let section = section1 {
                 self.movieSections.append(section)
             }
@@ -62,12 +87,20 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
                 self.movieSections.append(section)
             }
             self.collectionView.reloadData()
-            self.stopActivityIndicator()
+            //self.stopActivityIndicator()
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MoviesHeader
+        header.moviesHeaderHorizontalController.headerMovies = self.headerMovies
+        header.moviesHeaderHorizontalController.didSelectHandler = { [weak self] movie in
+            let controller = MovieDetailController(movieId: movie._id)
+            controller.movieId = movie._id
+            controller.navigationItem.title = movie.title
+            self?.navigationController?.pushViewController(controller, animated: true)
+        }
+        header.moviesHeaderHorizontalController.collectionView.reloadData()
         return header
     }
     
@@ -87,7 +120,7 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         if indexPath.item == 0 {
             cell.sectionLabel.text = "Latest Releases"
         } else  {
-            cell.sectionLabel.text = "Recently Added"
+            cell.sectionLabel.text = "Popular this Year"
         }
         
         cell.horizontalController.collectionView.reloadData()
@@ -95,7 +128,6 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
             let controller = MovieDetailController(movieId: movie._id)
             controller.movieId = movie._id
             controller.navigationItem.title = movie.title
-
             self?.navigationController?.pushViewController(controller, animated: true)
         }
         return cell
