@@ -34,24 +34,28 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         if DAKeychain.shared["accessToken"] != nil {
             setupLogOutButton()
         }
-        fetchSongs()
+//        fetchSongs()
         fetchUserInfo()
     }
     
     func fetchUserInfo()    {
-        Service.shared.getCurrentUserInfo { (userData, success) in
+        Service.shared.getCurrentUserInfo { [unowned self] (userData, success) in
             if success {
                 self.userInfo = userData?.data
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
+                self.fetchSongs()
             } else {
+                 DispatchQueue.main.async {
+                    self.showAlert(bgColor: .red, text: "Something went wrong. Please log in")
+                }
             }
         }
     }
     
-    func fetchSongs()    {
-        let urlString = "https://www.what-song.com/api/list-of-songs-favorited?username=tomm098"
+    func fetchSongs() {
+        var urlString = "https://www.what-song.com/api/list-of-songs-favorited?username="
+        if let userInfo = userInfo, let username = userInfo.username {
+            urlString = "\(urlString)\(username)"
+        }
         Service.shared.fetchCurrentUserSongs(urlString: urlString) { (data, err) in
             if let err = err {
                 print(err)
