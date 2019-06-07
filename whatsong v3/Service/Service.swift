@@ -47,22 +47,34 @@ class Service   {
             }.resume()
     }
     
-    func addTofavourite(songId: String?, completion: @escaping (_ result: Bool) -> Void) {
+    func addTofavourite(songId: String?, type: String, like: Bool, completion: @escaping (_ result: Bool) -> Void) {
         if let songId = songId {
-            var request = URLRequest(url:URL(string:"https://www.what-song.com/api/add_favorite_song?songID=\(songId)")!)
+            var request = URLRequest(url:URL(string:"https://www.what-song.com/api/user-action/favourite")!)
             request.addValue(DAKeychain.shared["accessToken"]!, forHTTPHeaderField: "Authorization")
-            request.httpMethod = "GET"
-            //http get
+            request.httpMethod = "POST"
+            let parameters: [String: Any] = [
+                "type" : type,
+                "itemID" : Int(songId)!,
+                "like" : like]
+            request.httpBody = parameters.percentEscaped().data(using: .utf8)
             URLSession.shared.dataTask(with: request){ data, response, error in
                 guard(error == nil) else {
                     completion(false)
                     return
                 }
                 if let data = data {
-                    let dataString = String(data: data, encoding: .utf8)
-                    print(dataString)
-                    
-                    
+                    do {
+                        let parseResult = try JSONDecoder().decode(SongFavResponce.self, from: data)
+                        print(parseResult)
+                        if parseResult.success {
+                            completion(true)
+                        } else {
+                            completion( false)
+                        }
+                        
+                    } catch {
+                        completion( false)
+                    }
                 }
                 if let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     completion(true)
@@ -164,4 +176,26 @@ class Service   {
             }
             }.resume()
     }
+}
+
+extension Dictionary {
+    func percentEscaped() -> String {
+        return map { (key, value) in
+            let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            return escapedKey + "=" + escapedValue
+            }
+            .joined(separator: "&")
+    }
+}
+
+extension CharacterSet {
+    static let urlQueryValueAllowed: CharacterSet = {
+        let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
+        let subDelimitersToEncode = "!$&'()*+,;="
+        
+        var allowed = CharacterSet.urlQueryAllowed
+        allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
+        return allowed
+    }()
 }
