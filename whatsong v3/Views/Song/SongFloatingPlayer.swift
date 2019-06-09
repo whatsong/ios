@@ -210,29 +210,22 @@ class SongFloatingPlayer: UIView {
         
         if userLoggedIn() && song.is_favorited == false  {
             print("trying to like song")
-            
-            Service.shared.addTofavourite(songId: "\(song._id)") { (success) in
-                if success {
-                    DispatchQueue.main.async {
-                        self.heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
-                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
-                    }
-                    
-                    
+            //MARK: PASS TYPE
+            Service.shared.addTofavourite(songId: "\(song._id)", type: "movie", like: true) { (success) in
+                DispatchQueue.main.async {
+                    self.heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+                    self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
                     self.song.is_favorited = true
                 }
             }
-            
         } else if userLoggedIn() && song.is_favorited == true {
-            Service.shared.addTofavourite(songId: "\(song._id)") { (success) in
+             Service.shared.addTofavourite(songId: "\(song._id)", type: "movie", like: false) { (success) in
                 if success {
                     DispatchQueue.main.async {
                         self.heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
                         self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully deleted song from library")
+                        self.song.is_favorited = false
                     }
-                    
-                    
-                    self.song.is_favorited = false
                 }
             }
         } else  {
