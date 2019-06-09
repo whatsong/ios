@@ -74,7 +74,8 @@ class MoviesHeaderCell: UICollectionViewCell    {
     
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
         iv.backgroundColor = UIColor.brandLightGrey()
         iv.layer.cornerRadius = 8
         return iv

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MoviesHeaderHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout  {
     
@@ -35,7 +36,16 @@ class MoviesHeaderHorizontalController: HorizontalSnappingController, UICollecti
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MoviesHeaderCell
-        cell.titleLabel.text = headerMovies[indexPath.item].title
+        let movie = headerMovies[indexPath.item]
+        cell.titleLabel.text = movie.title
+        cell.songCountLabel.text = "\(movie.song_count ?? 0) songs"
+        let urlPrefix = "https://www.what-song.com"
+        let urlSuffix = movie.banner ?? ""
+        let url = URL(string: urlPrefix + urlSuffix)
+        cell.imageView.sd_setImage(with: url, completed: nil)
+        cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.imageView.sd_imageIndicator?.startAnimatingIndicator()
+
         return cell
     }
     

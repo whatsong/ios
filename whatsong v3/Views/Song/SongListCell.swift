@@ -114,7 +114,12 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showFloatingPlayer(song: self.songsArray[indexPath.row])
+        let song = songsArray[indexPath.item]
+        if song.preview_url != nil || song.spotifyPreviewUrl != nil   {
+            showFloatingPlayer(song: self.songsArray[indexPath.row])
+        }   else    {
+            self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample.")
+        }
     }
     
     func showFloatingPlayer(song: Song, shouldPlay: Bool = true) {

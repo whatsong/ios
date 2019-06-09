@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ShowsHeaderHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout   {
     
@@ -35,6 +36,13 @@ class ShowsHeaderHorizontalController: HorizontalSnappingController, UICollectio
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ShowsHeaderCell
         let show = headerShows[indexPath.item]
+        cell.songCountLabel.text = "\(show.song_count ?? 0) songs"
+        let urlPrefix = "https://www.what-song.com"
+        let urlSuffix = show.banner ?? ""
+        let url = URL(string: urlPrefix + urlSuffix)
+        cell.imageView.sd_setImage(with: url, completed: nil)
+        cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.imageView.sd_imageIndicator?.startAnimatingIndicator()
         cell.titleLabel.text = show.title
         return cell
     }

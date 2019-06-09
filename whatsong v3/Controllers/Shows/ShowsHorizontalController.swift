@@ -42,6 +42,8 @@ class ShowsHorizontalController: UICollectionViewController, UICollectionViewDel
         let url =  URL(string: show?.poster ?? "")
         cell.posterImageView.sd_setImage(with: url)
         cell.posterImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.posterImageView.sd_imageIndicator?.startAnimatingIndicator()
+
         return cell
     }
     

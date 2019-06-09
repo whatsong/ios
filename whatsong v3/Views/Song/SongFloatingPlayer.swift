@@ -22,7 +22,7 @@ class SongFloatingPlayer: UIView {
 //                playPauseButton.isEnabled = false
 //                playPauseButton.adjustsImageWhenDisabled = false
 //                SongPlayer.shared.player.pause()
-//            }   else if song.preview_url != nil {
+//                }   else if song.preview_url != nil {
 //                print("5")
 //                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
 //                playPauseButton.isEnabled = true
@@ -51,12 +51,18 @@ class SongFloatingPlayer: UIView {
         
         let spotifyPreview = song.spotifyPreviewUrl
         let iTunesPreview = song.preview_url
+        func setPauseButton() {
+            self.playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            
+        }
         
         if spotifyPreview != nil && spotifyPreview != "0"   {
             SongPlayer.shared.playSong(song: spotifyPreview)
+            setPauseButton()
             print("playing from spotify")
         } else if iTunesPreview != "" && iTunesPreview != nil {
             SongPlayer.shared.playSong(song: iTunesPreview)
+            setPauseButton()
             print("playing from iTunes")
         } else  {
             self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample")
@@ -65,14 +71,14 @@ class SongFloatingPlayer: UIView {
     
     @objc func handlePlayPause() {
         
-         if SongPlayer.shared.player.timeControlStatus == .paused {
-            SongPlayer.shared.player.play()
-            playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-            print("10")
-        } else  {
+        if SongPlayer.shared.player.timeControlStatus == .playing   {
             SongPlayer.shared.player.pause()
             playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
             print("20")
+        }   else {
+            SongPlayer.shared.player.play()
+            playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            print("10")
         }
     }
     
@@ -260,9 +266,6 @@ class SongFloatingPlayer: UIView {
         observePlayerCurrentTime()
         
     }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     class func tabBarContainPlayer() -> Bool {
         guard let delegate = UIApplication.shared.delegate else { return false }
@@ -291,16 +294,31 @@ class SongFloatingPlayer: UIView {
     func setPlayPauseOnAppearing() {
         
         if SongPlayer.shared.playerUrl == song.preview_url || SongPlayer.shared.playerUrl == song.spotifyPreviewUrl {
-            if SongPlayer.shared.player.timeControlStatus == .paused {
-                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-                print("1")
-            } else  {
-                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-                print("2")
-            }
+            playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            print("1")
         } else {
             playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-            print("3")
+            print("2")
         }
+    }
+
+        
+//        if SongPlayer.shared.playerUrl == song.preview_url || SongPlayer.shared.playerUrl == song.spotifyPreviewUrl {
+//            if SongPlayer.shared.player.timeControlStatus == .paused {
+//                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//                print("1")
+//            } else  {
+//                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//                print("2")
+//            }
+//        } else {
+//            playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//            print("3")
+//        }
+//    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
