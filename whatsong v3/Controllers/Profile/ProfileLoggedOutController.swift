@@ -19,7 +19,7 @@ class ProfileLoggedOutController: UIViewController  {
         
         view.addSubview(stackView)
         
-        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 30, right: 20))
+        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 70, right: 20))
         
     }
     

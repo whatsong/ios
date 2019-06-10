@@ -12,7 +12,7 @@ import SDWebImage
 class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDelegateFlowLayout  {
     
     let cellId = "cellId"
-    var latestMoviesArray: LatestMovies?
+    var latestMoviesArray: [LatestMovie]?
     
     var didSelectHandler: ((LatestMovie) -> ())?
     
@@ -28,27 +28,27 @@ class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDe
     let lineSpacing: CGFloat = 12
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return latestMoviesArray?.data.count ?? 0
+        return latestMoviesArray?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MoviesSingleCell
-        let movie = latestMoviesArray?.data[indexPath.item]
+        let movie = latestMoviesArray?[indexPath.item]
         cell.titleLabel.text = movie?.title
         cell.yearLabel.text = movie?.year
         cell.songCountLabel.text = "\(movie?.song_count ?? 0) songs"
         let urlPrefix = "https://www.what-song.com"
         let urlSuffix = movie?.poster ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
-        cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imageView.sd_imageIndicator?.startAnimatingIndicator()
         cell.imageView.sd_setImage(with: url)
         cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
 
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: (view.frame.height - topBottomSpacing * 2 - lineSpacing * 2) / 2)
+        return CGSize(width: 120, height: (view.frame.height - topBottomSpacing - lineSpacing))
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -56,7 +56,7 @@ class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDe
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let movie = latestMoviesArray?.data[indexPath.item]  {
+        if let movie = latestMoviesArray?[indexPath.item]  {
             didSelectHandler?(movie)
         }
     }

@@ -34,7 +34,6 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         if DAKeychain.shared["accessToken"] != nil {
             setupLogOutButton()
         }
-//        fetchSongs()
         fetchUserInfo()
     }
     
@@ -133,7 +132,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         librarySongController.userSongs = songLibrary.data
         librarySongController.navigationItem.title = "Your Songs"
         navigationController?.pushViewController(librarySongController, animated: true)
-        
+        self.fetchSongs()
     }
 }
 

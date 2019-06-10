@@ -30,6 +30,12 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         collectionView.register(MoviesGroupCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(MoviesHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        
+        collectionView.refreshControl = refreshControl
+        self.extendedLayoutIncludesOpaqueBars = true
+        
         view.addSubview(activityIndicatorView)
         activityIndicatorView.fillSuperview()
         
@@ -87,8 +93,13 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
                 self.movieSections.append(section)
             }
             self.collectionView.reloadData()
+            self.collectionView.refreshControl?.endRefreshing()
             //self.stopActivityIndicator()
         }
+    }
+    
+    @objc func handleRefresh()    {
+        fetchData()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -114,7 +125,7 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MoviesGroupCell
-        let movieSection = movieSections[indexPath.item]
+        let movieSection = movieSections[indexPath.item].data
         
         cell.horizontalController.latestMoviesArray = movieSection
         if indexPath.item == 0 {
@@ -134,7 +145,7 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 500)
+        return CGSize(width: view.frame.width, height: 260)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

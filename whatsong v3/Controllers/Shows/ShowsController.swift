@@ -14,7 +14,6 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     let headerId = "headerCellId"
     var showDays: [LatestShowsByDay]? = []
     var headerShows = [TvShowInfo]()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,26 +23,47 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
         collectionView.register(ShowsGroupCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(ShowsHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        
+        collectionView.refreshControl = refreshControl
+        self.extendedLayoutIncludesOpaqueBars = true
+        
         fetchData()
     }
     
     fileprivate func fetchData() {
-    
-        Service.shared.fetchLatestShows { (showDays, error) in
+        
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        Service.shared.fetchShowsBySchedule { (showDays, error) in
             if let error = error    {
                 print("failed to fetch shows", error)
                 return
             }
             self.showDays = showDays?.data
+            dispatchGroup.leave()
         }
+        
+        dispatchGroup.enter()
         Service.shared.fetchFeaturedShows { (shows, error) in
             if let error = error    {
                 print("failed to fetch featured shows", error)
                 return
             }
             self.headerShows = shows?.data ?? []
+            dispatchGroup.leave()
         }
-        
+        dispatchGroup.notify(queue: .main)  {
+            print("completed your dispatch")
+            self.collectionView.reloadData()
+            self.collectionView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    @objc func handleRefresh()    {
+        fetchData()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

@@ -9,10 +9,15 @@
 import UIKit
 import AVKit
 
+protocol SongCellDelegate {
+    func didSelectSongDetail(for song: Song)
+}
+
 class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource    {
     
     let cellId = "cellId"
     var songsArray: [Song] = []
+    var songCellDelegate: SongCellDelegate?
     
     let heading: UILabel = {
         let label = UILabel()
@@ -163,20 +168,25 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     
     @objc func moreButtonTap(gesture: UITapGestureRecognizer)  {
         var indexPath = getIndexPathFromRecognizer(gesture: gesture)
+//        
+//        let window: UIWindow? = UIApplication.shared.keyWindow
+//        let offsetY = (window?.frame.maxY)!
+//        
+//        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
+//        window?.addSubview(songDetailView)
+//        showFloatingPlayer(song: songsArray[indexPath.item], shouldPlay: false)
+//        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+//            songDetailView.transform = .init(translationX: 0, y: -offsetY)
+//        }, completion: nil )
+//        
+//        let song = self.songsArray[indexPath.item]
+//        songDetailView.song = song
+//        songDetailView.setPlayPauseOnAppearing()
         
-        let window: UIWindow? = UIApplication.shared.keyWindow
-        let offsetY = (window?.frame.maxY)!
-
-        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
-        window?.addSubview(songDetailView)
-        showFloatingPlayer(song: songsArray[indexPath.item], shouldPlay: false)
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-            songDetailView.transform = .init(translationX: 0, y: -offsetY)
-        }, completion: nil )
-        
-        let song = self.songsArray[indexPath.item]
-        songDetailView.song = song
-        songDetailView.setPlayPauseOnAppearing()
+        if songCellDelegate != nil {
+            songCellDelegate?.didSelectSongDetail(for: songsArray[indexPath.item])
+        }
+        print("TEST", songsArray[indexPath.item].title)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout   {
+class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate   {
     
     let songsCellId = "episodeCellId"
     let infoCellId = "infoCellId"
@@ -59,6 +59,7 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout   {
             return cell
         }   else    {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: songsCellId, for: indexPath) as! SongListCell
+            cell.songCellDelegate = self
             cell.songsArray = songs
             cell.collectionView.reloadData()
             return cell
@@ -79,5 +80,12 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout   {
                 return CGSize(width: view.frame.width, height: 136)
             }
         }
+    }
+    
+    func didSelectSongDetail(for song: Song)  {
+        let songDetailController = SongDetailPopupController()
+        songDetailController.navigationItem.title = song.title
+        self.navigationController?.present(songDetailController, animated: true, completion: nil)
+        print("WHAT")
     }
 }

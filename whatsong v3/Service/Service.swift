@@ -99,6 +99,11 @@ class Service   {
         fetchMovieSections(urlString: urlString, completion: completion)
     }
     
+    func fetchMoviesBySchedule(completion: @escaping (MoviesByScheduleData?, Error?) -> ()) {
+        let urlString = "https://www.what-song.com/api/air-movies"
+        fetchGenericJSONData(urlString: urlString, completion: completion)
+    }
+    
     func fetchMovieSections(urlString: String, completion: @escaping (LatestMovies?, Error?) -> Void) {
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
@@ -134,7 +139,7 @@ class Service   {
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
-    func fetchLatestShows(completion: @escaping (LatestShowsData?, Error?) -> ()) {
+    func fetchShowsBySchedule(completion: @escaping (LatestShowsData?, Error?) -> ()) {
         let urlString = "https://www.what-song.com/api/air-episodes"
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }

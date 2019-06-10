@@ -30,6 +30,16 @@ struct TvShow: Decodable    {
     var title: String
 }
 
+struct MoviesByScheduleData: Decodable  {
+    var data: [MoviesByScheduleByDay]
+}
+
+struct MoviesByScheduleByDay: Decodable  {
+    var weekStart: String
+    var weekEnd: String
+    var movie_details: [LatestMovie]?
+}
+
 
 
 

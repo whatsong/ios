@@ -159,6 +159,7 @@ class LoginController: UIViewController {
     
     func handleLogin(completion: @escaping (LoginModel?, Error?, String?) -> ()) {
         dataTask?.cancel()
+        startActivityIndicator()
         if var urlComponents = URLComponents(string: "https://www.what-song.com/api/sign-in") {
             urlComponents.query = "login=\(usernameInput.text!)&password=\(passwordInput.text!)"
             guard let url = urlComponents.url else { return }
@@ -166,12 +167,15 @@ class LoginController: UIViewController {
                 defer { self.dataTask = nil }
                 if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     do  {
+                        self.stopActivityIndicator()
                         let loginData = try JSONDecoder().decode(LoginModel.self, from: data)
                         completion(loginData, nil, nil)
                     } catch {
+                        self.stopActivityIndicator()
                         completion(nil, error, nil)
                     }
                 } else {
+                    self.stopActivityIndicator()
                     completion(nil, error, "Wrong login or password")
                 }
             }
@@ -183,13 +187,13 @@ class LoginController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func displayActivityIndicatorView() -> () {
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        self.view.backgroundColor = UIColor(white: 1, alpha: 0.8)
-        self.view.bringSubviewToFront(self.activityIndicator)
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
-    }
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView()
+        aiv.color = UIColor.brandLightGrey()
+        aiv.startAnimating()
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
     
     func hideActivityIndicatorView() -> () {
         if !self.activityIndicator.isHidden{
