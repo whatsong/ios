@@ -15,7 +15,7 @@ class Service   {
     func fetchTitles(searchTerm: String, completion: @escaping (_ resultArray: Array<Title>, _ success: Bool) -> Void)  {
         var titlesArray = Array<Title>()
         
-        let urlString = "https://www.what-song.com/api/search?limit=10&type=movie&field=\(searchTerm)"
+        let urlString = "https://www.what-song.com/api/search?limit=10&type=all&field=\(searchTerm)"
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
@@ -30,17 +30,19 @@ class Service   {
             do {
                 let results =  try JSONDecoder().decode(SearchData.self, from: data)
                 for group in results.searchData {
-                    
-                    if let group = group {
-                        for movie in group.groupResults {
-                            if let movie = movie {
-                                titlesArray.append(movie)
+                    //for future just delete this "if"
+                    if group?.groupName != "Artists" {
+                        if let group = group {
+                            for movie in group.groupResults {
+                                if var movie = movie {
+                                    movie.groupName = group.groupName
+                                    titlesArray.append(movie)
+                                }
                             }
                         }
                     }
                 }
                 completion(titlesArray, true)
-                
             }   catch   {
                 completion(titlesArray, false)
             }
