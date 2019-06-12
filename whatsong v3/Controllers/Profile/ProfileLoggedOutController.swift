@@ -71,7 +71,7 @@ class ProfileLoggedOutController: UIViewController  {
         button.setTitle("Get Started", for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 18)
         button.titleLabel?.textColor = .white
-        button.backgroundColor = UIColor.brandLightPink()
+        button.backgroundColor = UIColor.brandPurple()
         button.layer.cornerRadius = 6
         button.constrainHeight(constant: 50)
         button.addTarget(self, action: #selector(getStarted), for: .touchUpInside)

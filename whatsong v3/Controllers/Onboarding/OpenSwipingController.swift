@@ -31,7 +31,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         let pc = UIPageControl()
         pc.pageIndicatorTintColor = .gray
         pc.numberOfPages = 4
-        pc.currentPageIndicatorTintColor = UIColor.brandPink()
+        pc.currentPageIndicatorTintColor = UIColor.brandPurple()
         pc.backgroundColor = UIColor.backgroundGrey()
 
         pc.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         button.setTitle("Log In", for: .normal)
         button.backgroundColor = .white
         button.layer.cornerRadius = 5
-        button.setTitleColor(UIColor.brandPink(), for: .normal)
+        button.setTitleColor(UIColor.brandPurple(), for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.addTarget(self, action: #selector(handleLoginClicked), for: .touchUpInside)
         return button
@@ -53,7 +53,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         let button = UIButton()
         button.setTitle("Sign Up", for: .normal)
         button.layer.cornerRadius = 5
-        button.backgroundColor = UIColor.brandPink()
+        button.backgroundColor = UIColor.brandPurple()
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.addTarget(self, action: #selector(handleSignUpClicked), for: .touchUpInside)
         return button

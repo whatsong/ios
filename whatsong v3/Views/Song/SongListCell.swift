@@ -168,17 +168,18 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     
     @objc func moreButtonTap(gesture: UITapGestureRecognizer)  {
         var indexPath = getIndexPathFromRecognizer(gesture: gesture)
-//        
+        
+//        // To present UIView (SongDetailPopup) Instead of UICollectionView (SongDetailView)
 //        let window: UIWindow? = UIApplication.shared.keyWindow
 //        let offsetY = (window?.frame.maxY)!
-//        
+//
 //        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
 //        window?.addSubview(songDetailView)
 //        showFloatingPlayer(song: songsArray[indexPath.item], shouldPlay: false)
 //        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
 //            songDetailView.transform = .init(translationX: 0, y: -offsetY)
 //        }, completion: nil )
-//        
+//
 //        let song = self.songsArray[indexPath.item]
 //        songDetailView.song = song
 //        songDetailView.setPlayPauseOnAppearing()
@@ -186,7 +187,6 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         if songCellDelegate != nil {
             songCellDelegate?.didSelectSongDetail(for: songsArray[indexPath.item])
         }
-        print("TEST", songsArray[indexPath.item].title)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -272,24 +272,6 @@ class SongCell: UICollectionViewCell    {
         stackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 18, bottom: 0, right: 18))
         divider.anchor(top: nil, leading: leadingAnchor, bottom: stackView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
         divider.constrainHeight(constant: 1)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setupViews()
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class NoSongsCell:  UICollectionViewCell    {
-    
-    func setupViews()   {
-        
     }
     
     override init(frame: CGRect) {

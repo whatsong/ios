@@ -84,6 +84,7 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
     
     func didSelectSongDetail(for song: Song)  {
         let songDetailController = SongDetailPopupController()
+        songDetailController.song = song
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
         print("WHAT")

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayout, AlbumCellDelegate   {
+class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayout, AlbumCellDelegate, SongCellDelegate   {
     
     let infoCellId = "infoCellId"
     let albumsListCellId = "albumsCellId"
@@ -90,6 +90,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
         } else  {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: songListCellId, for: indexPath) as! SongListCell
             cell.songsArray = songs
+            cell.songCellDelegate = self
             cell.collectionView.reloadData()
             return cell
         }
@@ -114,5 +115,12 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
         albumSongsController.albumSongs = album.songs
         albumSongsController.navigationItem.title = "\(album.album.title ?? "Title Unknown")"
         navigationController?.pushViewController(albumSongsController, animated: true)
+    }
+    
+    func didSelectSongDetail(for song: Song)  {
+        let songDetailController = SongDetailPopupController()
+        songDetailController.song = song
+        songDetailController.navigationItem.title = song.title
+        self.navigationController?.present(songDetailController, animated: true, completion: nil)
     }
 }

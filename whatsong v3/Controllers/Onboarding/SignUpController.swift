@@ -27,7 +27,7 @@ class SignUpController: UIViewController   {
     
     let usernameInput: UITextField = {
         let tf = UITextField()
-        tf.backgroundColor = UIColor.brandPink()
+        tf.backgroundColor = UIColor.brandPurple()
         tf.autocapitalizationType = .none
         tf.textColor = .white
         tf.font = UIFont(name: "Montserrat-Regular", size: 16)
@@ -45,7 +45,7 @@ class SignUpController: UIViewController   {
     let passwordInput: UITextField = {
         let tf = UITextField()
         tf.isSecureTextEntry = true
-        tf.backgroundColor = UIColor.brandPink()
+        tf.backgroundColor = UIColor.brandPurple()
         tf.textColor = .white
         tf.font = UIFont(name: "Montserrat-Regular", size: 16)
         let attributes: [NSAttributedString.Key : Any] = [
@@ -65,7 +65,7 @@ class SignUpController: UIViewController   {
         button.isEnabled = false
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.setTitle("Create Your Account", for: .normal)
-        button.setTitleColor(UIColor.brandPink(), for: .normal)
+        button.setTitleColor(UIColor.brandPurple(), for: .normal)
         button.layer.cornerRadius = 4
         // button.addTarget(self, action: #selector(signUpAction), for: .touchUpInside)
         return button
@@ -102,7 +102,7 @@ class SignUpController: UIViewController   {
     
     func setupViews() {
         
-        view.backgroundColor = UIColor.brandPink()
+        view.backgroundColor = UIColor.brandPurple()
         
         let stackView = UIStackView(arrangedSubviews: [usernameInput, passwordInput, signUpButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
