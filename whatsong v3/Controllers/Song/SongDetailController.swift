@@ -28,7 +28,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         
         collectionView.backgroundColor = .clear
         collectionView.register(SongDetailCell.self, forCellWithReuseIdentifier: cellId)
-        
+        collectionView.allowsSelection = false
         view.addSubview(dismissButton)
         
         dismissButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -44,7 +44,54 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SongDetailCell
         cell.song = song
+        cell.youtubeButton.addTarget(self, action: #selector(openWithYoutube(sender:)), for: .touchUpInside)
+        cell.spotifyButton.addTarget(self, action: #selector(openWithSpotify(sender:)), for: .touchUpInside)
+        cell.playPauseButton.addTarget(self, action: #selector(handlePlayPause(sender:)), for: .touchUpInside)
+        
         return cell
+    }
+    
+    @objc func youTubeAction(sender: UIButton) {
+        print("Button \(sender.tag) Clicked")
+    }
+    
+    @objc func handlePlayPause(sender: UIButton) {
+        print("playpause")
+    }
+    
+    @objc func openWithYoutube(sender: UIButton)  {
+        if let song = song {
+            let youtubeId = song.youtube_id
+            let appUrl = URL(string: "youtube://\(youtubeId ?? "")")
+            let webUrl = URL(string: "https://youtube.com/watch?v=\(youtubeId ?? "")")
+            
+            let application = UIApplication.shared
+            
+            if application.canOpenURL(appUrl!)   {
+                application.open(appUrl!)
+            }   else    {
+                application.open(webUrl!)
+            }
+        }
+    }
+    
+    @objc func openWithSpotify(sender: UIButton)  {
+        print("open with spotfiy")
+        if let song = song {
+            if isSpotifyInstalled() {
+                let url = URL(string: song.spotify_uri ?? "")
+                UIApplication.shared.open(url!)
+            } else {
+                var str = song.spotify_uri!
+                str = str.replacingOccurrences(of: "spotify:track:", with: "", options: [.anchored], range: nil)
+                let fullString = "https://open.spotify.com/track/" + str
+                UIApplication.shared.open(URL(string: fullString)!)
+            }
+        }
+    }
+    
+    func isSpotifyInstalled() -> Bool  {
+        return UIApplication.shared.canOpenURL(NSURL(string:"spotify:")! as URL)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -66,5 +113,9 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             let top = -UIApplication.shared.statusBarFrame.height
             return UIEdgeInsets(top: top, left: 0, bottom: top, right: 0)
         }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
 }
