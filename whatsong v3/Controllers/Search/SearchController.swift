@@ -70,13 +70,13 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResultCell
         let movieResult = movies[indexPath.item]
-        cell.titleLabel.attributedText = NSAttributedString(string: movieResult?.name ?? "", attributes: [
+        cell.titleLabel.attributedText = NSAttributedString(string: movieResult?.title ?? "", attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
-        cell.yearLabel.text = movieResult?.year
-        cell.yearLabel.attributedText = NSAttributedString(string: movieResult?.year ?? "", attributes: [
-            NSAttributedString.Key.kern: -0.6
-            ])
+        cell.yearLabel.text = "2019"//movieResult?.year
+//        cell.yearLabel.attributedText = NSAttributedString(string: movieResult?.year ?? "", attributes: [
+//            NSAttributedString.Key.kern: -0.6
+//            ])
         let urlPrefix = "https://www.what-song.com"
         let urlSuffix = movieResult?.poster ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
@@ -97,13 +97,18 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movieId = movies[indexPath.item]?.id
-        print(movieId)
-        let movieController = MovieDetailController(movieId: movieId!)
-        movieController.movieId = movieId
-        movieController.navigationItem.title = movies[indexPath.item]?.name
-
-        navigationController?.pushViewController(movieController, animated: true)
+        
+        let movieShow = movies[indexPath.row]
+        let movieShowId = movies[indexPath.item]?.id
+        if movieShow?.groupName == "Movies" {
+            let movieController = MovieDetailController(movieId: movieShowId!)
+            movieController.movieId = movieShowId
+            navigationController?.pushViewController(movieController, animated: true)
+        } else if movieShow?.groupName == "Television" {
+            let tvShowViewController = TvShowDetailsController()
+            tvShowViewController.showId = movieShowId!
+            navigationController?.pushViewController(tvShowViewController, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

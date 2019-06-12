@@ -10,9 +10,11 @@ import UIKit
 
 struct SearchData: Decodable  {
     let searchData: [Group?]
+    let success: Bool?
     
     private enum CodingKeys: String, CodingKey {
         case searchData = "data"
+        case success = "success"
     }
 }
 
@@ -29,14 +31,54 @@ struct Group: Decodable  {
 struct Title: Decodable {
     let id: Int?
     let name: String?
-    let year: String?
+//    let year: String?
     let poster: String?
+    let slug: String?
+    let title: String?
+    var groupName: String?
+    
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try values.decode(Int.self, forKey: .id)
+        self.slug = try values.decode(String.self, forKey: .slug)
+        if values.contains(.title) {
+            self.title = try values.decodeIfPresent(String.self, forKey: .title)
+        } else {
+            self.title = nil
+        }
+        groupName = nil
+        
+//        if values.contains(.year) {
+//            self.year = try values.decodeIfPresent(String.self, forKey: .year)
+//        } else {
+//            self.year = nil
+//        }
+        
+        if values.contains(.poster) {
+            self.poster = try values.decodeIfPresent(String.self, forKey: .poster)
+        } else {
+            self.poster = nil
+        }
+        
+        if values.contains(.name) {
+            self.name = try values.decodeIfPresent(String.self, forKey: .name)
+        } else {
+            self.name = nil
+        }
+    }
+    
     
     private enum CodingKeys: String, CodingKey {
+
+        
         case id = "_id"
-        case name = "title"
+        case title = "title"
         case year = "year"
         case poster = "poster"
-
+        case slug = "slug"
+        case name = "name"
     }
 }
+
+
