@@ -42,6 +42,23 @@ class SignUpController: UIViewController   {
         return tf
     }()
     
+    let emailInput: UITextField = {
+        let tf = UITextField()
+        tf.backgroundColor = UIColor.brandPurple()
+        tf.autocapitalizationType = .none
+        tf.textColor = .white
+        tf.font = UIFont(name: "Montserrat-Regular", size: 16)
+        let attributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font : UIFont(name: "Montserrat-Regular", size: 16)!,
+            NSAttributedString.Key.kern: -0.2
+        ]
+        tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes: attributes)
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.setBottomBorder(color: .white)
+        return tf
+    }()
+    
     let passwordInput: UITextField = {
         let tf = UITextField()
         tf.isSecureTextEntry = true
@@ -67,7 +84,7 @@ class SignUpController: UIViewController   {
         button.setTitle("Create Your Account", for: .normal)
         button.setTitleColor(UIColor.brandPurple(), for: .normal)
         button.layer.cornerRadius = 4
-        // button.addTarget(self, action: #selector(signUpAction), for: .touchUpInside)
+         button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
     }()
     
@@ -83,7 +100,7 @@ class SignUpController: UIViewController   {
         return button
     }()
     
-    @objc func handleTextInputChange()    {
+    @objc func handleTextInputChange() {
         let isFormValid = usernameInput.text?.count ?? 0 > 2 && passwordInput.text?.count ?? 0 > 2
         
         if isFormValid {
@@ -96,25 +113,40 @@ class SignUpController: UIViewController   {
         }
     }
     
+    @objc func handleSignUp() {
+        
+        if usernameInput.text!.count > 0 && passwordInput.text!.count > 0 && emailInput.text!.count > 0 {
+            Service.shared.signUp(login: usernameInput.text!, password: passwordInput.text!, mail: emailInput.text!) { [unowned self] (success) in
+                if success {
+
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong")
+                    }
+                }
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.showAlert(bgColor: UIColor.brandWarning(), text: "Please complete all fields")
+            }
+        }
+    }
+    
     @objc func handleDismiss()    {
         self.dismiss(animated: true, completion: nil)
     }
     
     func setupViews() {
-        
         view.backgroundColor = UIColor.brandPurple()
-        
-        let stackView = UIStackView(arrangedSubviews: [usernameInput, passwordInput, signUpButton])
+        let stackView = UIStackView(arrangedSubviews: [usernameInput, emailInput, passwordInput, signUpButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.constrainHeight(constant: 160)
         stackView.spacing = 14
-        
         view.addSubview(dismissButtonWhite)
         view.addSubview(signupHeading)
         view.addSubview(stackView)
-        
         dismissButtonWhite.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 80, left: 20, bottom: 0, right: 0))
         signupHeading.anchor(top: dismissButtonWhite.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 0))
         stackView.anchor(top: signupHeading.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 40, left: 20, bottom: 0, right: 20))

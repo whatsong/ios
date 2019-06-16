@@ -49,10 +49,11 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     var timer: Timer?
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+       
         // invalidates timer from firing off search request aggresively. So now will only perform fetchTitles request after 0.5seconds instead of after every letter typed.
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            self.startActivityIndicator()
             Service.shared.fetchTitles(searchTerm: searchText) { (titleArray, success) in
                 if success {
                     self.movies = titleArray
@@ -103,10 +104,12 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
         if movieShow?.groupName == "Movies" {
             let movieController = MovieDetailController(movieId: movieShowId!)
             movieController.movieId = movieShowId
+            movieController.navigationItem.title = movieShow!.title
             navigationController?.pushViewController(movieController, animated: true)
         } else if movieShow?.groupName == "Television" {
             let tvShowViewController = TvShowDetailsController()
             tvShowViewController.showId = movieShowId!
+            tvShowViewController.navigationItem.title = movieShow!.title
             navigationController?.pushViewController(tvShowViewController, animated: true)
         }
     }

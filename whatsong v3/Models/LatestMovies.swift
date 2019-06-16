@@ -21,6 +21,6 @@ struct LatestMovie: Decodable  {
     
 }
 
-struct SongFavResponce: Decodable {
+struct UniversalResponce: Decodable {
     let success: Bool
 }

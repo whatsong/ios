@@ -98,41 +98,6 @@ class SongDetailCell: UICollectionViewCell  {
         
     }
     
-    @objc func handlePlayPause() {
-        print("playpause")
-    }
-    
-    @objc func openWithYoutube()  {
-        let youtubeId = song.youtube_id
-        let appUrl = URL(string: "youtube://\(youtubeId ?? "")")
-        let webUrl = URL(string: "https://youtube.com/watch?v=\(youtubeId ?? "")")
-
-        let application = UIApplication.shared
-
-        if application.canOpenURL(appUrl!)   {
-            application.open(appUrl!)
-        }   else    {
-            application.open(webUrl!)
-        }
-    }
-    
-    func isSpotifyInstalled() -> Bool  {
-        return UIApplication.shared.canOpenURL(NSURL(string:"spotify:")! as URL)
-    }
-    
-    @objc func openWithSpotify()  {
-        print("open with spotfiy")
-        if isSpotifyInstalled() {
-            let url = URL(string: song.spotify_uri ?? "")
-            UIApplication.shared.open(url!)
-        } else {
-            var str = song.spotify_uri!
-            str = str.replacingOccurrences(of: "spotify:track:", with: "", options: [.anchored], range: nil)
-            let fullString = "https://open.spotify.com/track/" + str
-            UIApplication.shared.open(URL(string: fullString)!)
-        }
-    }
-    
     func setupBackgroundGradient()    {
         let layer = CAGradientLayer()
         let view = self
@@ -155,7 +120,6 @@ class SongDetailCell: UICollectionViewCell  {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = UIColor.brandBlack()
         button.contentMode = .scaleToFill
-        button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
         return button
     }()
     
@@ -249,7 +213,6 @@ class SongDetailCell: UICollectionViewCell  {
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.contentHorizontalAlignment = .left
-        button.addTarget(self, action: #selector(openWithSpotify), for: .touchUpInside)
         return button
     }()
     
@@ -269,7 +232,6 @@ class SongDetailCell: UICollectionViewCell  {
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
         button.contentHorizontalAlignment = .left
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(openWithYoutube), for: .touchUpInside)
         return button
     }()
     
