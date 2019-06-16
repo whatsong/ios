@@ -22,7 +22,9 @@ struct ShowDetails: Decodable   {
     var name: String
     var poster: String
     var song_count: Int
+    var number: Int
     var tv_show: TvShow
+    var season: Seasons
 }
 
 struct TvShow: Decodable    {

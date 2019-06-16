@@ -15,6 +15,8 @@ class MoviesController1: ShowsController   {
     var moviesCellId = "moviesCellId"
     var moviesHeaderId = "moviesHeaderId"
     
+    let sectionHeadings = ["This Week", "Last Week", "Three Weeks Ago", "Four Weeks Ago", "Five Weeks Ago", "Six Weeks Ago", "Seven Weeks Ago"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,9 +49,9 @@ class MoviesController1: ShowsController   {
         }
         
         dispatchGroup.enter()
-        Service.shared.fetchFeaturedMovies { (movies, error) in
-            if let error = error    {
-                print("failed to fetch featured shows", error)
+        Service.shared.fetchFeaturedMovies { (movies, err) in
+            if let err = err    {
+                print("Failed to fetch featured movies", err)
                 return
             }
             self.headerMovies = movies?.data ?? []
@@ -88,6 +90,9 @@ class MoviesController1: ShowsController   {
         cell.dayData = movieDays?[indexPath.row]
         let date = cell.dayData?.weekStart.toDate(stringFormat: "dd-MM-yyyy")
         cell.dateLabel.text = date?.toString(dateFormat: "MMM dd, yyyy")
+        
+        cell.sectionLabel.text = sectionHeadings[indexPath.item]
+        
         cell.horizontalController.latestMoviesArray = []
         cell.horizontalController.latestMoviesArray = movieDays?[indexPath.row].movie_details
         cell.horizontalController.didSelectHandler = { [weak self]

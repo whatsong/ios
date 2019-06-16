@@ -39,11 +39,17 @@ class ShowsHorizontalController: UICollectionViewController, UICollectionViewDel
         let show = tvShows?[indexPath.row]
         cell.titleLabel.text = show?.tv_show.title
         cell.songCountLabel.text = "\(show?.song_count ?? 0) songs"
+        
+        let seasonNumber = show?.season.season
+        let episodeNumber = show?.number
+        cell.episodeLabel.text = "s\(seasonNumber ?? 0) • e\(episodeNumber ?? 0)"
+        
         let url =  URL(string: show?.poster ?? "")
-        cell.posterImageView.sd_setImage(with: url)
+    
         cell.posterImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.posterImageView.sd_imageIndicator?.startAnimatingIndicator()
-
+        cell.posterImageView.sd_setImage(with: url)
+        
         return cell
     }
     

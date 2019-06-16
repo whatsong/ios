@@ -45,8 +45,7 @@ class MoviesSingleCell: UICollectionViewCell   {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        titleLabel.numberOfLines = 1
-        
+        titleLabel.numberOfLines = 2
         
         addSubview(bgView)
         addSubview(imageView)

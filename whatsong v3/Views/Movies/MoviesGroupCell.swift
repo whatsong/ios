@@ -12,16 +12,6 @@ class MoviesGroupCell: UICollectionViewCell {
     
     var dayData: MoviesByScheduleByDay?
     
-    var sectionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Regular", size: 16)
-        label.textColor = UIColor.brandBlack()
-        label.attributedText = NSAttributedString(string: "Latest Releases", attributes: [
-            NSAttributedString.Key.kern: -0.8
-            ])
-        return label
-    }()
-    
     var dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 12)
@@ -32,15 +22,27 @@ class MoviesGroupCell: UICollectionViewCell {
         return label
     }()
     
+    var sectionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Montserrat-Regular", size: 16)
+        label.textColor = UIColor.brandBlack()
+        label.attributedText = NSAttributedString(string: "Latest Releases", attributes: [
+            NSAttributedString.Key.kern: -0.8
+            ])
+        return label
+    }()
+    
     var horizontalController = MoviesHorizontalController()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-                
+        
+        addSubview(dateLabel)
         addSubview(sectionLabel)
         addSubview(horizontalController.view)
         
-        sectionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 0))
+        dateLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 0))
+        sectionLabel.anchor(top: dateLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 20, bottom: 0, right: 0))
         horizontalController.view.anchor(top: sectionLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
         
     }

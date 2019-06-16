@@ -40,7 +40,6 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         self.dismiss(animated: true, completion: nil)
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SongDetailCell
         cell.song = song

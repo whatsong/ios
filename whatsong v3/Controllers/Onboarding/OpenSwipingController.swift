@@ -14,6 +14,14 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         super.init(nibName: nil, bundle: nil)
     }
     
+    var textHeading = ["whatsong", "Find", "Contribute", "Collect", "Just Launched"]
+    var subHeading = ["Discover music from the latest movies and television shows",
+                      "Find songs you heard from the latest episode of your favourite show, or a movie you just saw in the cinema",
+                      "Found a song that hasn't been added yet? Add it yourself to gain points and contribute to our growing community",
+                      "Save your favourite songs to your library on the go!",
+                      "The iOS app has just been launched so please leave any feedback or suggestions and we promise we'll get it built"
+    ]
+    
     var presentTransition: UIViewControllerAnimatedTransitioning?
     var dismissTransition: UIViewControllerAnimatedTransitioning?
     
@@ -30,7 +38,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     let pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.pageIndicatorTintColor = .gray
-        pc.numberOfPages = 4
+        pc.numberOfPages = 5
         pc.currentPageIndicatorTintColor = UIColor.brandPurple()
         pc.backgroundColor = UIColor.backgroundGrey()
 
@@ -102,11 +110,17 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SwipedPageCell
+        cell.logoText.attributedText = NSAttributedString(string: textHeading[indexPath.item], attributes: [
+            NSAttributedString.Key.kern: -1.0
+            ])
+        cell.subheading.attributedText = NSAttributedString(string: subHeading[indexPath.item], attributes: [
+            NSAttributedString.Key.kern: -0.6
+            ])
         return cell
     }
     

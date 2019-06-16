@@ -40,9 +40,10 @@ class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDe
         let urlPrefix = "https://www.what-song.com"
         let urlSuffix = movie?.poster ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
+        
+        cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imageView.sd_imageIndicator?.startAnimatingIndicator()
         cell.imageView.sd_setImage(with: url)
-        cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
 
         return cell
     }

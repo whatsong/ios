@@ -44,7 +44,7 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
     
     var movieSections = [LatestMovies]()
     var headerMovies = [MovieInfo]()
-
+    
     fileprivate func fetchData()    {
         var section1: LatestMovies?
         var section2: LatestMovies?

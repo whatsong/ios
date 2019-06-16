@@ -87,6 +87,5 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
         songDetailController.song = song
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
-        print("WHAT")
     }
 }
