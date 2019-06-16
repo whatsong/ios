@@ -34,7 +34,7 @@ class MainTabBarController: UITabBarController  {
     
     func setupLoggedOutViewControllers() {
         viewControllers = [
-            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-text"),
+            createNavController(viewController: MoviesController1(), title: "Movies", imageName: "movies-icon-text"),
             createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "shows-icon-text"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-text"),
             createNavController(viewController: ProfileLoggedOutController(), title: "Profile", imageName: "profile-icon-text")
