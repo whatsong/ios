@@ -49,6 +49,41 @@ class Service   {
             }.resume()
     }
     
+    func signUp(login: String, password: String, mail: String, completion: @escaping (_ result: Bool) -> Void) {
+        var request = URLRequest(url: URL(string: "https://www.what-song.com/api/sign-up")!)
+        request.httpMethod = "POST"
+        let parameters: [String: Any] = [
+            "username" : login,
+            "password" : password,
+            "email" : mail]
+        request.httpBody = parameters.percentEscaped().data(using: .utf8)
+        URLSession.shared.dataTask(with: request){ data, response, error in
+            guard(error == nil) else {
+                completion(false)
+                return
+            }
+            if let data = data {
+                do {
+                    let parseResult = try JSONDecoder().decode(UniversalResponce.self, from: data)
+                    if parseResult.success {
+                        completion(true)
+                    } else {
+                        completion( false)
+                    }
+                    
+                } catch {
+                    completion( false)
+                }
+            }
+            if let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                completion(true)
+                
+            } else {
+                completion(false)
+            }
+        }.resume()
+    }
+    
     func addTofavourite(songId: String?, type: String, like: Bool, completion: @escaping (_ result: Bool) -> Void) {
         if let songId = songId {
             var request = URLRequest(url:URL(string:"https://www.what-song.com/api/user-action/favourite")!)
@@ -66,7 +101,7 @@ class Service   {
                 }
                 if let data = data {
                     do {
-                        let parseResult = try JSONDecoder().decode(SongFavResponce.self, from: data)
+                        let parseResult = try JSONDecoder().decode(UniversalResponce.self, from: data)
                         print(parseResult)
                         if parseResult.success {
                             completion(true)
