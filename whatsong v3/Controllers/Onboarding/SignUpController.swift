@@ -118,7 +118,9 @@ class SignUpController: UIViewController   {
         if usernameInput.text!.count > 0 && passwordInput.text!.count > 0 && emailInput.text!.count > 0 {
             Service.shared.signUp(login: usernameInput.text!, password: passwordInput.text!, mail: emailInput.text!) { [unowned self] (success) in
                 if success {
-
+                    DispatchQueue.main.async {
+                        self.presentCustom(vc: LoginController(), animated: true)
+                    }
                 } else {
                     DispatchQueue.main.async {
                         self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong")
@@ -152,4 +154,8 @@ class SignUpController: UIViewController   {
         stackView.anchor(top: signupHeading.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 40, left: 20, bottom: 0, right: 20))
     }
     
+    func presentCustom(vc: UIViewController, animated: Bool) {
+        vc.modalPresentationStyle = .custom
+        present(vc, animated: true, completion: nil)
+    }
 }
