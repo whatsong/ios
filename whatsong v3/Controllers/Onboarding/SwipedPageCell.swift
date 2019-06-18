@@ -10,7 +10,6 @@ import UIKit
 
 class SwipedPageCell: UICollectionViewCell  {
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -19,6 +18,14 @@ class SwipedPageCell: UICollectionViewCell  {
         backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
         
     }
+    
+    let imageScreenshot: UIImageView = {
+       let iv = UIImageView()
+        iv.image = UIImage(named: "tv-screenshot")
+        iv.contentMode = .scaleAspectFit
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
     
     let logoText: UILabel = {
         let label = UILabel()
@@ -48,10 +55,14 @@ class SwipedPageCell: UICollectionViewCell  {
         let verticalStackView = VerticalStackView(arrangedSubviews: [logoText, subheading])
         verticalStackView.spacing = 10
         
+        addSubview(imageScreenshot)
         addSubview(verticalStackView)
         
-        verticalStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
-        verticalStackView.centerYInSuperview()
+        imageScreenshot.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
+        imageScreenshot.constrainHeight(constant: frame.height / 2)
+        
+        verticalStackView.anchor(top: imageScreenshot.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 30, left: 20, bottom: 80, right: 20))
+        //verticalStackView.centerYInSuperview()
         verticalStackView.centerXInSuperview()
         
     }

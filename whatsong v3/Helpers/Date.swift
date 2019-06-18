@@ -78,3 +78,12 @@ extension Date  {
     }
     
 }
+
+extension Date {
+    
+    var stringDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy"
+        return formatter.string(from: self)
+    }
+}

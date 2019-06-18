@@ -100,7 +100,7 @@ class LoginController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
-        stackView.constrainHeight(constant: 160)
+        stackView.constrainHeight(constant: 180)
         stackView.spacing = 14
         
         view.addSubview(dismissButton)

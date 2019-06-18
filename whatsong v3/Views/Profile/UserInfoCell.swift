@@ -34,7 +34,13 @@ class UserInfoCell: ShowInfoCell   {
             }
             if userInfo.added_scenes_count != nil {
                 headerArray.append("Joined")
-                subtitleArray.append(userInfo.created_at ?? "")
+                
+                let formatter = ISO8601DateFormatter()
+                formatter.formatOptions.insert(.withFractionalSeconds)
+                if let date = formatter.date(from: userInfo.created_at ?? "") {
+                    let dateString = date.stringDate
+                    subtitleArray.append(dateString)
+                }
             }
         }
         collectionView.reloadData()

@@ -113,8 +113,4 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             return UIEdgeInsets(top: top, left: 0, bottom: top, right: 0)
         }
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
 }

@@ -144,7 +144,7 @@ class SignUpController: UIViewController   {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
-        stackView.constrainHeight(constant: 160)
+        stackView.constrainHeight(constant: 240)
         stackView.spacing = 14
         view.addSubview(dismissButtonWhite)
         view.addSubview(signupHeading)

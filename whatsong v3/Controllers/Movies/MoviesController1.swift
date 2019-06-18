@@ -15,7 +15,7 @@ class MoviesController1: ShowsController   {
     var moviesCellId = "moviesCellId"
     var moviesHeaderId = "moviesHeaderId"
     
-    let sectionHeadings = ["This Week", "Last Week", "Three Weeks Ago", "Four Weeks Ago", "Five Weeks Ago", "Six Weeks Ago", "Seven Weeks Ago"]
+    let sectionHeadings = ["This Week", "Last Week", "Two Weeks Ago", "Three Weeks Ago", "Four Weeks Ago", "Five Weeks Ago", "Six Weeks Ago"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

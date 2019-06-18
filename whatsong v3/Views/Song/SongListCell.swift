@@ -131,6 +131,8 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         guard let delegate = UIApplication.shared.delegate else { return }
         guard let window = delegate.window else { return }
         let tabBarView = window?.rootViewController as! UITabBarController
+        
+        // If the floating player has already been initialised
         if SongFloatingPlayer.tabBarContainPlayer() {
             let playerView = SongFloatingPlayer.getCurrentPlayerFromTabBar()
             playerView?.song = song
@@ -139,11 +141,15 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
             }
             return
         }
+        
+        // Else -- first time being initialised
         let songPlayerView = SongFloatingPlayer()
         songPlayerView.song = song
-        if shouldPlay{
+        if shouldPlay {
             songPlayerView.playSong()
         }
+        
+        // Adds floating view
         tabBarView.view.insertSubview(songPlayerView, belowSubview: tabBarView.tabBar)
         if let mainWindow = window {
             songPlayerView.anchor(top: tabBarView.tabBar.topAnchor, leading: mainWindow.leadingAnchor, bottom: nil, trailing: mainWindow.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -153,7 +159,11 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
             songPlayerView.transform = .init(translationX: 0, y: -54)
         }, completion: nil)
+        
+        // Set icons on first appearing
         songPlayerView.setPlayPauseOnAppearing()
+        songPlayerView.setIsFavouritedOnAppearing(isFavorited: song.is_favorited!)
+        print("Is this song favourited", song.is_favorited)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -185,7 +195,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
 //        let song = self.songsArray[indexPath.item]
 //        songDetailView.song = song
 //        songDetailView.setPlayPauseOnAppearing()
-        
+        print(songCellDelegate)
         if songCellDelegate != nil {
             songCellDelegate?.didSelectSongDetail(for: songsArray[indexPath.item])
         }

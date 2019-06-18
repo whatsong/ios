@@ -34,15 +34,15 @@ class UserStatsCell: UICollectionViewCell, UICollectionViewDelegate, UICollectio
         countArray = []
         if let userStats = userStats {
             if userStats.scores != nil {
-                labelArray.append("Songs")
+                labelArray.append("Points")
                 countArray.append(userStats.scores ?? 0)
             }
             if userStats.added_songs_count != nil {
-                labelArray.append("Scene Descriptions")
+                labelArray.append("Added Songs")
                 countArray.append(userStats.added_songs_count ?? 0)
             }
             if userStats.added_scenes_count != nil {
-                labelArray.append("Time Descriptions")
+                labelArray.append("Scene Descriptions")
                 countArray.append(userStats.added_scenes_count ?? 0)
             }
         }

@@ -11,29 +11,20 @@ import AVKit
 
 class SongFloatingPlayer: UIView {
     
+    
+    var songCellDelegate: SongCellDelegate?
+    
     var song: Song! {
         didSet  {
             songName.text = song.title
             artistName.text = song.artist.name
-            
-//            if song.preview_url == nil {
-//                print("4")
-//                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-//                playPauseButton.isEnabled = false
-//                playPauseButton.adjustsImageWhenDisabled = false
-//                SongPlayer.shared.player.pause()
-//                }   else if song.preview_url != nil {
-//                print("5")
-//                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-//                playPauseButton.isEnabled = true
-//            }
+        
             if song.is_favorited == false   {
                 heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
                 print("not favorited")
             } else if song.is_favorited == true {
                 heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
                 print("favorited")
-
             }
         }
     }
@@ -51,9 +42,9 @@ class SongFloatingPlayer: UIView {
         
         let spotifyPreview = song.spotifyPreviewUrl
         let iTunesPreview = song.preview_url
+        
         func setPauseButton() {
             self.playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-            
         }
         
         if spotifyPreview != nil && spotifyPreview != "0"   {
@@ -79,6 +70,27 @@ class SongFloatingPlayer: UIView {
             SongPlayer.shared.player.play()
             playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
             print("10")
+        }
+    }
+    
+//    @objc func showSongInfoPopup() {
+//        let window: UIWindow? = UIApplication.shared.keyWindow
+//        let offsetY = (window?.frame.maxY)!
+//        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
+//        window?.addSubview(songDetailView)
+//
+//        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+//            songDetailView.transform = .init(translationX: 0, y: -offsetY)
+//        }, completion: nil)
+//        songDetailView.song = song
+//        songDetailView.setPlayPauseOnAppearing()
+//    }
+    
+    @objc func showSongDetailView() {
+        
+        print(songCellDelegate)
+        if songCellDelegate != nil {
+            songCellDelegate?.didSelectSongDetail(for: song)
         }
     }
     
@@ -119,28 +131,15 @@ class SongFloatingPlayer: UIView {
         button.addTarget(self, action: #selector(handleLikeSong), for: .touchUpInside)
         return button
     }()
-
+    
     let viewButton:UIButton = {
         
         let button = UIButton()
         button.setTitle("", for: .normal)
-        button.addTarget(self, action: #selector(showSongInfoPopup), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showSongDetailView), for: .touchUpInside)
         button.backgroundColor = UIColor.clear
         return button
     }()
-    
-    @objc func showSongInfoPopup() {
-        let window: UIWindow? = UIApplication.shared.keyWindow
-        let offsetY = (window?.frame.maxY)!
-        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
-        window?.addSubview(songDetailView)
-        
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-            songDetailView.transform = .init(translationX: 0, y: -offsetY)
-        }, completion: nil)
-        songDetailView.song = song
-        songDetailView.setPlayPauseOnAppearing()
-    }
     
     let playPauseButton: UIButton = {
         let button = UIButton()
@@ -223,7 +222,7 @@ class SongFloatingPlayer: UIView {
                 if success {
                     DispatchQueue.main.async {
                         self.heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
-                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully deleted song from library")
+                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully removed song from library")
                         self.song.is_favorited = false
                     }
                 }
@@ -294,22 +293,17 @@ class SongFloatingPlayer: UIView {
             print("2")
         }
     }
-
-        
-//        if SongPlayer.shared.playerUrl == song.preview_url || SongPlayer.shared.playerUrl == song.spotifyPreviewUrl {
-//            if SongPlayer.shared.player.timeControlStatus == .paused {
-//                playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-//                print("1")
-//            } else  {
-//                playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-//                print("2")
-//            }
-//        } else {
-//            playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-//            print("3")
-//        }
-//    }
     
+    func setIsFavouritedOnAppearing(isFavorited: Bool)   {
+        
+        if isFavorited == true    {
+            heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+            print("favorited")
+        }   else  {
+            heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
+            print("not favorited")
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
