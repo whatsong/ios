@@ -49,7 +49,7 @@ class Service   {
             }.resume()
     }
     
-    func signUp(login: String, password: String, mail: String, completion: @escaping (_ result: Bool) -> Void) {
+    func signUp(login: String, password: String, mail: String, completion: @escaping (_ result: Bool, _ errorMessage: String?) -> Void) {
         var request = URLRequest(url: URL(string: "https://www.what-song.com/api/sign-up")!)
         request.httpMethod = "POST"
         let parameters: [String: Any] = [
@@ -59,27 +59,30 @@ class Service   {
         request.httpBody = parameters.percentEscaped().data(using: .utf8)
         URLSession.shared.dataTask(with: request){ data, response, error in
             guard(error == nil) else {
-                completion(false)
+                completion(false, error?.localizedDescription)
                 return
             }
             if let data = data {
                 do {
-                    let parseResult = try JSONDecoder().decode(UniversalResponce.self, from: data)
+                    let parseResult = try JSONDecoder().decode(SignUpResponce.self, from: data)
                     if parseResult.success {
-                        completion(true)
+                        completion(true, nil)
                     } else {
-                        completion( false)
+                        var errorMessage:String?
+                        if let error = parseResult.error, let errors = error.errors {
+                            if let mail = errors.email {
+                                errorMessage = mail.message
+                            }
+                            if let username = errors.username {
+                                errorMessage = username.message
+                            }
+                        }
+                        completion(false, errorMessage)
                     }
                     
                 } catch {
-                    completion( false)
+                    completion(false, "Something went wrong")
                 }
-            }
-            if let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                completion(true)
-                
-            } else {
-                completion(false)
             }
         }.resume()
     }
@@ -101,7 +104,7 @@ class Service   {
                 }
                 if let data = data {
                     do {
-                        let parseResult = try JSONDecoder().decode(UniversalResponce.self, from: data)
+                        let parseResult = try JSONDecoder().decode(SignUpResponce.self, from: data)
                         print(parseResult)
                         if parseResult.success {
                             completion(true)

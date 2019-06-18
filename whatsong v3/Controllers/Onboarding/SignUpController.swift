@@ -116,14 +116,19 @@ class SignUpController: UIViewController   {
     @objc func handleSignUp() {
         
         if usernameInput.text!.count > 0 && passwordInput.text!.count > 0 && emailInput.text!.count > 0 {
-            Service.shared.signUp(login: usernameInput.text!, password: passwordInput.text!, mail: emailInput.text!) { [unowned self] (success) in
+            Service.shared.signUp(login: usernameInput.text!, password: passwordInput.text!, mail: emailInput.text!) { [unowned self] (success, errorMessage) in
                 if success {
                     DispatchQueue.main.async {
                         self.presentCustom(vc: LoginController(), animated: true)
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong")
+                        if let errorMessage = errorMessage {
+                            self.showAlert(bgColor: UIColor.brandWarning(), text: errorMessage)
+                        } else {
+                            self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong")
+                        }
+                        
                     }
                 }
             }
