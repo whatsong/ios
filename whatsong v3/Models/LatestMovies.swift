@@ -20,7 +20,3 @@ struct LatestMovie: Decodable  {
     var song_count: Int?
     
 }
-
-struct UniversalResponce: Decodable {
-    let success: Bool
-}
