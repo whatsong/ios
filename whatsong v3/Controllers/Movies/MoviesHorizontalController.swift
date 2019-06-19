@@ -12,7 +12,11 @@ import SDWebImage
 class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDelegateFlowLayout  {
     
     let cellId = "cellId"
-    var latestMoviesArray: [LatestMovie]?
+    var latestMoviesArray: [LatestMovie]?{
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     var didSelectHandler: ((LatestMovie) -> ())?
     

@@ -11,7 +11,11 @@ import SDWebImage
 
 class ShowsHorizontalController: UICollectionViewController, UICollectionViewDelegateFlowLayout   {
     
-    var tvShows: [ShowDetails]?
+    var tvShows: [ShowDetails]? {
+        didSet{
+            collectionView.reloadData()
+        }
+    }
     
     init() {
         let layout = UICollectionViewFlowLayout()
