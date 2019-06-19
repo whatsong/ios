@@ -11,7 +11,6 @@ import AVKit
 
 class SongFloatingPlayer: UIView {
     
-    
     var songCellDelegate: SongCellDelegate?
     
     var song: Song! {
@@ -215,6 +214,8 @@ class SongFloatingPlayer: UIView {
                     self.heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
                     self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
                     self.song.is_favorited = true
+                    NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
+                                   "songId" : self.song._id])
                 }
             }
         } else if userLoggedIn() && song.is_favorited == true {
@@ -224,6 +225,8 @@ class SongFloatingPlayer: UIView {
                         self.heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
                         self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully removed song from library")
                         self.song.is_favorited = false
+                        NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : false,
+                                       "songId" : self.song._id])
                     }
                 }
             }
