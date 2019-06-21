@@ -162,8 +162,9 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         
         // Set icons on first appearing
         songPlayerView.setPlayPauseOnAppearing()
-        songPlayerView.setIsFavouritedOnAppearing(isFavorited: song.is_favorited!)
-        print("Is this song favourited", song.is_favorited)
+        
+//        songPlayerView.setIsFavouritedOnAppearing(isFavorited: song.is_favorited!)
+//        print("Is this song favourited", song.is_favorited)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -179,8 +180,13 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     }
     
     @objc func moreButtonTap(gesture: UITapGestureRecognizer)  {
+
         var indexPath = getIndexPathFromRecognizer(gesture: gesture)
         
+        let songDetailView = SongDetailCell()
+        let song = self.songsArray[indexPath.item]
+        songDetailView.song = song
+
 //        // To present UIView (SongDetailPopup) Instead of UICollectionView (SongDetailView)
 //        let window: UIWindow? = UIApplication.shared.keyWindow
 //        let offsetY = (window?.frame.maxY)!
@@ -195,6 +201,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
 //        let song = self.songsArray[indexPath.item]
 //        songDetailView.song = song
 //        songDetailView.setPlayPauseOnAppearing()
+        
         print(songCellDelegate)
         if songCellDelegate != nil {
             songCellDelegate?.didSelectSongDetail(for: songsArray[indexPath.item])

@@ -17,14 +17,14 @@ class SongDetailCell: UICollectionViewCell  {
             timePlayed.text = "\(String(describing: song.time_play))"
             sceneDescription.text = song.scene_description
             
-            if song.preview_url != nil  {
-                print("iTunes preview exists")
-            }   else if song.preview_url == nil   {
-                print("7")
-                playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
-                playPauseButton.isEnabled = false
-                playPauseButton.adjustsImageWhenDisabled = false
-            }
+//            if song.preview_url != nil  {
+//                print("iTunes preview exists")
+//            }   else if song.preview_url == nil   {
+//                print("7")
+//                playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
+//                playPauseButton.isEnabled = false
+//                playPauseButton.adjustsImageWhenDisabled = false
+//            }
             
             if song.spotify_uri == nil  {
                 spotifyButton.isEnabled = true
@@ -82,7 +82,6 @@ class SongDetailCell: UICollectionViewCell  {
         addSubview(albumImage)
         addSubview(playPauseButton)
         addSubview(rowStackView)
-        addSubview(testButton)
         
         albumImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         albumImage.constrainHeight(constant: frame.width)
@@ -93,9 +92,33 @@ class SongDetailCell: UICollectionViewCell  {
     
         rowStackView.anchor(top: albumImage.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 20, bottom: 0, right: 20))
         
-        testButton.anchor(top: rowStackView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
-        testButton.constrainHeight(constant: 50)
+    }
+    
+    
+    func setPlayPauseOnAppearing()  {
         
+        print(SongPlayer.shared.currentlyPlayingUrl, "currentlyPlaying")
+        print(SongPlayer.shared.previewUrl, "previewUrl")
+        print(song?.spotifyPreviewUrl, "spotify")
+        print(song?.preview_url, "itunes")
+        
+        if SongPlayer.shared.doesPreviewExist(spotifyPreviewUrl: song?.spotifyPreviewUrl, iTunesPreviewUrl: song?.preview_url) == false   {
+            playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
+            playPauseButton.isEnabled = false
+            playPauseButton.adjustsImageWhenDisabled = false
+            print("no audio")
+        } else if SongPlayer.shared.currentlyPlayingUrl == song?.spotifyPreviewUrl || SongPlayer.shared.currentlyPlayingUrl == song?.preview_url    {
+            if SongPlayer.shared.player.timeControlStatus == .paused {
+                playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+                print("paused on current song")
+            } else  {
+                playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
+                print("playing current song")
+            }
+        }   else    {
+            playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
+            print("different song")
+        }
     }
     
     func setupBackgroundGradient()    {
@@ -234,19 +257,6 @@ class SongDetailCell: UICollectionViewCell  {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    let testButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Test", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(testButtonHandle), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func testButtonHandle() {
-        print("test button")
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -28,7 +28,6 @@ class MovieInfoCell: ShowInfoCell   {
                 formatter.formatOptions.insert(.withFractionalSeconds)
                 if let date = formatter.date(from: movieInfo.time_released!) {
                     let dateString = date.stringDate
-                    print(dateString) // October 2014
                     subtitleArray.append(dateString)
 
                 }

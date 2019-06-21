@@ -29,32 +29,15 @@ class SongFloatingPlayer: UIView {
         }
     }
     
-    func doesPreviewExist()   {
-        // 1 -- Check if spotify preview exists. If it does, play from here.
-        
-        // 2 -- If it does not, check iTunes preview. If it exists, play from here.
-        // - if itunesURL == "" show warning
-        // - if iTunesURL does not exist
-        // For iTunes, we must also check if error
-    }
-    
     func playSong() {
-        
-        let spotifyPreview = song.spotifyPreviewUrl
-        let iTunesPreview = song.preview_url
         
         func setPauseButton() {
             self.playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
         }
         
-        if spotifyPreview != nil && spotifyPreview != "0"   {
-            SongPlayer.shared.playSong(song: spotifyPreview)
+        if SongPlayer.shared.doesPreviewExist(spotifyPreviewUrl: song.spotifyPreviewUrl, iTunesPreviewUrl: song.preview_url)  {
+            SongPlayer.shared.playSong()
             setPauseButton()
-            print("playing from spotify")
-        } else if iTunesPreview != "" && iTunesPreview != nil {
-            SongPlayer.shared.playSong(song: iTunesPreview)
-            setPauseButton()
-            print("playing from iTunes")
         } else  {
             self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample")
         }
@@ -65,11 +48,9 @@ class SongFloatingPlayer: UIView {
         if SongPlayer.shared.player.timeControlStatus == .playing   {
             SongPlayer.shared.player.pause()
             playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-            print("20")
         }   else {
             SongPlayer.shared.player.play()
             playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-            print("10")
         }
     }
     
@@ -235,10 +216,8 @@ class SongFloatingPlayer: UIView {
     fileprivate func observePlayerCurrentTime() {
         let interval = CMTimeMake(value: 1, timescale: 2)
         SongPlayer.shared.player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
-            let totalSeconds = CMTimeGetSeconds(time)
-            
+            //let totalSeconds = CMTimeGetSeconds(time)
             self.updateTimeSlider()
-            print(totalSeconds)
         }
     }
     
@@ -246,17 +225,13 @@ class SongFloatingPlayer: UIView {
         let currentTimeSeconds = CMTimeGetSeconds(SongPlayer.shared.player.currentTime())
         let durationSeconds = CMTimeGetSeconds(SongPlayer.shared.player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
         let percentage = currentTimeSeconds / durationSeconds
-        
         self.timeSlider.value = Float(percentage)
-        
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        
         observePlayerCurrentTime()
-        
     }
     
     class func tabBarContainPlayer() -> Bool {
@@ -284,13 +259,8 @@ class SongFloatingPlayer: UIView {
     }
     
     func setPlayPauseOnAppearing() {
-        
-        if SongPlayer.shared.playerUrl == song.preview_url || SongPlayer.shared.playerUrl == song.spotifyPreviewUrl {
+        if SongPlayer.shared.doesPreviewExist(spotifyPreviewUrl: song.preview_url, iTunesPreviewUrl: song.spotifyPreviewUrl) == true   {
             playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-            print("1")
-        } else {
-            playPauseButton.setImage(UIImage(named: "no-audio-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-            print("2")
         }
     }
     

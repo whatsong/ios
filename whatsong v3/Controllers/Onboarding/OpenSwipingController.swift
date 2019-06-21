@@ -14,13 +14,18 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         super.init(nibName: nil, bundle: nil)
     }
     
+    override var prefersStatusBarHidden: Bool   {
+        return true
+    }
+    
     var textHeading = ["whatsong", "Find", "Contribute", "Collect", "Just Launched"]
     var subHeading = ["Discover music from the latest movies and television shows",
                       "Find songs you heard from the latest episode of your favourite show, or a movie you just saw in the cinema",
                       "Found a song that hasn't been added yet? Add it yourself to gain points and contribute to our growing community",
-                      "Save your favourite songs to your library on the go!",
+                      "Found a song that hasn't been added yet? Add it yourself to gain points and contribute to our growing community",
                       "The iOS app has just been launched so please leave any feedback or suggestions and we promise we'll get it built"
     ]
+    var imageName: [String?] = [nil, "tv-screenshot", "tv-screenshot", "tv-screenshot", "tv-screenshot", "tv-screenshot"]
     
     var presentTransition: UIViewControllerAnimatedTransitioning?
     var dismissTransition: UIViewControllerAnimatedTransitioning?
@@ -81,7 +86,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = UIColor.backgroundGrey()
+        view.backgroundColor = UIColor.backgroundGrey()
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SwipedPageCell.self, forCellWithReuseIdentifier: cellId)
@@ -91,14 +96,13 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.spacing = 10
         buttonStackView.distribution = .fillEqually
-        buttonStackView.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
         
         view.addSubview(collectionView)
         view.addSubview(pageControl)
         view.addSubview(buttonStackView)
-        view.addSubview(skipButton)
+        //view.addSubview(skipButton)
         
-        collectionView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+        collectionView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: pageControl.topAnchor, trailing: view.trailingAnchor)
         
         pageControl.anchor(top: nil, leading: view.leadingAnchor, bottom: buttonStackView.topAnchor, trailing: view.trailingAnchor)
         pageControl.constrainHeight(constant: 40)
@@ -106,7 +110,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         buttonStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 40, right: 20))
         buttonStackView.constrainHeight(constant: 50)
         
-        skipButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 50, left: 0, bottom: 0, right: 20))
+        //skipButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 50, left: 0, bottom: 0, right: 20))
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -121,6 +125,14 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         cell.subheading.attributedText = NSAttributedString(string: subHeading[indexPath.item], attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
+        if indexPath.item == 0 {
+            cell.imageScreenshot.isHidden = true
+            cell.setupViews(distribution: .fill, alignment: .center, spacing: 10)
+        } else  {
+            cell.imageScreenshot.isHidden = false
+            cell.setupViews(distribution: .fillProportionally, alignment: .fill, spacing: 0)
+            cell.imageScreenshot.image = UIImage(named: imageName[indexPath.item]!)
+        }
         return cell
     }
     
@@ -131,6 +143,19 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        if #available(iOS 11.0, *) {
+//
+//            let top = UIApplication.shared.keyWindow?.safeAreaInsets.top
+//            return UIEdgeInsets(top: -top!, left: 0, bottom: 0, right: 0)
+//
+//        } else {
+//            // Fallback on earlier versions
+//            let top = -UIApplication.shared.statusBarFrame.height
+//            return UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
+//        }
+//    }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)

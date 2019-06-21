@@ -254,8 +254,8 @@ class SongDetailPopup: UIView {
             }
         }
         
-        if SongPlayer.shared.playerUrl != song.preview_url {
-            SongPlayer.shared.playSong(song: song.preview_url)
+        if SongPlayer.shared.previewUrl != song.preview_url {
+            SongPlayer.shared.playSong()
             playPauseButton.setImage(UIImage(named: "pause-button-large"), for: .normal)
             print("11")
             return
@@ -325,7 +325,7 @@ class SongDetailPopup: UIView {
     }
     
     func setPlayPauseOnAppearing() {
-        if SongPlayer.shared.playerUrl == song.preview_url {
+        if SongPlayer.shared.previewUrl == song.preview_url {
             if SongPlayer.shared.player.timeControlStatus == .paused && ((song?.preview_url) != nil) {
                 playPauseButton.setImage(UIImage(named: "play-button-large"), for: .normal)
                 print("8")

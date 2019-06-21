@@ -19,14 +19,31 @@ class SongPlayer {
         return avPlayer
     }()
     
-    var playerUrl:String?
+    var currentlyPlayingUrl: String?
+    var previewUrl: String?
     
-    func playSong(song: String?)  {
-        guard let url = URL(string: song ?? "") else { return }
+    func doesPreviewExist(spotifyPreviewUrl: String?, iTunesPreviewUrl: String?) -> Bool    {
+        if spotifyPreviewUrl != nil && spotifyPreviewUrl != "0" {
+            print("Spotify preview exists.")
+            previewUrl = spotifyPreviewUrl
+            return true
+        } else if iTunesPreviewUrl != "" && iTunesPreviewUrl != nil   {
+            print("iTunes preview exists.")
+            previewUrl = iTunesPreviewUrl
+            return true
+        }   else    {
+            print("No audio preview exists.")
+            previewUrl = nil
+            return false
+        }
+    }
+    
+    func playSong()  {
+        guard let url = URL(string: previewUrl ?? "") else { return }
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
-        playerUrl = song
+        currentlyPlayingUrl = previewUrl
     }
     
     func nilPlayer() {

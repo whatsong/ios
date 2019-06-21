@@ -13,9 +13,9 @@ class SwipedPageCell: UICollectionViewCell  {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupViews()
+        setupViews(distribution: .fillProportionally, alignment: .fill, spacing: 0)
         
-        backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
+        backgroundColor = UIColor.backgroundGrey()
         
     }
     
@@ -24,6 +24,7 @@ class SwipedPageCell: UICollectionViewCell  {
         iv.image = UIImage(named: "tv-screenshot")
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
+        //iv.backgroundColor = .blue
         return iv
     }()
     
@@ -35,6 +36,7 @@ class SwipedPageCell: UICollectionViewCell  {
         label.font = UIFont(name: "FatFrank", size: 40)
         label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
         label.textAlignment = .center
+        //label.backgroundColor = .yellow
         return label
     }()
     
@@ -47,23 +49,20 @@ class SwipedPageCell: UICollectionViewCell  {
         label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
         label.numberOfLines = 0
         label.textAlignment = .center
+        //label.backgroundColor = .orange
         return label
     }()
     
-    func setupViews()   {
+    func setupViews(distribution: UIStackView.Distribution, alignment: UIStackView.Alignment, spacing: CGFloat)   {
         
-        let verticalStackView = VerticalStackView(arrangedSubviews: [logoText, subheading])
-        verticalStackView.spacing = 10
-        
-        addSubview(imageScreenshot)
+        let verticalStackView = VerticalStackView(arrangedSubviews: [imageScreenshot, logoText, subheading])
+        verticalStackView.spacing = spacing
+        verticalStackView.distribution = distribution
+        verticalStackView.alignment = alignment
+
         addSubview(verticalStackView)
         
-        imageScreenshot.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
-        imageScreenshot.constrainHeight(constant: frame.height / 2)
-        
-        verticalStackView.anchor(top: imageScreenshot.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 30, left: 20, bottom: 80, right: 20))
-        //verticalStackView.centerYInSuperview()
-        verticalStackView.centerXInSuperview()
+        verticalStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 10, right: 20))
         
     }
 

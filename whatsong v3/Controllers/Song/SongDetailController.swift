@@ -45,6 +45,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         cell.song = song
         cell.youtubeButton.addTarget(self, action: #selector(openWithYoutube(sender:)), for: .touchUpInside)
         cell.spotifyButton.addTarget(self, action: #selector(openWithSpotify(sender:)), for: .touchUpInside)
+        cell.setPlayPauseOnAppearing()
         cell.playPauseButton.addTarget(self, action: #selector(handlePlayPause(sender:)), for: .touchUpInside)
         
         return cell
@@ -55,7 +56,42 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     }
     
     @objc func handlePlayPause(sender: UIButton) {
-        print("playpause")
+        
+        if SongPlayer.shared.currentlyPlayingUrl == song?.preview_url || SongPlayer.shared.currentlyPlayingUrl == song?.spotifyPreviewUrl   {
+            if SongFloatingPlayer.tabBarContainPlayer() {
+                let currentViewPlayer = SongFloatingPlayer.getCurrentPlayerFromTabBar()
+                if SongPlayer.shared.player.timeControlStatus == .paused {
+                    currentViewPlayer?.playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                } else  {
+                    currentViewPlayer?.playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                }
+            }
+            
+            if SongPlayer.shared.player.timeControlStatus == .paused    {
+                print("paused")
+                sender.setImage(UIImage(named: "pause-button-large"), for: .normal)
+                SongPlayer.shared.player.play()
+
+            } else if SongPlayer.shared.player.timeControlStatus == .playing    {
+                print("playing")
+                SongPlayer.shared.player.pause()
+                sender.setImage(UIImage(named: "play-button-large"), for: .normal)
+            }
+        }   else if SongPlayer.shared.currentlyPlayingUrl != song?.preview_url {
+            sender.setImage(UIImage(named: "pause-button-large"), for: .normal)
+            SongPlayer.shared.playSong()
+        
+            if SongFloatingPlayer.tabBarContainPlayer() {
+                let currentViewPlayer = SongFloatingPlayer.getCurrentPlayerFromTabBar()
+                currentViewPlayer?.song = song
+                currentViewPlayer?.playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            }
+    
+            print("playing new song")
+        }   else    {
+            print("something else")
+        }
+
     }
     
     @objc func openWithYoutube(sender: UIButton)  {
