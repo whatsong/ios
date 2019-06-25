@@ -13,18 +13,14 @@ class SwipedPageCell: UICollectionViewCell  {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupViews(distribution: .fillProportionally, alignment: .fill, spacing: 0)
-        
         backgroundColor = UIColor.backgroundGrey()
-        
     }
     
-    let imageScreenshot: UIImageView = {
-       let iv = UIImageView()
-        iv.image = UIImage(named: "tv-screenshot")
+    let imageScreenshot: UIImageViewAligned = {
+        let iv = UIImageViewAligned()
+        iv.alignTop = true
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
-        //iv.backgroundColor = .blue
         return iv
     }()
     
@@ -35,8 +31,8 @@ class SwipedPageCell: UICollectionViewCell  {
             ])
         label.font = UIFont(name: "FatFrank", size: 40)
         label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
+        label.numberOfLines = 1
         label.textAlignment = .center
-        //label.backgroundColor = .yellow
         return label
     }()
     
@@ -49,7 +45,6 @@ class SwipedPageCell: UICollectionViewCell  {
         label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
         label.numberOfLines = 0
         label.textAlignment = .center
-        //label.backgroundColor = .orange
         return label
     }()
     
@@ -59,6 +54,7 @@ class SwipedPageCell: UICollectionViewCell  {
         verticalStackView.spacing = spacing
         verticalStackView.distribution = distribution
         verticalStackView.alignment = alignment
+        verticalStackView.setCustomSpacing(20, after: imageScreenshot)
 
         addSubview(verticalStackView)
         

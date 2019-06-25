@@ -41,9 +41,7 @@ class MoviesHorizontalController: BaseHorizontalCvController, UICollectionViewDe
         cell.titleLabel.text = movie?.title
         cell.yearLabel.text = movie?.year
         cell.songCountLabel.text = "\(movie?.song_count ?? 0) songs"
-        let urlPrefix = "https://www.what-song.com"
-        let urlSuffix = movie?.poster ?? ""
-        let url = URL(string: urlPrefix + urlSuffix)
+        let url = URL(string: movie?.poster ?? "")
         
         cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imageView.sd_imageIndicator?.startAnimatingIndicator()

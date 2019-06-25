@@ -78,7 +78,7 @@ class SignUpController: UIViewController   {
     
     let signUpButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(red: 243/255, green: 204/255, blue: 224/255, alpha: 1)
+        button.backgroundColor = UIColor(red: 174/255, green: 161/255, blue: 244/255, alpha: 1)
         button.isEnabled = false
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.setTitle("Create Your Account", for: .normal)
@@ -108,7 +108,7 @@ class SignUpController: UIViewController   {
             signUpButton.backgroundColor = .white
         } else  {
             signUpButton.isEnabled = false
-            signUpButton.backgroundColor = UIColor(red: 243/255, green: 204/255, blue: 224/255, alpha: 1)
+            signUpButton.backgroundColor = UIColor(red: 174/255, green: 161/255, blue: 244/255, alpha: 1)
             
         }
     }

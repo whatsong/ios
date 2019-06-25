@@ -14,17 +14,22 @@ class SongDetailCell: UICollectionViewCell  {
         didSet  {
             songName.text = song.title
             artistName.text = song.artist.name
-            timePlayed.text = "\(String(describing: song.time_play))"
-            sceneDescription.text = song.scene_description
+
+            if song.time_play != nil    {
+                guard let timeInt = song.time_play else { return }
+                timePlayed.text = "\(timeInt) min"
+            } else {
+                timePlayed.text = "Unknown time"
+                timePlayed.textColor = UIColor.brandDarkGrey()
+            }
             
-//            if song.preview_url != nil  {
-//                print("iTunes preview exists")
-//            }   else if song.preview_url == nil   {
-//                print("7")
-//                playPauseButton.setImage(UIImage(named: "no-audio-icon-large"), for: .normal)
-//                playPauseButton.isEnabled = false
-//                playPauseButton.adjustsImageWhenDisabled = false
-//            }
+            if song.scene_description == nil || song.scene_description == ""    {
+                sceneDescription.text = "Unknown scene"
+                sceneDescription.textColor = UIColor.brandDarkGrey()
+            }   else    {
+                sceneDescription.text = song.scene_description
+
+            }
             
             if song.spotify_uri == nil  {
                 spotifyButton.isEnabled = true
@@ -64,18 +69,19 @@ class SongDetailCell: UICollectionViewCell  {
         
         let spotifyStackView = UIStackView(arrangedSubviews: [spotifyIcon, spotifyButton])
         let youtubeStackView = UIStackView(arrangedSubviews: [youtubeIcon , youtubeButton])
-        spotifyStackView.spacing = 10; youtubeStackView.spacing = 10
+        let timeStackView = UIStackView(arrangedSubviews: [timePlayed, editTimeButton])
+        let sceneStackView = UIStackView(arrangedSubviews: [sceneDescription, editSceneButton])
+        spotifyStackView.spacing = 10; youtubeStackView.spacing = 10; timeStackView.spacing = 10; sceneStackView.spacing = 10;
         youtubeButton.constrainHeight(constant: 30)
         
         let rowStackView = UIStackView(arrangedSubviews: [
-            horizontalStackView, timeHeading, timePlayed, sceneHeading, sceneDescription, openWithHeading, spotifyStackView, youtubeStackView
+            horizontalStackView, timeHeading, timeStackView, sceneHeading, sceneStackView, openWithHeading, spotifyStackView, youtubeStackView
             ])
         rowStackView.axis = .vertical
         rowStackView.spacing = 8
         rowStackView.setCustomSpacing(30, after: horizontalStackView)
-        rowStackView.setCustomSpacing(24, after: timePlayed)
-        rowStackView.setCustomSpacing(24, after: sceneDescription)
-        rowStackView.setCustomSpacing(24, after: timePlayed)
+        rowStackView.setCustomSpacing(24, after: timeStackView)
+        rowStackView.setCustomSpacing(24, after: sceneStackView)
         
         rowStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -174,6 +180,15 @@ class SongDetailCell: UICollectionViewCell  {
         return iv
     }()
     
+    let editTimeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "edit-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
+        button.constrainWidth(constant: 18)
+        button.constrainHeight(constant: 18)
+        return button
+    }()
+    
     let timeHeading: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Bold", size: 10)
@@ -187,10 +202,18 @@ class SongDetailCell: UICollectionViewCell  {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 16)
         label.textColor = UIColor.white
-        label.text = "17" + "minutes"
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let editSceneButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "edit-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
+        button.constrainWidth(constant: 18)
+        button.constrainHeight(constant: 18)
+        return button
     }()
     
     let sceneHeading: UILabel = {
@@ -206,7 +229,6 @@ class SongDetailCell: UICollectionViewCell  {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 16)
         label.textColor = UIColor.white
-        label.text = "First song as the helicopter flies over in Mexico for a mission."
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -252,6 +274,15 @@ class SongDetailCell: UICollectionViewCell  {
     let youtubeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Youtube", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
+        button.contentHorizontalAlignment = .left
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let shareButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Share", for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
         button.contentHorizontalAlignment = .left
         button.translatesAutoresizingMaskIntoConstraints = false

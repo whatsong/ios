@@ -89,6 +89,8 @@
 		BBCA3EEB2256E78000037DCF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCA3EEA2256E78000037DCF /* Date.swift */; };
 		BBCA3EEE225C5E8700037DCF /* TvShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCA3EED225C5E8700037DCF /* TvShowDetails.swift */; };
 		BBCA3EF0225CB7F400037DCF /* TvShowInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCA3EEF225CB7F400037DCF /* TvShowInfo.swift */; };
+		BBD0AFDD22C0EE37000579EF /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0AFDC22C0EE37000579EF /* UIImageView.swift */; };
+		BBD0AFDF22C1E12B000579EF /* EditSongLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0AFDE22C1E12B000579EF /* EditSongLauncher.swift */; };
 		BBEB4357223F6DF200D54998 /* SongListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB4356223F6DF200D54998 /* SongListCell.swift */; };
 		BBEB435C224A24BF00D54998 /* SongDetailPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */; };
 		BBEDA28C221BDD9F007610DF /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */; };
@@ -211,6 +213,8 @@
 		BBCA3EEA2256E78000037DCF /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		BBCA3EED225C5E8700037DCF /* TvShowDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowDetails.swift; sourceTree = "<group>"; };
 		BBCA3EEF225CB7F400037DCF /* TvShowInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowInfo.swift; sourceTree = "<group>"; };
+		BBD0AFDC22C0EE37000579EF /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		BBD0AFDE22C1E12B000579EF /* EditSongLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSongLauncher.swift; sourceTree = "<group>"; };
 		BBEB4356223F6DF200D54998 /* SongListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCell.swift; sourceTree = "<group>"; };
 		BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailPopup.swift; sourceTree = "<group>"; };
 		BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
@@ -437,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				BB74F7F522AE2868006AB7C1 /* SongDetailController.swift */,
+				BBD0AFDE22C1E12B000579EF /* EditSongLauncher.swift */,
 			);
 			path = Song;
 			sourceTree = "<group>";
@@ -582,6 +587,7 @@
 			isa = PBXGroup;
 			children = (
 				BBEDA28F221C07A8007610DF /* UIView.swift */,
+				BBD0AFDC22C0EE37000579EF /* UIImageView.swift */,
 				BB1BF56F22928161009FBC91 /* UIViewController.swift */,
 				BB193C5F222E2A61000EB8DB /* UIColor.swift */,
 				BB193C6F222F511F000EB8DB /* UILabel.swift */,
@@ -874,6 +880,7 @@
 				BBCA3EF0225CB7F400037DCF /* TvShowInfo.swift in Sources */,
 				96D2C01422BAA1CE00E09AA7 /* SettingsManager.swift in Sources */,
 				BB193C6E222F501C000EB8DB /* MoviesSingleCell.swift in Sources */,
+				BBD0AFDD22C0EE37000579EF /* UIImageView.swift in Sources */,
 				BB7D7093221BA31000CE8A9F /* MainTabBarController.swift in Sources */,
 				96C53B15229ACE75006937CB /* SongPlayer.swift in Sources */,
 				BBF751F9222FC9FC00640C92 /* HorizontalSnappingController.swift in Sources */,
@@ -890,6 +897,7 @@
 				BB1BF57422939194009FBC91 /* ProfileController.swift in Sources */,
 				BB193C66222EA1D7000EB8DB /* MoviesGroupCell.swift in Sources */,
 				BB0CC21A2282812D008BC023 /* SpotifyController.swift in Sources */,
+				BBD0AFDF22C1E12B000579EF /* EditSongLauncher.swift in Sources */,
 				BB193C60222E2A61000EB8DB /* UIColor.swift in Sources */,
 				BBEDA290221C07A8007610DF /* UIView.swift in Sources */,
 				BB0CC21822826B4A008BC023 /* MovieInfoCell.swift in Sources */,
@@ -1098,7 +1106,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomandrew.whatsong-v3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "whatsong v3/Spotify-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1130,7 +1138,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomandrew.whatsong-v3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "whatsong v3/Spotify-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -68,10 +68,12 @@ class SongFloatingPlayer: UIView {
     
     @objc func showSongDetailView() {
         
-        print(songCellDelegate)
-        if songCellDelegate != nil {
-            songCellDelegate?.didSelectSongDetail(for: song)
-        }
+        let songDetailController = SongDetailPopupController()
+        let song = self.song
+        songDetailController.song = song
+        
+        self.window?.rootViewController?.present(songDetailController, animated: true, completion: nil)
+
     }
     
     let view: UIView = {
@@ -218,9 +220,9 @@ class SongFloatingPlayer: UIView {
     
     fileprivate func observePlayerCurrentTime() {
         let interval = CMTimeMake(value: 1, timescale: 2)
-        SongPlayer.shared.player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
+        SongPlayer.shared.player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] (time) in
             //let totalSeconds = CMTimeGetSeconds(time)
-            self.updateTimeSlider()
+            self?.updateTimeSlider()
         }
     }
     

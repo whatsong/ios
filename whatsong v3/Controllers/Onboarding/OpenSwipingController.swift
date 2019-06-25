@@ -18,14 +18,15 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         return true
     }
     
-    var textHeading = ["whatsong", "Find", "Contribute", "Collect", "Just Launched"]
-    var subHeading = ["Discover music from the latest movies and television shows",
-                      "Find songs you heard from the latest episode of your favourite show, or a movie you just saw in the cinema",
-                      "Found a song that hasn't been added yet? Add it yourself to gain points and contribute to our growing community",
-                      "Found a song that hasn't been added yet? Add it yourself to gain points and contribute to our growing community",
-                      "The iOS app has just been launched so please leave any feedback or suggestions and we promise we'll get it built"
+    var textHeading = ["whatsong", "Discover", "Find", "Contribute", "Collect", "Just Launched"]
+    var subHeading: [String?] = [nil,
+                      "Discover music from the latest movies and television shows, updated daily",
+                      "Easily find songs with playable samples, scene descriptions and time stamps",
+                      "Found a song that hasn't been added yet? Add it yourself to gain points and help other users",
+                      "Add songs you love to your library of favorites and track your contributions",
+                      "The iOS app has just been launched so we'd love to hear any feedback or suggestions"
     ]
-    var imageName: [String?] = [nil, "tv-screenshot", "tv-screenshot", "tv-screenshot", "tv-screenshot", "tv-screenshot"]
+    var imageName: [String?] = [nil, "screenshot-1", "screenshot-2", "screenshot-3", "screenshot-4", "tv-screenshot"]
     
     var presentTransition: UIViewControllerAnimatedTransitioning?
     var dismissTransition: UIViewControllerAnimatedTransitioning?
@@ -43,7 +44,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     let pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.pageIndicatorTintColor = .gray
-        pc.numberOfPages = 5
+        pc.numberOfPages = 6
         pc.currentPageIndicatorTintColor = UIColor.brandPurple()
         pc.backgroundColor = UIColor.backgroundGrey()
 
@@ -107,14 +108,14 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         pageControl.anchor(top: nil, leading: view.leadingAnchor, bottom: buttonStackView.topAnchor, trailing: view.trailingAnchor)
         pageControl.constrainHeight(constant: 40)
         
-        buttonStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 40, right: 20))
+        buttonStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 20, right: 20))
         buttonStackView.constrainHeight(constant: 50)
         
         //skipButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 50, left: 0, bottom: 0, right: 20))
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -122,7 +123,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         cell.logoText.attributedText = NSAttributedString(string: textHeading[indexPath.item], attributes: [
             NSAttributedString.Key.kern: -1.0
             ])
-        cell.subheading.attributedText = NSAttributedString(string: subHeading[indexPath.item], attributes: [
+        cell.subheading.attributedText = NSAttributedString(string: subHeading[indexPath.item] ?? "" , attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
         if indexPath.item == 0 {
@@ -130,32 +131,22 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
             cell.setupViews(distribution: .fill, alignment: .center, spacing: 10)
         } else  {
             cell.imageScreenshot.isHidden = false
-            cell.setupViews(distribution: .fillProportionally, alignment: .fill, spacing: 0)
             cell.imageScreenshot.image = UIImage(named: imageName[indexPath.item]!)
+            cell.imageScreenshot.alignTop = true
+            cell.imageScreenshot.constrainHeight(constant: view.frame.height * 0.60)
+//            cell.subheading.constrainHeight(constant: 70)
+            cell.setupViews(distribution: .fillProportionally, alignment: .fill, spacing: 0)
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height - 130)
+        return CGSize(width: view.frame.width, height: view.frame.height - 110)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        if #available(iOS 11.0, *) {
-//
-//            let top = UIApplication.shared.keyWindow?.safeAreaInsets.top
-//            return UIEdgeInsets(top: -top!, left: 0, bottom: 0, right: 0)
-//
-//        } else {
-//            // Fallback on earlier versions
-//            let top = -UIApplication.shared.statusBarFrame.height
-//            return UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
-//        }
-//    }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)

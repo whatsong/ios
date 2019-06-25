@@ -118,7 +118,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         return CGSize(width: frame.width, height: 100)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {        
         let song = songsArray[indexPath.item]
         if song.preview_url != nil || song.spotifyPreviewUrl != nil   {
             showFloatingPlayer(song: self.songsArray[indexPath.row])
@@ -186,6 +186,11 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         let songDetailView = SongDetailCell()
         let song = self.songsArray[indexPath.item]
         songDetailView.song = song
+        
+        print(songCellDelegate)
+        if songCellDelegate != nil {
+            songCellDelegate?.didSelectSongDetail(for: songsArray[indexPath.item])
+        }
 
 //        // To present UIView (SongDetailPopup) Instead of UICollectionView (SongDetailView)
 //        let window: UIWindow? = UIApplication.shared.keyWindow
@@ -202,10 +207,6 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
 //        songDetailView.song = song
 //        songDetailView.setPlayPauseOnAppearing()
         
-        print(songCellDelegate)
-        if songCellDelegate != nil {
-            songCellDelegate?.didSelectSongDetail(for: songsArray[indexPath.item])
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout  {
+class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate  {
     
     let albumSongListCellId = "albumSongListCellId"
     var albumSongs: [Song] = []
@@ -28,6 +28,7 @@ class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumSongListCellId, for: indexPath) as! AlbumSongList
         cell.songsArray = self.albumSongs
+        cell.songCellDelegate = self
         cell.collectionView.reloadData()
         return cell
     }
@@ -35,6 +36,13 @@ class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = CGFloat((self.albumSongs.count) * 60) + 100
         return CGSize(width: view.frame.width, height: height)
+    }
+    
+    func didSelectSongDetail(for song: Song)  {
+        let songDetailController = SongDetailPopupController()
+        songDetailController.song = song
+        songDetailController.navigationItem.title = song.title
+        self.navigationController?.present(songDetailController, animated: true, completion: nil)
     }
     
 }

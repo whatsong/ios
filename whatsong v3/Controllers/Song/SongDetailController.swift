@@ -14,6 +14,10 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     let cellId = "songId"
     var song: Song?
     
+    override var prefersStatusBarHidden: Bool   {
+        return true
+    }
+    
     let dismissButton: UIButton = {
         let button = UIButton()
         button.setTitle("Dismiss", for: .normal)
@@ -47,7 +51,10 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         cell.spotifyButton.addTarget(self, action: #selector(openWithSpotify(sender:)), for: .touchUpInside)
         cell.setPlayPauseOnAppearing()
         cell.playPauseButton.addTarget(self, action: #selector(handlePlayPause(sender:)), for: .touchUpInside)
-        
+        cell.shareButton.addTarget(self, action: #selector(handleShare(sender:)), for: .touchUpInside)
+        cell.editTimeButton.addTarget(self, action: #selector(handleEditTime), for: .touchUpInside)
+        cell.editSceneButton.addTarget(self, action: #selector(handleEditScene(sender:)), for: .touchUpInside)
+
         return cell
     }
     
@@ -117,10 +124,14 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
                 let url = URL(string: song.spotify_uri ?? "")
                 UIApplication.shared.open(url!)
             } else {
-                var str = song.spotify_uri!
-                str = str.replacingOccurrences(of: "spotify:track:", with: "", options: [.anchored], range: nil)
-                let fullString = "https://open.spotify.com/track/" + str
-                UIApplication.shared.open(URL(string: fullString)!)
+                if (song.spotify_uri != nil) {
+                    var str = song.spotify_uri!
+                    str = str.replacingOccurrences(of: "spotify:track:", with: "", options: [.anchored], range: nil)
+                    let fullString = "https://open.spotify.com/track/" + str
+                    UIApplication.shared.open(URL(string: fullString)!)
+                } else  {
+                    print("no spotify uri")
+                }
             }
         }
     }
@@ -128,6 +139,22 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     func isSpotifyInstalled() -> Bool  {
         return UIApplication.shared.canOpenURL(NSURL(string:"spotify:")! as URL)
     }
+    
+    @objc func handleEditTime()  {
+        let editLauncher = EditSongLauncher()
+        editLauncher.showEditView()
+    }
+    
+    @objc func handleEditScene(sender: UIButton)  {
+        print("edit scene")
+    }
+    
+    @objc func handleShare(sender: UIButton)  {
+        let activityController = UIActivityViewController(activityItems: ["Hey, check out this song"], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+    }
+    
+    // MARK:-- Protocol Methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
