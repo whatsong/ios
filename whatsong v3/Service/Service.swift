@@ -208,7 +208,13 @@ class Service   {
     
     func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
         guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+        guard let token = DAKeychain.shared["accessToken"] else { return }
+        
+        var request = URLRequest(url:url)
+        request.addValue("\(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { (data, resp, err) in
             if let err = err    {
                 completion(nil, err)
                 return
