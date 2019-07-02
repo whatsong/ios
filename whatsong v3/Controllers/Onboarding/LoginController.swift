@@ -148,7 +148,6 @@ class LoginController: UIViewController {
                     mainTabBarController.setupLoggedInViewControllers()
 
                         self.view.window?.rootViewController?.dismiss(animated: true, completion: {
-                        // completion handler after successful login
                             self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged in")
                     })
                 }
@@ -159,7 +158,7 @@ class LoginController: UIViewController {
     
     func handleLogin(completion: @escaping (LoginModel?, Error?, String?) -> ()) {
         dataTask?.cancel()
-        startActivityIndicator()
+        startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY))
         if var urlComponents = URLComponents(string: "https://www.what-song.com/api/sign-in") {
             urlComponents.query = "login=\(usernameInput.text!)&password=\(passwordInput.text!)"
             guard let url = urlComponents.url else { return }
@@ -185,24 +184,6 @@ class LoginController: UIViewController {
     
     @objc func handleDismiss()    {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    let activityIndicatorView: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView()
-        aiv.color = UIColor.brandLightGrey()
-        aiv.startAnimating()
-        aiv.hidesWhenStopped = true
-        return aiv
-    }()
-    
-    func hideActivityIndicatorView() -> () {
-        if !self.activityIndicator.isHidden{
-            DispatchQueue.main.async {
-                UIApplication.shared.endIgnoringInteractionEvents()
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
-            }
-        }
     }
     
     func displayAlert(userMessage: String) -> Void {

@@ -120,13 +120,15 @@ class SignUpController: UIViewController   {
                 if success {
                     DispatchQueue.main.async {
                         self.presentCustom(vc: LoginController(), animated: true)
+                        self.showAlert(bgColor: UIColor.brandWarning(), text: "Succesfully created account. Please log in.")
+
                     }
                 } else {
                     DispatchQueue.main.async {
                         if let errorMessage = errorMessage {
                             self.showAlert(bgColor: UIColor.brandWarning(), text: errorMessage)
                         } else {
-                            self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong")
+                            self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong. Please try again.")
                         }
                         
                     }

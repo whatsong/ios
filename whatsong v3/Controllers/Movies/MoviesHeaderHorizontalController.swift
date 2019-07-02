@@ -42,9 +42,10 @@ class MoviesHeaderHorizontalController: HorizontalSnappingController, UICollecti
         let urlPrefix = "https://www.what-song.com"
         let urlSuffix = movie.banner ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
-        cell.imageView.sd_setImage(with: url, completed: nil)
         cell.imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.imageView.sd_imageIndicator?.startAnimatingIndicator()
+        cell.imageView.sd_setImage(with: url, completed: nil)
+
 
         return cell
     }

@@ -32,7 +32,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     
     var movieId: Int!    {
         didSet  {
-            startActivityIndicator()
+            startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: 100))
             let urlString = "https://www.what-song.com/api/movie-info?movieID=\(movieId ?? 0)"
             Service.shared.fetchMovieDetail(urlString: urlString) { (data, err) in
                 

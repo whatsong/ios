@@ -11,8 +11,7 @@ import UIKit
 extension UIViewController  {
     var activityIndicatorTag: Int { return 999999 }
 
-    func startActivityIndicator(style: UIActivityIndicatorView.Style = .gray, location: CGPoint? = nil) {
-        UIApplication.shared.beginIgnoringInteractionEvents()
+    func startActivityIndicator(style: UIActivityIndicatorView.Style = .gray, center: CGPoint) {
         
         DispatchQueue.main.async {
             let activityIndicator = UIActivityIndicatorView(style: style)
@@ -23,7 +22,8 @@ extension UIViewController  {
             activityIndicator.style = .gray
             activityIndicator.backgroundColor = UIColor.backgroundGrey()
             activityIndicator.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-            activityIndicator.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY)
+            activityIndicator.center = center
+            //activityIndicator.center = CGPoint(x: self.view.bounds.midX, y: 100)
             activityIndicator.hidesWhenStopped = true
             //Start animating and add the view
             
@@ -37,7 +37,6 @@ extension UIViewController  {
             
             if let activityIndicator = self.view.subviews.filter (
                 { $0.tag == self.activityIndicatorTag}).first as? UIActivityIndicatorView {
-                UIApplication.shared.endIgnoringInteractionEvents()
                 activityIndicator.stopAnimating()
                 activityIndicator.removeFromSuperview()
             }

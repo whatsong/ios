@@ -26,15 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
         redirectURL: SpotifyRedirectURL
     )
     
-    
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = MainTabBarController()
-
+        window?.rootViewController = MainTabBarMenuContainerController()
         
 //        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
 //            window?.rootViewController = MainTabBarController()
@@ -42,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
 //        } else {
 //            window?.rootViewController = OpenSwipingController()
 //        }
-        
         return true
     }
 

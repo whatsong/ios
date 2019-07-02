@@ -53,7 +53,7 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
         // invalidates timer from firing off search request aggresively. So now will only perform fetchTitles request after 0.5seconds instead of after every letter typed.
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
-            self.startActivityIndicator()
+            self.startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY))
             Service.shared.fetchTitles(searchTerm: searchText) { (titleArray, success) in
                 if success {
                     self.movies = titleArray
@@ -74,16 +74,18 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
         cell.titleLabel.attributedText = NSAttributedString(string: movieResult?.title ?? "", attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
-        cell.yearLabel.text = "2019"//movieResult?.year
-//        cell.yearLabel.attributedText = NSAttributedString(string: movieResult?.year ?? "", attributes: [
-//            NSAttributedString.Key.kern: -0.6
-//            ])
+        //cell.yearLabel.text = "\(movieResult?.year ?? 0)"
+        cell.yearLabel.attributedText = NSAttributedString(string: "\(movieResult?.year ?? 0)", attributes: [
+            NSAttributedString.Key.kern: -0.6
+            ])
         let urlPrefix = "https://www.what-song.com"
         let urlSuffix = movieResult?.poster ?? ""
         let url = URL(string: urlPrefix + urlSuffix)
         print(url)
-        cell.posterImageView.sd_setImage(with: url)
         cell.posterImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.posterImageView.sd_imageIndicator?.startAnimatingIndicator()
+        cell.posterImageView.sd_setImage(with: url)
+
         
         return cell
     }

@@ -11,6 +11,7 @@ import UIKit
 class MainTabBarController: UITabBarController  {
     
     var profileController: UIViewController?
+    var toggleMenuDelegate: MainTabBarControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,7 @@ class MainTabBarController: UITabBarController  {
     
     func setupLoggedInViewControllers() {
         viewControllers = [
-            createNavController(viewController: MoviesController1(), title: "Movies", imageName: "movies-icon-text"),
+            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-text"),
             createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "shows-icon-text"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-text"),
             createNavController(viewController: ProfileController(), title: "Profile", imageName: "profile-icon-text")
@@ -34,7 +35,7 @@ class MainTabBarController: UITabBarController  {
     
     func setupLoggedOutViewControllers() {
         viewControllers = [
-            createNavController(viewController: MoviesController1(), title: "Movies", imageName: "movies-icon-text"),
+            createNavController(viewController: MoviesController(), title: "Movies", imageName: "movies-icon-text"),
             createNavController(viewController: ShowsController(), title: "TV Shows", imageName: "shows-icon-text"),
             createNavController(viewController: SearchController(), title: "Search", imageName: "search-icon-text"),
             createNavController(viewController: ProfileLoggedOutController(), title: "Profile", imageName: "profile-icon-text")
@@ -45,33 +46,21 @@ class MainTabBarController: UITabBarController  {
         let loginController = OpenSwipingController()
         present(loginController, animated: true, completion: nil)
     }
-    
-    func userLoggedIn() -> Bool    {
-        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
-            return true
-        } else {
-            return false
-        }
-    }
-    
+
     fileprivate func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController  {
         
         let navController = UINavigationController(rootViewController: viewController)
-        viewController.navigationItem.title = title
-        
-        
-        // I don't know what this line does!! For some reason though when I remove it, the ShowsController doesn't show anything.
-        viewController.view.backgroundColor = UIColor.backgroundGrey()
-        
         navController.tabBarItem.image = UIImage(named: imageName)
-        //navController.tabBarItem.title = title
         navController.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+        
+        viewController.navigationItem.title = title
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu-icon")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleSlideInMenu))
+        viewController.navigationItem.leftBarButtonItem?.tintColor = UIColor.brandBlack()
         
         //tab bar attributes
         let tabBarAttributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 10)!
             ]
-
         navController.tabBarItem.setTitleTextAttributes(tabBarAttributes, for: .normal)
         navController.tabBarController?.tabBar.isTranslucent = false
         
@@ -107,4 +96,19 @@ class MainTabBarController: UITabBarController  {
         
         return navController
     }
+    
+    @objc func handleSlideInMenu() {
+        toggleMenuDelegate?.handleMenuToggle()
+//        if isExpanded   {
+//            configureMenuController()
+//        }
+//
+//        isExpanded = !isExpanded
+//        showMenuController(shouldExpand: isExpanded)
+    }
+}
+
+protocol MainTabBarControllerDelegate   {
+    
+    func handleMenuToggle()
 }

@@ -35,7 +35,7 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
     fileprivate func fetchData() {
         
         let dispatchGroup = DispatchGroup()
-        
+        startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY))
         dispatchGroup.enter()
         Service.shared.fetchShowsBySchedule { (showDays, error) in
             if let error = error    {
@@ -56,7 +56,8 @@ class ShowsController: BaseCvController, UICollectionViewDelegateFlowLayout  {
             dispatchGroup.leave()
         }
         dispatchGroup.notify(queue: .main)  {
-            print("completed your dispatch")
+            print("completed tv shows dispatch")
+            self.stopActivityIndicator()
             self.collectionView.reloadData()
             self.collectionView.refreshControl?.endRefreshing()
         }

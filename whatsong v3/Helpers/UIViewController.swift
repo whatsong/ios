@@ -65,6 +65,14 @@ class LeftToRightTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
 extension UIViewController  {
     
+    func userLoggedIn() -> Bool    {
+        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func showAlert(bgColor: UIColor, text: String) {
         let statusBarHeight = (UIApplication.shared.keyWindow?.safeAreaInsets.top)!
         let offset = statusBarHeight + CGFloat(24)

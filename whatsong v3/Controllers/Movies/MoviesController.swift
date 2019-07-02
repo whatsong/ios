@@ -1,34 +1,29 @@
 //
-//  Movies.swift
+//  MoviesController1.swift
 //  whatsong v3
 //
-//  Created by Tom Andrew on 5/3/19.
+//  Created by Tom Andrew on 10/6/19.
 //  Copyright © 2019 Tom Andrew. All rights reserved.
-
+//
 
 import UIKit
 
-class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    {
+class MoviesController: ShowsController   {
     
-    let cellId = "cellId"
-    let headerId = "headerId"
+    var movieDays: [MoviesByScheduleByDay]? = []
+    var headerMovies = [MovieInfo]()
+    var moviesCellId = "moviesCellId"
+    var moviesHeaderId = "moviesHeaderId"
     
-    
-    let activityIndicatorView: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView()
-        aiv.color = UIColor.brandLightGrey()
-        aiv.startAnimating()
-        aiv.hidesWhenStopped = true
-        return aiv
-    }()
+    let sectionHeadings = ["This Week", "Last Week", "Two Weeks Ago", "Three Weeks Ago", "Four Weeks Ago", "Five Weeks Ago", "Six Weeks Ago"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         collectionView.backgroundColor = UIColor.backgroundGrey()
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-
-        collectionView.register(MoviesGroupCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(MoviesHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.register(MoviesGroupCell.self, forCellWithReuseIdentifier: moviesCellId)
+        collectionView.register(MoviesHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: moviesHeaderId)
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
@@ -36,74 +31,48 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         collectionView.refreshControl = refreshControl
         self.extendedLayoutIncludesOpaqueBars = true
         
-        view.addSubview(activityIndicatorView)
-        activityIndicatorView.fillSuperview()
-        
         fetchData()
     }
     
-    var movieSections = [LatestMovies]()
-    var headerMovies = [MovieInfo]()
-    
-    fileprivate func fetchData()    {
-        var section1: LatestMovies?
-        var section2: LatestMovies?
-        
-        //Dispatch Group helps sync our data requests together.
+    fileprivate func fetchData() {
+        startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY))
         let dispatchGroup = DispatchGroup()
-        
-        //startActivityIndicator()
         dispatchGroup.enter()
-        Service.shared.fetchLatestMovies { (movieSectionData, err) in
-            if let err =  err   {
-                print("Failed to fetch latest movies:", err)
-                return
+        Service.shared.fetchMoviesBySchedule { (movieDays, err) in
+            if let err = err    {
+                print("Failed to fetch movies", err)
+                DispatchQueue.main.async {
+                    self.showAlert(bgColor: UIColor.brandWarning(), text: "Failed to fetch movies, refreshing feed.")
+                }
+                self.fetchData()
             }
+            self.movieDays = movieDays?.data
             dispatchGroup.leave()
-            section1 = movieSectionData
-        }
-
-        dispatchGroup.enter()
-        Service.shared.fetchRecentlyAdded { (movieSectionData, err) in
-            if let err =  err   {
-                print("Failed to fetch recently added movies:", err)
-                return
-            }
-            dispatchGroup.leave()
-            section2 = movieSectionData
         }
         
         dispatchGroup.enter()
         Service.shared.fetchFeaturedMovies { (movies, err) in
             if let err = err    {
-                print("Failed to fetch featured movies:", err)
+                print("Failed to fetch featured movies", err)
+                DispatchQueue.main.async {
+                    self.showAlert(bgColor: UIColor.brandWarning(), text: "Failed to fetch movies, refreshing feed.")
+                }
+                self.fetchData()
             }
-            dispatchGroup.leave()
             self.headerMovies = movies?.data ?? []
+            dispatchGroup.leave()
         }
         
-        // completion
         dispatchGroup.notify(queue: .main) {
-            print("completed your dispatch")
-            self.activityIndicatorView.stopAnimating()
-            if let section = section1 {
-                self.movieSections.append(section)
-            }
-            if let section = section2 {
-                self.movieSections.append(section)
-            }
+            print("complete movies dispatch")
             self.collectionView.reloadData()
+            self.stopActivityIndicator()
             self.collectionView.refreshControl?.endRefreshing()
-            //self.stopActivityIndicator()
         }
-    }
-    
-    @objc func handleRefresh()    {
-        fetchData()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MoviesHeader
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: moviesHeaderId, for: indexPath) as! MoviesHeader
         header.moviesHeaderHorizontalController.headerMovies = self.headerMovies
         header.moviesHeaderHorizontalController.didSelectHandler = { [weak self] movie in
             let controller = MovieDetailController(movieId: movie._id)
@@ -115,27 +84,25 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         return header
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 260)
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieSections.count
+        
+        guard let days = movieDays else { return 0 }
+        movieDays = days.filter({ !$0.movie_details!.isEmpty })
+        return movieDays!.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MoviesGroupCell
-        let movieSection = movieSections[indexPath.item].data
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: moviesCellId, for: indexPath) as! MoviesGroupCell
+        cell.dayData = movieDays?[indexPath.row]
+        let date = cell.dayData?.weekStart.toDate(stringFormat: "dd-MM-yyyy")
+        cell.dateLabel.text = date?.toString(dateFormat: "MMM dd, yyyy")
         
-        cell.horizontalController.latestMoviesArray = movieSection
-        if indexPath.item == 0 {
-            cell.sectionLabel.text = "Latest Releases"
-        } else  {
-            cell.sectionLabel.text = "Popular this Year"
-        }
+        cell.sectionLabel.text = sectionHeadings[indexPath.item]
         
-        cell.horizontalController.collectionView.reloadData()
-        cell.horizontalController.didSelectHandler = { [weak self] movie in
+        cell.horizontalController.latestMoviesArray = []
+        cell.horizontalController.latestMoviesArray = movieDays?[indexPath.row].movie_details
+        cell.horizontalController.didSelectHandler = { [weak self]
+            movie in
             let controller = MovieDetailController(movieId: movie._id)
             controller.movieId = movie._id
             controller.navigationItem.title = movie.title
@@ -144,16 +111,6 @@ class MoviesController: BaseCvController, UICollectionViewDelegateFlowLayout    
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 260)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
-        
+    @objc func handleSlideInMenu()    {
     }
 }

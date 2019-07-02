@@ -31,7 +31,7 @@ struct Group: Decodable  {
 struct Title: Decodable {
     let id: Int?
     let name: String?
-//    let year: String?
+    let year: Int?
     let poster: String?
     let slug: String?
     let title: String?
@@ -49,11 +49,11 @@ struct Title: Decodable {
         }
         groupName = nil
         
-//        if values.contains(.year) {
-//            self.year = try values.decodeIfPresent(String.self, forKey: .year)
-//        } else {
-//            self.year = nil
-//        }
+        if values.contains(.year) {
+            self.year = try values.decodeIfPresent(Int.self, forKey: .year)
+        } else {
+            self.year = nil
+        }
         
         if values.contains(.poster) {
             self.poster = try values.decodeIfPresent(String.self, forKey: .poster)

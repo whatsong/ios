@@ -64,7 +64,7 @@ class Service   {
             }
             if let data = data {
                 do {
-                    let parseResult = try JSONDecoder().decode(SignUpResponce.self, from: data)
+                    let parseResult = try JSONDecoder().decode(SignUpResponse.self, from: data)
                     if parseResult.success {
                         completion(true, nil)
                     } else {
@@ -87,6 +87,22 @@ class Service   {
         }.resume()
     }
     
+    func addSceneDescription(songId: String?, scene: String, completion: () -> Void)  {
+        if let songId = songId  {
+            var request = URLRequest(url: URL(string:"https://www.what-song.com/api/add-scene-description")!)
+            request.addValue(DAKeychain.shared["accessToken"]!, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "POST"
+            let parameters: [String: Any] = [
+                "songID": songId,
+                "scene_description": scene
+            ]
+            request.httpBody = parameters.percentEscaped().data(using: .utf8)
+            URLSession.shared.dataTask(with: request) { (data, response, err) in
+                
+            }
+        }
+    }
+    
     func addTofavourite(songId: String?, type: String, like: Bool, completion: @escaping (_ result: Bool) -> Void) {
         if let songId = songId {
             var request = URLRequest(url:URL(string:"https://www.what-song.com/api/user-action/favourite")!)
@@ -95,7 +111,8 @@ class Service   {
             let parameters: [String: Any] = [
                 "type" : type,
                 "itemID" : Int(songId)!,
-                "like" : like]
+                "like" : like
+            ]
             request.httpBody = parameters.percentEscaped().data(using: .utf8)
             URLSession.shared.dataTask(with: request){ data, response, error in
                 guard(error == nil) else {
@@ -104,7 +121,7 @@ class Service   {
                 }
                 if let data = data {
                     do {
-                        let parseResult = try JSONDecoder().decode(SignUpResponce.self, from: data)
+                        let parseResult = try JSONDecoder().decode(SignUpResponse.self, from: data)
                         print(parseResult)
                         if parseResult.success {
                             completion(true)
@@ -208,7 +225,14 @@ class Service   {
     
     func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
         guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+        
+        guard let token = DAKeychain.shared["accessToken"] else { return }
+        
+        var request = URLRequest(url:url)
+        request.addValue("\(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { (data, resp, err) in
             if let err = err    {
                 completion(nil, err)
                 return

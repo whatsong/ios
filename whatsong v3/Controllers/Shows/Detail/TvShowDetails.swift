@@ -24,7 +24,7 @@ class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLay
     
     var showId: Int!    {
         didSet {
-            startActivityIndicator()
+            startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: 100))
             let urlString = "https://www.what-song.com/api/tv-info?tvshowID=\(showId ?? 0)"
             Service.shared.fetchTvShowDetail(urlString: urlString) { (data, err) in
                 

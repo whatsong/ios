@@ -28,7 +28,6 @@ class SongDetailCell: UICollectionViewCell  {
                 sceneDescription.textColor = UIColor.brandDarkGrey()
             }   else    {
                 sceneDescription.text = song.scene_description
-
             }
             
             if song.spotify_uri == nil  {
@@ -229,7 +228,7 @@ class SongDetailCell: UICollectionViewCell  {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Regular", size: 16)
         label.textColor = UIColor.white
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

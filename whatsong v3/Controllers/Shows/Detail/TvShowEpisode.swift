@@ -34,7 +34,7 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
     }
     
     func fetchEpisode() {
-        startActivityIndicator()
+        startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: 100))
         let urlString = "https://www.what-song.com/api/episode-info?episodeID=\(episode?._id ?? 0)"
         Service.shared.fetchTvShowEpisode(urlString: urlString) { (data, err) in
             if let err = err {

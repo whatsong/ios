@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SignUpResponce: Decodable {
+struct SignUpResponse: Decodable {
     let success: Bool
     var error: ErrorStruct?
 }

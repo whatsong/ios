@@ -53,7 +53,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         cell.playPauseButton.addTarget(self, action: #selector(handlePlayPause(sender:)), for: .touchUpInside)
         cell.shareButton.addTarget(self, action: #selector(handleShare(sender:)), for: .touchUpInside)
         cell.editTimeButton.addTarget(self, action: #selector(handleEditTime), for: .touchUpInside)
-        cell.editSceneButton.addTarget(self, action: #selector(handleEditScene(sender:)), for: .touchUpInside)
+        cell.editSceneButton.addTarget(self, action: #selector(handleEditScene), for: .touchUpInside)
 
         return cell
     }
@@ -140,13 +140,37 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         return UIApplication.shared.canOpenURL(NSURL(string:"spotify:")! as URL)
     }
     
-    @objc func handleEditTime()  {
-        let editLauncher = EditSongLauncher()
-        editLauncher.showEditView()
+    @objc func handleEditScene() {
+        setupFloatingView()
     }
     
-    @objc func handleEditScene(sender: UIButton)  {
-        print("edit scene")
+    @objc func handleEditTime()  {
+        print("handling edit time")
+        
+    }
+    
+    func setupFloatingView()    {
+//        let dimmedBackgroundView = UIView()
+//        dimmedBackgroundView.backgroundColor = UIColor.init(white: 0, alpha: 0)
+        
+        if userLoggedIn()   {
+            let floatingEditView = FloatingEditLauncher()
+            floatingEditView.song = song
+            floatingEditView.backgroundColor = .white
+            floatingEditView.layer.cornerRadius = 12
+            floatingEditView.layer.masksToBounds = true
+            
+            view.addSubview(floatingEditView)
+            
+            floatingEditView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: -380, right: 10), size: .init(width: 0, height: 370))
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                floatingEditView.transform = .init(translationX: 0, y: -380)
+                
+            }, completion: nil)
+        }   else    {
+            showAlert(bgColor: UIColor.brandWarning(), text: "You must be logged in to edit a song")
+        }
     }
     
     @objc func handleShare(sender: UIButton)  {
