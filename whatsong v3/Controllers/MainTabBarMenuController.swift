@@ -17,8 +17,7 @@ class MainTabBarMenuContainerController: UIViewController, MainTabBarControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureMainTabBarController()
-        
+            configureMainTabBarController()
     }
     
     func configureMainTabBarController()    {

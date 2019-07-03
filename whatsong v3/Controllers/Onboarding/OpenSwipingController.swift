@@ -101,7 +101,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         view.addSubview(collectionView)
         view.addSubview(pageControl)
         view.addSubview(buttonStackView)
-        //view.addSubview(skipButton)
+        view.addSubview(skipButton)
         
         collectionView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: pageControl.topAnchor, trailing: view.trailingAnchor)
         
@@ -111,7 +111,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         buttonStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 20, right: 20))
         buttonStackView.constrainHeight(constant: 50)
         
-        //skipButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 50, left: 0, bottom: 0, right: 20))
+        skipButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 50, left: 0, bottom: 0, right: 20))
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

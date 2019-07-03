@@ -34,16 +34,21 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         if DAKeychain.shared["accessToken"] != nil {
             setupLogOutButton()
         }
+        
         fetchUserInfo()
+
     }
     
     func fetchUserInfo()    {
         Service.shared.getCurrentUserInfo { [unowned self] (userData, success) in
+            self.startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: 100))
             if success {
                 self.userInfo = userData?.data
                 self.fetchSongs()
+                self.stopActivityIndicator()
             } else {
                  DispatchQueue.main.async {
+                    self.stopActivityIndicator()
                     self.showAlert(bgColor: .red, text: "Something went wrong. Please log in")
                 }
             }
@@ -116,10 +121,17 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
             DAKeychain.shared["accessToken"] = nil
             
-            guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-            mainTabBarController.setupLoggedOutViewControllers()
+            guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarMenuContainerController else { return }
+            mainTabBarController.configureMainTabBarController()
             
-            self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged out")
+//            self.view.window?.rootViewController?.dismiss(animated: true, completion: {
+//                self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged out")
+//                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//                appDelegate.window?.rootViewController = nil
+//                appDelegate.window?.rootViewController = MainTabBarMenuContainerController()
+//                appDelegate.window?.makeKeyAndVisible()
+//            })
+            
             print("performed log out")
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

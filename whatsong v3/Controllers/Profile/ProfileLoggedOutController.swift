@@ -11,7 +11,7 @@ import UIKit
 class ProfileLoggedOutController: UIViewController  {
     
     func setupViews()   {
-        self.tabBarController?.tabBar.isHidden = true
+        view.backgroundColor = UIColor.backgroundGrey()
         
         let stackView = VerticalStackView(arrangedSubviews: [headingLabel, featureOne, featureTwo, featureThree, button], spacing: 8)
         stackView.setCustomSpacing(18, after: headingLabel)
@@ -79,7 +79,6 @@ class ProfileLoggedOutController: UIViewController  {
     }()
     
     @objc func getStarted() {
-        print("start")
         present(OpenSwipingController(), animated: true, completion: nil)
     }
     

@@ -144,11 +144,16 @@ class LoginController: UIViewController {
                 DAKeychain.shared["accessToken"] = model.data.accessToken.value
                 DispatchQueue.main.async {
                     //reset app state after successful login
-                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-                    mainTabBarController.setupLoggedInViewControllers()
+                
+//                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+//                    mainTabBarController.setupLoggedInControllers()
 
-                        self.view.window?.rootViewController?.dismiss(animated: true, completion: {
-                            self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged in")
+                    self.view.window?.rootViewController?.dismiss(animated: true, completion: {
+                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged in")
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.window?.rootViewController = nil
+                        appDelegate.window?.rootViewController = MainTabBarMenuContainerController()
+                        appDelegate.window?.makeKeyAndVisible()
                     })
                 }
             } else {
