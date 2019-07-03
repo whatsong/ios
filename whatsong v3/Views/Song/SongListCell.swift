@@ -130,7 +130,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
     func showFloatingPlayer(song: Song, shouldPlay: Bool = true) {
         guard let delegate = UIApplication.shared.delegate else { return }
         guard let window = delegate.window else { return }
-        let tabBarView = window?.rootViewController as! UITabBarController
+        let tabBarView = (window?.rootViewController as! MainTabBarMenuContainerController).centerTabBarController as UITabBarController
         
         // If the floating player has already been initialised
         if SongFloatingPlayer.tabBarContainPlayer() {

@@ -242,7 +242,7 @@ class SongFloatingPlayer: UIView {
     class func tabBarContainPlayer() -> Bool {
         guard let delegate = UIApplication.shared.delegate else { return false }
         guard let window = delegate.window else { return false }
-        let tabBarView = window?.rootViewController as! UITabBarController
+        let tabBarView = (window?.rootViewController as! MainTabBarMenuContainerController).centerTabBarController as UITabBarController
         for view in tabBarView.view.subviews {
             if view is SongFloatingPlayer {
                 return true
@@ -254,7 +254,7 @@ class SongFloatingPlayer: UIView {
     class func getCurrentPlayerFromTabBar() -> SongFloatingPlayer? {
         guard let delegate = UIApplication.shared.delegate else { return nil }
         guard let window = delegate.window else { return nil }
-        let tabBarView = window?.rootViewController as! UITabBarController
+       let tabBarView = (window?.rootViewController as! MainTabBarMenuContainerController).centerTabBarController as UITabBarController
         for view in tabBarView.view.subviews {
             if view is SongFloatingPlayer {
                 return view as? SongFloatingPlayer
