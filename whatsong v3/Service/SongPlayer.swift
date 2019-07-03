@@ -12,13 +12,15 @@ import AVKit
 class SongPlayer {
     
     static let shared = SongPlayer()
-    
+
     let player: AVPlayer = {
         let avPlayer = AVPlayer()
         avPlayer.automaticallyWaitsToMinimizeStalling = false
         return avPlayer
     }()
     
+    
+    var observer:Any?
     var currentlyPlayingUrl: String?
     var previewUrl: String?
     
@@ -44,10 +46,41 @@ class SongPlayer {
         player.replaceCurrentItem(with: playerItem)
         player.play()
         currentlyPlayingUrl = previewUrl
+        NotificationCenter.default.post(name: .playerStartBuffer, object: nil)
+        preriodicTimeObsever()
+    }
+    
+    func preriodicTimeObsever(){
+        
+        if let observer = self.observer{
+            //removing time obse
+            player.removeTimeObserver(observer)
+            self.observer = nil
+        }
+        
+        let intervel : CMTime = CMTimeMake(value: 1, timescale: 10)
+        observer = player.addPeriodicTimeObserver(forInterval: intervel, queue: DispatchQueue.main) { [weak self] time in
+            
+            guard let `self` = self else { return }
+            
+            //this is the slider value update if you are using UISlider.
+            if self.player.currentItem?.status == .readyToPlay {
+                NotificationCenter.default.post(name: .playerFinishBuffer, object: nil)
+                self.player.removeTimeObserver(self.observer)
+                self.observer = nil
+            } else {
+                NotificationCenter.default.post(name: .playerStartBuffer, object: nil)
+            }
+        }
     }
     
     func nilPlayer() {
         player.replaceCurrentItem(with: nil)
+        if let observer = self.observer{
+            
+            player.removeTimeObserver(observer)
+            self.observer = nil
+        }
     }
 
 }
