@@ -220,8 +220,15 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         button.setTitle("Save", for: .normal)
         button.setTitleColor(UIColor.brandPurple(), for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
+        button.addTarget(self, action: #selector(saveText), for: .touchUpInside)
         return button
     }()
+    
+    @objc func saveText() {
+        Service.shared.addSceneDescription(songId: "\(song._id)", scene: textView.text) {
+            
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
