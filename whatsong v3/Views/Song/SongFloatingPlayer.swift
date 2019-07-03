@@ -267,8 +267,8 @@ class SongFloatingPlayer: UIView {
         super.init(frame: frame)
         setupViews()
         observePlayerCurrentTime()
-        NotificationCenter.default.addObserver(self, selector: #selector(showActivityIndicator), name: .playerStartBuffer, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideActivityIndicator), name: .playerFinishBuffer, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showActivityIndicator), name: .wsNotificationPlayerStartBuffer, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideActivityIndicator), name: .wsNotificationPlayerFinishBuffer, object: nil)
     }
     
     class func tabBarContainPlayer() -> Bool {

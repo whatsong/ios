@@ -46,7 +46,7 @@ class SongPlayer {
         player.replaceCurrentItem(with: playerItem)
         player.play()
         currentlyPlayingUrl = previewUrl
-        NotificationCenter.default.post(name: .playerStartBuffer, object: nil)
+        NotificationCenter.default.post(name: .wsNotificationPlayerStartBuffer, object: nil)
         preriodicTimeObsever()
     }
     
@@ -65,11 +65,11 @@ class SongPlayer {
             
             //this is the slider value update if you are using UISlider.
             if self.player.currentItem?.status == .readyToPlay {
-                NotificationCenter.default.post(name: .playerFinishBuffer, object: nil)
+                NotificationCenter.default.post(name: .wsNotificationPlayerFinishBuffer, object: nil)
                 self.player.removeTimeObserver(self.observer)
                 self.observer = nil
             } else {
-                NotificationCenter.default.post(name: .playerStartBuffer, object: nil)
+                NotificationCenter.default.post(name: .wsNotificationPlayerStartBuffer, object: nil)
             }
         }
     }

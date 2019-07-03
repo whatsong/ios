@@ -10,8 +10,8 @@ import UIKit
 
 extension Notification.Name {
     public static let wsNotificationLikeSong = Notification.Name(rawValue: "com.whatsong.likeSong")
-    public static let playerStartBuffer = Notification.Name(rawValue: "com.whatsong.bufferStart")
-    public static let playerFinishBuffer = Notification.Name(rawValue: "com.whatsong.bufferFinish")
+    public static let wsNotificationPlayerStartBuffer = Notification.Name(rawValue: "com.whatsong.bufferStart")
+    public static let wsNotificationPlayerFinishBuffer = Notification.Name(rawValue: "com.whatsong.bufferFinish")
 }
 
 
