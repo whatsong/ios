@@ -53,6 +53,18 @@ class SongFloatingPlayer: UIView {
         }
     }
     
+    @objc func showActivityIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        playPauseButton.isHidden = true
+    }
+    
+    @objc func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        playPauseButton.isHidden = false
+        playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+    
 //    @objc func showSongInfoPopup() {
 //        let window: UIWindow? = UIApplication.shared.keyWindow
 //        let offsetY = (window?.frame.maxY)!
@@ -132,6 +144,7 @@ class SongFloatingPlayer: UIView {
         button.constrainHeight(constant: 29)
         button.constrainWidth(constant: 29)
         button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     
@@ -152,6 +165,17 @@ class SongFloatingPlayer: UIView {
         return view
     }()
     
+    let activityIndicator: UIActivityIndicatorView = {
+      
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        activityIndicator.backgroundColor = UIColor.backgroundGrey()
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 29, height: 29)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = true
+        return activityIndicator
+    }()
+    
     func setupViews()   {
         backgroundColor = UIColor.white
         
@@ -165,6 +189,7 @@ class SongFloatingPlayer: UIView {
         addSubview(viewButton)
         addSubview(heartIcon)
         addSubview(playPauseButton)
+        addSubview(activityIndicator)
         addSubview(timeSlider)
         addSubview(divider)
         
@@ -179,6 +204,11 @@ class SongFloatingPlayer: UIView {
         
         playPauseButton.anchor(top: nil, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 20))
         playPauseButton.centerYInSuperview()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        let horizontalConstraint = activityIndicator.centerXAnchor.constraint(equalTo: self.playPauseButton.centerXAnchor)
+        let verticalConstraint = activityIndicator.centerYAnchor.constraint(equalTo: self.playPauseButton.centerYAnchor)
+        
+        NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint])
         
         timeSlider.anchor(top: nil, leading: leadingAnchor, bottom: topAnchor, trailing: trailingAnchor)
         timeSlider.constrainHeight(constant: 2)
@@ -237,6 +267,8 @@ class SongFloatingPlayer: UIView {
         super.init(frame: frame)
         setupViews()
         observePlayerCurrentTime()
+        NotificationCenter.default.addObserver(self, selector: #selector(showActivityIndicator), name: .wsNotificationPlayerStartBuffer, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideActivityIndicator), name: .wsNotificationPlayerFinishBuffer, object: nil)
     }
     
     class func tabBarContainPlayer() -> Bool {
@@ -282,5 +314,9 @@ class SongFloatingPlayer: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

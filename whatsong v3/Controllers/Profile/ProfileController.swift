@@ -41,7 +41,9 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
     
     func fetchUserInfo()    {
         Service.shared.getCurrentUserInfo { [unowned self] (userData, success) in
-            self.startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: 100))
+            DispatchQueue.main.async {
+                self.startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: 100))
+            }
             if success {
                 self.userInfo = userData?.data
                 self.fetchSongs()
@@ -56,6 +58,11 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
     }
     
     func fetchSongs() {
+        
+        DispatchQueue.main.async {
+            self.startActivityIndicator(center:  CGPoint(x: self.view.bounds.midX, y: 100))
+        }
+        
         var urlString = "https://www.what-song.com/api/list-of-songs-favorited?username="
         if let userInfo = userInfo, let username = userInfo.username {
             urlString = "\(urlString)\(username)"
@@ -63,6 +70,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         Service.shared.fetchCurrentUserSongs(urlString: urlString) { (data, err) in
             if let err = err {
                 print(err)
+                self.stopActivityIndicator()
             } else  {
                 guard let userLibraryData = data else { return }
                 self.userLibrary = userLibraryData
@@ -70,6 +78,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    self.stopActivityIndicator()
                 }
             }
         }
@@ -142,10 +151,9 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
     
     func didSelectYourSongs(for songLibrary: SongLibrary) {
         let librarySongController = LibrarySongsController()
-        librarySongController.userSongs = songLibrary.data
         librarySongController.navigationItem.title = "Your Songs"
+        librarySongController.userInfo = userInfo
         navigationController?.pushViewController(librarySongController, animated: true)
-        self.fetchSongs()
     }
 }
 

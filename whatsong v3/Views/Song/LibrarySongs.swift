@@ -42,6 +42,12 @@ class LibrarySongs: SongListCell    {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: librarySongId, for: indexPath) as! LibrarySongCell
         cell.backgroundColor = .white
         let song = songsArray[indexPath.item]
+        cell.songTitle.attributedText = NSAttributedString(string: "", attributes: [
+            NSAttributedString.Key.kern: -0.8
+            ])
+        cell.artistName.attributedText = NSAttributedString(string: "", attributes: [
+            NSAttributedString.Key.kern: -0.8
+            ])
         cell.songTitle.attributedText = NSAttributedString(string: song.title, attributes: [
             NSAttributedString.Key.kern: -0.8
             ])
