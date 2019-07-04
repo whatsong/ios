@@ -12,7 +12,7 @@ import AVKit
 class SongFloatingPlayer: UIView {
     
     var songCellDelegate: SongCellDelegate?
-    
+    var isSongEnd : Bool = false
     var song: Song! {
         didSet  {
             songName.text = song.title
@@ -50,6 +50,14 @@ class SongFloatingPlayer: UIView {
         }   else {
             SongPlayer.shared.player.play()
             playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            if(self.isSongEnd){
+                self.isSongEnd = false
+                if SongPlayer.shared.doesPreviewExist(spotifyPreviewUrl: song.spotifyPreviewUrl, iTunesPreviewUrl: song.preview_url)  {
+                    SongPlayer.shared.playSong()
+                } else  {
+                    self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample")
+                }
+            }
         }
     }
     
@@ -269,8 +277,13 @@ class SongFloatingPlayer: UIView {
         observePlayerCurrentTime()
         NotificationCenter.default.addObserver(self, selector: #selector(showActivityIndicator), name: .wsNotificationPlayerStartBuffer, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideActivityIndicator), name: .wsNotificationPlayerFinishBuffer, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(note:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
-    
+    @objc func playerDidFinishPlaying(note: NSNotification) {
+        SongPlayer.shared.player.pause()
+        self.isSongEnd = true
+        playPauseButton.setImage(UIImage(named: "play-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    }
     class func tabBarContainPlayer() -> Bool {
         guard let delegate = UIApplication.shared.delegate else { return false }
         guard let window = delegate.window else { return false }

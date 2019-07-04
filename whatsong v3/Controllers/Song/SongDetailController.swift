@@ -41,7 +41,9 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     }
     
     @objc func dismissFunc()  {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            self.showFloatingPlayer(song: self.song!,shouldPlay: false,shouldAddToView: SongPlayer.shared.player.timeControlStatus == .paused ? false : true)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -78,8 +80,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             if SongPlayer.shared.player.timeControlStatus == .paused    {
                 print("paused")
                 sender.setImage(UIImage(named: "pause-button-large"), for: .normal)
-                SongPlayer.shared.player.play()
-
+                self.showFloatingPlayer(song: self.song!,shouldPlay: true)
             } else if SongPlayer.shared.player.timeControlStatus == .playing    {
                 print("playing")
                 SongPlayer.shared.player.pause()
@@ -87,8 +88,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             }
         }   else if SongPlayer.shared.currentlyPlayingUrl != song?.preview_url {
             sender.setImage(UIImage(named: "pause-button-large"), for: .normal)
-            SongPlayer.shared.playSong()
-            
+            self.showFloatingPlayer(song: self.song!,shouldPlay: true)
             // if the Floating Player has already been initialised
             if SongFloatingPlayer.tabBarContainPlayer() {
                 let currentViewPlayer = SongFloatingPlayer.getCurrentPlayerFromTabBar()
@@ -101,14 +101,11 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
                 //songListView.showFloatingPlayer(song: song, shouldPlay: true)
                 print("6")
             }
-    
             print("playing new song")
         }   else    {
             print("something else")
         }
-
     }
-    
     @objc func openWithYoutube(sender: UIButton)  {
         if let song = song {
             let youtubeId = song.youtube_id

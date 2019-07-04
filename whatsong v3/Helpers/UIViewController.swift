@@ -64,7 +64,59 @@ class LeftToRightTransition: NSObject, UIViewControllerAnimatedTransitioning {
 }
 
 extension UIViewController  {
-    
+    func showFloatingPlayer(song: Song, shouldPlay: Bool = true, shouldAddToView : Bool = false) {
+        guard let delegate = UIApplication.shared.delegate else { return }
+        guard let window = delegate.window else { return }
+        let tabBarView = (window?.rootViewController as! MainTabBarMenuContainerController).centerTabBarController as UITabBarController
+        
+        // If the floating player has already been initialised
+        
+       
+        if SongFloatingPlayer.tabBarContainPlayer() {
+            let playerView = SongFloatingPlayer.getCurrentPlayerFromTabBar()
+            if shouldPlay {
+                playerView?.song = song
+                playerView?.playSong()
+            }
+            if(shouldAddToView){
+
+                if let mainWindow = window {
+                    playerView!.anchor(top: tabBarView.tabBar.topAnchor, leading: mainWindow.leadingAnchor, bottom: nil, trailing: mainWindow.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+                    let widthConstraint = playerView!.widthAnchor.constraint(equalToConstant: tabBarView.view.frame.size.width)
+                    playerView!.addConstraint(widthConstraint)
+                }
+                UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                    playerView!.transform = .init(translationX: 0, y: -54)
+                }, completion: nil)
+                playerView!.hideActivityIndicator()
+            }
+            return
+        }
+        if(shouldPlay){
+            // Else -- first time being initialised
+            let songPlayerView = SongFloatingPlayer()
+            songPlayerView.song = song
+            if shouldPlay {
+                songPlayerView.playSong()
+            }
+            
+            // Adds floating view
+            tabBarView.view.insertSubview(songPlayerView, belowSubview: tabBarView.tabBar)
+            if(shouldAddToView){
+                if let mainWindow = window {
+                    songPlayerView.anchor(top: tabBarView.tabBar.topAnchor, leading: mainWindow.leadingAnchor, bottom: nil, trailing: mainWindow.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+                    let widthConstraint = songPlayerView.widthAnchor.constraint(equalToConstant: tabBarView.view.frame.size.width)
+                    songPlayerView.addConstraint(widthConstraint)
+                }
+                UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                    songPlayerView.transform = .init(translationX: 0, y: -54)
+                }, completion: nil)
+            }
+            
+            // Set icons on first appearing
+            songPlayerView.setPlayPauseOnAppearing()
+        }
+    }
     func userLoggedIn() -> Bool    {
         if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
             return true
