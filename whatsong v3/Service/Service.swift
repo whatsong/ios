@@ -223,7 +223,7 @@ class Service   {
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
-    func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
+    func fetchGenericJSONDataWithOutAuthToken<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
         guard let url = URL(string: urlString) else { return }
         
         
@@ -242,7 +242,7 @@ class Service   {
             }.resume()
     }
     
-    func fetchGenericJSONDataWithAuthToken<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
+    func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
         guard let url = URL(string: urlString) else { return }
         
         guard let token = DAKeychain.shared["accessToken"] else { return }

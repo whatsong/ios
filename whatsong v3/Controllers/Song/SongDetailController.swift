@@ -183,34 +183,34 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     
     @objc func handleSongLike(sender: UIImageView) {
         print("handling like")
-//        if userLoggedIn() && song.is_favorited == false  {
-//            print("trying to like song")
-//            //MARK: PASS TYPE
-//            Service.shared.addTofavourite(songId: "\(song._id)", type: "song", like: true) { (success) in
-//                DispatchQueue.main.async {
-//                    sender.image = UIImage(named: "heart-icon-fill")
-//                    self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
-//                    self.song.is_favorited = true
-//
-//                    //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
-//                                                                                                           //"songId" : self.song._id])
-//                }
-//            }
-//        } else if userLoggedIn() && song.is_favorited == true {
-//            Service.shared.addTofavourite(songId: "\(song._id)", type: "song", like: false) { (success) in
-//                if success {
-//                    DispatchQueue.main.async {
-//                        sender.image = UIImage(named: "heart-icon")
-//                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully removed song from library")
-//                        self.song.is_favorited = false
-//                        //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : false,
-//                                                                                                               //"songId" : self.song._id])
-//                    }
-//                }
-//            }
-//        } else  {
-//            showAlert(bgColor: UIColor.brandWarning(), text: "You must be logged in to save a song")
-//        }
+        if userLoggedIn() && song?.is_favorited == false  {
+            print("trying to like song")
+            //MARK: PASS TYPE
+            Service.shared.addTofavourite(songId: "\(song?._id ?? 0)", type: "song", like: true) { (success) in
+                DispatchQueue.main.async {
+                    sender.image = UIImage(named: "heart-icon-fill")
+                    self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
+                    self.song?.is_favorited = true
+
+                    //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
+                                                                                                           //"songId" : self.song._id])
+                }
+            }
+        } else if userLoggedIn() && song?.is_favorited == true {
+            Service.shared.addTofavourite(songId: "\(song?._id ?? 0)", type: "song", like: false) { (success) in
+                if success {
+                    DispatchQueue.main.async {
+                        sender.image = UIImage(named: "heart-icon")
+                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully removed song from library")
+                        self.song?.is_favorited = false
+                        //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : false,
+                                                                                                               //"songId" : self.song._id])
+                    }
+                }
+            }
+        } else  {
+            showAlert(bgColor: UIColor.brandWarning(), text: "You must be logged in to save a song")
+        }
     }
     
     @objc func handleShare(sender: UIButton)  {
