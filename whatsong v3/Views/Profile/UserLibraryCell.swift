@@ -68,7 +68,6 @@ class UserLibraryCell: UserStatsCell    {
         }
         
     }
-    
 }
 
 class UserLibrarySingleCell: UICollectionViewCell   {

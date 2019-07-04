@@ -42,6 +42,15 @@ class SongDetailCell: UICollectionViewCell  {
                 youtubeIcon.alpha = 0.3
             }
             
+            if song.is_favorited == false   {
+                heartIcon.image = UIImage(named: "heart-icon")?.withRenderingMode(.alwaysTemplate)
+                print("not favorited")
+            } else if song.is_favorited == true {
+                heartIcon.image = UIImage(named: "heart-icon-fill")?.withRenderingMode(.alwaysTemplate)
+                heartIcon.tintColor = UIColor.brandPurple()
+                print("favorited")
+            }
+            
             let imageUrlString = song.spotifyImg640
             guard let url = imageUrlString else { return }
             
@@ -69,7 +78,7 @@ class SongDetailCell: UICollectionViewCell  {
         let spotifyStackView = UIStackView(arrangedSubviews: [spotifyIcon, spotifyButton])
         let youtubeStackView = UIStackView(arrangedSubviews: [youtubeIcon , youtubeButton])
         let timeStackView = UIStackView(arrangedSubviews: [timePlayed, editTimeButton])
-        let sceneStackView = UIStackView(arrangedSubviews: [sceneDescription, editSceneButton])
+        let sceneStackView = UIStackView(arrangedSubviews: [sceneDescription, editSceneIcon])
         spotifyStackView.spacing = 10; youtubeStackView.spacing = 10; timeStackView.spacing = 10; sceneStackView.spacing = 10;
         youtubeButton.constrainHeight(constant: 30)
         
@@ -156,7 +165,6 @@ class SongDetailCell: UICollectionViewCell  {
         label.font = UIFont(name: "Montserrat-SemiBold", size: 24)
         label.textColor = UIColor.white
         label.text = "White Hinterland"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -165,7 +173,6 @@ class SongDetailCell: UICollectionViewCell  {
         label.font = UIFont(name: "Montserrat-Regular", size: 18)
         label.textColor = UIColor.brandLightGrey()
         label.text = "Kairos"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -175,7 +182,7 @@ class SongDetailCell: UICollectionViewCell  {
         iv.tintColor = .white
         iv.contentMode = .scaleAspectFit
         iv.constrainWidth(constant: 31)
-        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -206,14 +213,16 @@ class SongDetailCell: UICollectionViewCell  {
         return label
     }()
     
-    let editSceneButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "edit-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .white
-        button.constrainWidth(constant: 18)
-        button.constrainHeight(constant: 18)
-        return button
+    let editSceneIcon: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "edit-icon")?.withRenderingMode(.alwaysTemplate)
+        iv.tintColor = .white
+        iv.contentMode = .scaleAspectFit
+        iv.constrainWidth(constant: 18)
+        iv.isUserInteractionEnabled = true
+        return iv
     }()
+    
     
     let sceneHeading: UILabel = {
         let label = UILabel()

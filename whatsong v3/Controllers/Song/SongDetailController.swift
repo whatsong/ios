@@ -53,7 +53,8 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         cell.playPauseButton.addTarget(self, action: #selector(handlePlayPause(sender:)), for: .touchUpInside)
         cell.shareButton.addTarget(self, action: #selector(handleShare(sender:)), for: .touchUpInside)
         cell.editTimeButton.addTarget(self, action: #selector(handleEditTime), for: .touchUpInside)
-        cell.editSceneButton.addTarget(self, action: #selector(handleEditScene), for: .touchUpInside)
+        cell.editSceneIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleEditScene)))
+        cell.heartIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSongLike(sender:))))
 
         return cell
     }
@@ -87,11 +88,18 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         }   else if SongPlayer.shared.currentlyPlayingUrl != song?.preview_url {
             sender.setImage(UIImage(named: "pause-button-large"), for: .normal)
             SongPlayer.shared.playSong()
-        
+            
+            // if the Floating Player has already been initialised
             if SongFloatingPlayer.tabBarContainPlayer() {
                 let currentViewPlayer = SongFloatingPlayer.getCurrentPlayerFromTabBar()
                 currentViewPlayer?.song = song
                 currentViewPlayer?.playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                print("5")
+                //if the Floating Player has not been initialised for the first time
+            } else if SongFloatingPlayer.getCurrentPlayerFromTabBar() == nil {
+                //let songListView = SongListCell()
+                //songListView.showFloatingPlayer(song: song, shouldPlay: true)
+                print("6")
             }
     
             print("playing new song")
@@ -171,6 +179,38 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         }   else    {
             showAlert(bgColor: UIColor.brandWarning(), text: "You must be logged in to edit a song")
         }
+    }
+    
+    @objc func handleSongLike(sender: UIImageView) {
+        print("handling like")
+//        if userLoggedIn() && song.is_favorited == false  {
+//            print("trying to like song")
+//            //MARK: PASS TYPE
+//            Service.shared.addTofavourite(songId: "\(song._id)", type: "song", like: true) { (success) in
+//                DispatchQueue.main.async {
+//                    sender.image = UIImage(named: "heart-icon-fill")
+//                    self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
+//                    self.song.is_favorited = true
+//
+//                    //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
+//                                                                                                           //"songId" : self.song._id])
+//                }
+//            }
+//        } else if userLoggedIn() && song.is_favorited == true {
+//            Service.shared.addTofavourite(songId: "\(song._id)", type: "song", like: false) { (success) in
+//                if success {
+//                    DispatchQueue.main.async {
+//                        sender.image = UIImage(named: "heart-icon")
+//                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully removed song from library")
+//                        self.song.is_favorited = false
+//                        //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : false,
+//                                                                                                               //"songId" : self.song._id])
+//                    }
+//                }
+//            }
+//        } else  {
+//            showAlert(bgColor: UIColor.brandWarning(), text: "You must be logged in to save a song")
+//        }
     }
     
     @objc func handleShare(sender: UIButton)  {

@@ -123,7 +123,8 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
             
             guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarMenuContainerController else { return }
             mainTabBarController.configureMainTabBarController()
-            
+            self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged out")
+
 //            self.view.window?.rootViewController?.dismiss(animated: true, completion: {
 //                self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged out")
 //                let appDelegate = UIApplication.shared.delegate as! AppDelegate
