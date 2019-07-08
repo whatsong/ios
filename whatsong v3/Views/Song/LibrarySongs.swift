@@ -11,9 +11,11 @@ import UIKit
 class LibrarySongs: SongListCell    {
     
     let librarySongId = "librarySongId"
+    let loadingCellId = "loadingCellId"
+    var vc : LibrarySongsController! = nil
 
     override func setupViews() {
-        
+        collectionView.register(LoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
         collectionView.register(LibrarySongCell.self, forCellWithReuseIdentifier: librarySongId)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -30,15 +32,25 @@ class LibrarySongs: SongListCell    {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 60)
+        if(indexPath.row == (self.songsArray.count - 1) && self.vc.isDataFound){
+            return CGSize(width: frame.width, height: 44)
+        }
+        else{
+           return CGSize(width: frame.width, height: 60)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return songsArray.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if(indexPath.row == (self.songsArray.count - 1) && self.vc.isDataFound){
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! LoadingCell
+            cell.activityIndicatorView.startAnimating()
+            return cell
+        }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: librarySongId, for: indexPath) as! LibrarySongCell
         cell.backgroundColor = .white
         let song = songsArray[indexPath.item]

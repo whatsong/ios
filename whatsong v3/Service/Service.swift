@@ -15,18 +15,27 @@ class Service   {
     func fetchTitles(searchTerm: String, completion: @escaping (_ resultArray: Array<Title>, _ success: Bool) -> Void)  {
         var titlesArray = Array<Title>()
         
-        let urlString = "https://www.what-song.com/api/search?limit=10&type=all&field=\(searchTerm)"
-        guard let url = URL(string: urlString) else { return }
+        let originalString = "https://www.what-song.com/api/search?limit=10&type=all&field=\(searchTerm)"
+        let urlString = originalString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+
+        guard let url = URL(string: urlString!) else {
+            completion(titlesArray, false)
+            return
+        }
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             // if error occurs
             if let err = err    {
                 print("Failed to fetch titles", err)
+                 completion(titlesArray, false)
                 return
             }
             
             // if success
-            guard let data = data else { return }
+            guard let data = data else {
+                 completion(titlesArray, false)
+                return
+            }
             do {
                 let results =  try JSONDecoder().decode(SearchData.self, from: data)
                 for group in results.searchData {
