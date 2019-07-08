@@ -219,8 +219,8 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
                         self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
                         self.song?.is_favorited = true
                         
-                        //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
-                        //"songId" : self.song._id])
+                        NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
+                            "songId" : self.song!._id])
                     }
                 }
             } else if userLoggedIn() && song?.is_favorited == true {
@@ -231,8 +231,8 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
                             senderImage.tintColor = .white
                             self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully removed song from library")
                             self.song?.is_favorited = false
-                            //NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : false,
-                            //"songId" : self.song._id])
+                            NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : false,
+                                "songId" : self.song!._id])
                         }
                     }
                 }

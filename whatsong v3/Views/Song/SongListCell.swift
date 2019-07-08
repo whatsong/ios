@@ -56,6 +56,22 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         heading.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 18, bottom: 0, right: 0))
         
         collectionView.anchor(top: heading.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        NotificationCenter.default.addObserver(self, selector: #selector(songLiked(notification:)), name: .wsNotificationLikeSong, object: nil)
+    }
+    
+    @objc func songLiked(notification: Notification) {
+        let userInfo = notification.userInfo as! Dictionary<String,Any>
+        let songId = userInfo["songId"] as! Int
+        let liked = userInfo["liked"] as! Bool
+        updateSong(songId: songId, liked: liked)
+    }
+    
+    func updateSong(songId: Int, liked: Bool) {
+        for (index, song) in songsArray.enumerated(){
+            if songId == song._id {
+                songsArray[index].is_favorited = liked
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
