@@ -98,18 +98,13 @@ class MainTabBarController: UITabBarController  {
     }
     
     @objc func handleSlideInMenu() {
-        toggleMenuDelegate?.handleMenuToggle()
-//        if isExpanded   {
-//            configureMenuController()
-//        }
-//
-//        isExpanded = !isExpanded
-//        showMenuController(shouldExpand: isExpanded)
+        
+        toggleMenuDelegate?.handleMenuToggle(forMenuOption: nil)
     }
 }
 
 protocol MainTabBarControllerDelegate   {
     
-    func handleMenuToggle()
+    func handleMenuToggle(forMenuOption menuOption: MenuOption?)
     
 }

@@ -21,7 +21,7 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     var textHeading = ["whatsong", "Discover", "Find", "Contribute", "Collect", "Just Launched"]
     var subHeading: [String?] = [nil,
                       "Discover music from the latest movies and television shows, updated daily",
-                      "Easily find songs with playable samples, scene descriptions and time stamps",
+                      "Easily find songs with audio samples, scene descriptions and time stamps",
                       "Found a song that hasn't been added yet? Add it yourself to gain points and help other users",
                       "Add songs you love to your library of favorites and track your contributions",
                       "The iOS app has just been launched so we'd love to hear any feedback or suggestions"

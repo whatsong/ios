@@ -9,18 +9,12 @@
 enum MenuOption: Int, CustomStringConvertible    {
     
     case About
-    
     case ReportBug
     case ReportListing
-    
     case RequestMovie
     case RequestShow
     case RequestFeature
-
-    case RateApp
-    case ShareApp
     case VisitWebsite
-    
     case Version
     
     var description: String {
@@ -31,10 +25,17 @@ enum MenuOption: Int, CustomStringConvertible    {
         case .RequestMovie: return "Request Movie"
         case .RequestShow: return "Request Show"
         case .RequestFeature: return "Request Feature"
-        case .RateApp: return "Rate App"
-        case .ShareApp: return "Share App"
         case .VisitWebsite: return "Visit Website"
         case .Version: return "Version"
+        }
+    }
+    
+    var rightDescription: String?   {
+        switch self {
+        case .Version:
+            return "1.01"
+        default:
+            return nil
         }
     }
     

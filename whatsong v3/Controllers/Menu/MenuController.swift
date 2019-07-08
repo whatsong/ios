@@ -12,12 +12,7 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var tableView: UITableView!
     let cellId = "cellId"
-    
-    let textArray = [
-        "Request Movie",
-        "Request TV Show",
-        
-    ]
+    var delegate: MainTabBarControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +30,16 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.backgroundColor = UIColor.black
         tableView.separatorStyle = .none
         tableView.rowHeight = 50
+        tableView.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0)
         
         view.addSubview(tableView)
+        tableView.constrainWidth(constant: view.frame.width * 0.8)
+        tableView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: nil)
         
-        tableView.fillSuperview()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,6 +49,17 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.titleLabel.attributedText = NSAttributedString(string: menuOption?.description ?? "", attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
+        if indexPath.row == 7 {
+            cell.descLabel.text = menuOption?.rightDescription
+            cell.isUserInteractionEnabled = false
+        }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let menuOption = MenuOption(rawValue: indexPath.row)
+        delegate?.handleMenuToggle(forMenuOption: menuOption)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 }

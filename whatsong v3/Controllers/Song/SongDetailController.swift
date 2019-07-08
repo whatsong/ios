@@ -14,6 +14,10 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     let cellId = "songId"
     var song: Song?
     
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation    {
+        return .slide
+    }
+    
     override var prefersStatusBarHidden: Bool   {
         return true
     }
@@ -34,10 +38,33 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         collectionView.register(SongDetailCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.allowsSelection = false
         view.addSubview(dismissButton)
+        animateStatusBar()
+        
+        collectionView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         
         dismissButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         dismissButton.constrainHeight(constant: 50)
         
+    }
+    
+    @objc func handlePan(gesture: UIPanGestureRecognizer)  {
+        if gesture.state == .changed {
+            let translation = gesture.translation(in: self.collectionView.superview)
+            self.collectionView.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        }   else if gesture.state == .ended {
+            
+            let translation = gesture.translation(in: self.collectionView.superview)
+            let velocity = gesture.velocity(in: self.collectionView.superview)
+            print(velocity.y)
+            
+            if translation.y > 180 || velocity.y > 1000 {
+                self.dismissFunc()
+            }   else    {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.collectionView.transform = .identity
+                })
+            }
+        }
     }
     
     @objc func dismissFunc()  {
@@ -218,6 +245,12 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     @objc func handleShare(sender: UIButton)  {
         let activityController = UIActivityViewController(activityItems: ["Hey, check out this song"], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
+    }
+    
+    func animateStatusBar() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }, completion: nil)
     }
     
     // MARK:-- Protocol Methods

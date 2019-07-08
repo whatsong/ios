@@ -20,7 +20,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
     
     let numberOfStatRows = 3
     let numberOfLibraryRows = 2
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,19 +35,17 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
             setupLogOutButton()
         }
         
+        self.startActivityIndicator(center:  CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY))
         fetchUserInfo()
-
     }
     
     func fetchUserInfo()    {
         Service.shared.getCurrentUserInfo { [unowned self] (userData, success) in
             DispatchQueue.main.async {
-                self.startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: 100))
             }
             if success {
                 self.userInfo = userData?.data
                 self.fetchSongs()
-                self.stopActivityIndicator()
             } else {
                  DispatchQueue.main.async {
                     self.stopActivityIndicator()
@@ -58,10 +56,6 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
     }
     
     func fetchSongs() {
-        
-        DispatchQueue.main.async {
-            self.startActivityIndicator(center:  CGPoint(x: self.view.bounds.midX, y: 100))
-        }
         
         var urlString = "https://www.what-song.com/api/list-of-songs-favorited?username="
         if let userInfo = userInfo, let username = userInfo.username {
