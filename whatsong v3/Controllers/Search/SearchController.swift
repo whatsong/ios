@@ -62,6 +62,7 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
                         self.stopActivityIndicator()
                     }
                 } else {
+                    self.stopActivityIndicator()
                     //show error
                 }
             }
