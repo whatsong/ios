@@ -222,7 +222,19 @@ class SongFloatingPlayer: UIView {
         timeSlider.constrainHeight(constant: 2)
         
         divider.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+        NotificationCenter.default.addObserver(self, selector: #selector(songLiked(notification:)), name: .wsNotificationLikeSong, object: nil)
+    }
+    
+    @objc func songLiked(notification: Notification) {
         
+        let userInfo = notification.userInfo as! Dictionary<String,Any>
+        let liked = userInfo["liked"] as! Bool
+        song.is_favorited = liked
+        if liked {
+            self.heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+        } else {
+            self.heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
+        }
     }
     
     @objc func handleLikeSong() {
