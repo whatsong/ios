@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate   {
+class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate,SongDetailPopupControllerDelegate   {
     
     let songsCellId = "episodeCellId"
     let infoCellId = "infoCellId"
@@ -85,7 +85,13 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
     func didSelectSongDetail(for song: Song)  {
         let songDetailController = SongDetailPopupController()
         songDetailController.song = song
+        songDetailController.delegate = self
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
+    }
+    func refreshDetailScence() {
+        if (episode != nil) {
+            fetchEpisode()
+        }
     }
 }
