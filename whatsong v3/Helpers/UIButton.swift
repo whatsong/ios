@@ -13,11 +13,11 @@ extension UIButton
     func applyGradient(colorOne: UIColor, colorTwo: UIColor)
     {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = bounds
-        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
-        gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+        gradientLayer.colors =  [colorOne ,colorTwo ].map{$0.cgColor}
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
+    
 }

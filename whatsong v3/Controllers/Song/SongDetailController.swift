@@ -26,13 +26,12 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         return true
     }
     
-    let dismissButton: UIButton = {
-        let button = UIButton()
+    let dismissButton: GradientButton = {
+        let button = GradientButton()
         button.setTitle("Dismiss", for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(dismissFunc), for: .touchUpInside)
-        button.applyGradient(colorOne: .red, colorTwo: .blue)
         return button
     }()
     
