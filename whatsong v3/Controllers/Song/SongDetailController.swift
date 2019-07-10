@@ -28,23 +28,22 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         button.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(dismissFunc), for: .touchUpInside)
+        button.applyGradient(colorOne: .red, colorTwo: .blue)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = .clear
         collectionView.register(SongDetailCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.allowsSelection = false
         view.addSubview(dismissButton)
         animateStatusBar()
         
-        collectionView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+        //collectionView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         
         dismissButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        dismissButton.constrainHeight(constant: 50)
-        
+        dismissButton.constrainHeight(constant: 60)
     }
     
     @objc func handlePan(gesture: UIPanGestureRecognizer)  {
@@ -194,7 +193,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             
             view.addSubview(floatingEditView)
             
-            floatingEditView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: -380, right: 10), size: .init(width: 0, height: 370))
+            floatingEditView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: -380, right: 10), size: .init(width: 0, height: 380))
             
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
                 floatingEditView.transform = .init(translationX: 0, y: -380)

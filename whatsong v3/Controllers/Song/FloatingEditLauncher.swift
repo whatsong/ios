@@ -18,7 +18,6 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
                 print("scene is not nil")
                 textView.text = song.scene_description
                 textView.textColor = UIColor.brandBlack()
-
             }
             if song.scene_description?.count ?? 0 > 3   {
                 contributorLabel.text = "This scene was added by \(song.user_scene ?? 0)"
@@ -39,7 +38,6 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
     //MARK: Setup Views
     
     func setupViews()   {
-        
         
         // Heading Views
         let headingStackView = VerticalStackView(arrangedSubviews: [songTitle, artistName])
@@ -90,7 +88,8 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         
         let window = UIApplication.shared.keyWindow
         let windowHeight = window?.frame.height
-        let viewHeight: CGFloat = 380
+        guard let bottomSafeHeight = window?.safeAreaInsets.bottom else { return }
+        let viewHeight: CGFloat = 380 + bottomSafeHeight
         
         if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification    {
             frame.origin.y = windowHeight! - keyboardRect.height - viewHeight
@@ -129,9 +128,12 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
     }
     
     @objc func handleDismissFloatingView()    {
-        print("Dismiss")
-        self.removeFromSuperview()
-        
+        guard let bottomSafeHeight = window?.safeAreaInsets.bottom else { return }
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+            self.transform = .init(translationX: 0, y: bottomSafeHeight)
+        }) { (_) in
+            self.removeFromSuperview()
+        }
     }
     
     // MARK:- Views

@@ -97,6 +97,7 @@
 		BBD0B02422CAE3E3000579EF /* MenuOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02322CAE3E3000579EF /* MenuOptionCell.swift */; };
 		BBD0B02622CB15C4000579EF /* MainTabBarMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02522CB15C4000579EF /* MainTabBarMenuController.swift */; };
 		BBD0B02822CB3365000579EF /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02722CB3365000579EF /* MenuOption.swift */; };
+		BBD0B02A22D46784000579EF /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02922D46784000579EF /* UIButton.swift */; };
 		BBEB4357223F6DF200D54998 /* SongListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB4356223F6DF200D54998 /* SongListCell.swift */; };
 		BBEB435C224A24BF00D54998 /* SongDetailPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */; };
 		BBEDA28C221BDD9F007610DF /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */; };
@@ -227,6 +228,7 @@
 		BBD0B02322CAE3E3000579EF /* MenuOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptionCell.swift; sourceTree = "<group>"; };
 		BBD0B02522CB15C4000579EF /* MainTabBarMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarMenuController.swift; sourceTree = "<group>"; };
 		BBD0B02722CB3365000579EF /* MenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOption.swift; sourceTree = "<group>"; };
+		BBD0B02922D46784000579EF /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		BBEB4356223F6DF200D54998 /* SongListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCell.swift; sourceTree = "<group>"; };
 		BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailPopup.swift; sourceTree = "<group>"; };
 		BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 				BBEDA28F221C07A8007610DF /* UIView.swift */,
 				BBD0AFDC22C0EE37000579EF /* UIImageView.swift */,
 				BB1BF56F22928161009FBC91 /* UIViewController.swift */,
+				BBD0B02922D46784000579EF /* UIButton.swift */,
 				BB193C5F222E2A61000EB8DB /* UIColor.swift */,
 				BB193C6F222F511F000EB8DB /* UILabel.swift */,
 				BB637F452230E7FE009FEFD7 /* VerticalStackView.swift */,
@@ -915,6 +918,7 @@
 				BB637F462230E7FE009FEFD7 /* VerticalStackView.swift in Sources */,
 				BB666943229AAE3E002654A7 /* MoviesHeader.swift in Sources */,
 				BB193C6A222EAB11000EB8DB /* BaseCvController.swift in Sources */,
+				BBD0B02A22D46784000579EF /* UIButton.swift in Sources */,
 				BBEDA293221C13C9007610DF /* Search.swift in Sources */,
 				BB1661E02266C0B70077C2B0 /* TvShowEpisodesBySeason.swift in Sources */,
 				BB66694E229CCCDC002654A7 /* ProfileLoggedOutController.swift in Sources */,

@@ -223,7 +223,6 @@ class SongDetailCell: UICollectionViewCell  {
         return iv
     }()
     
-    
     let sceneHeading: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Bold", size: 10)
