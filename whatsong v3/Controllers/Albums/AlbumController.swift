@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate  {
+class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate,SongDetailPopupControllerDelegate  {
     
     let albumSongListCellId = "albumSongListCellId"
     var albumSongs: [Song] = []
@@ -41,8 +41,11 @@ class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout, Son
     func didSelectSongDetail(for song: Song)  {
         let songDetailController = SongDetailPopupController()
         songDetailController.song = song
+        songDetailController.delegate = self
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
     }
-    
+    func refreshDetailScence() {
+        
+    }
 }

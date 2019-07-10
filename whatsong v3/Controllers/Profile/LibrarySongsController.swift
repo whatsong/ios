@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate  {
+class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayout, SongCellDelegate,SongDetailPopupControllerDelegate  {
     
     private var songListCellId = "songListCellId"
     private var userSongs: [Song] = []
@@ -103,6 +103,7 @@ class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayo
     func didSelectSongDetail(for song: Song) {
         let songDetailController = SongDetailPopupController()
         songDetailController.song = song
+        songDetailController.delegate = self
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
     }
@@ -116,5 +117,8 @@ class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayo
         if threhold <= 10 && isDataFound {
             fetchSongs()
         }
+    }
+    func refreshDetailScence() {
+        fetchSongs()
     }
 }

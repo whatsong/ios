@@ -96,7 +96,7 @@ class Service   {
         }.resume()
     }
     
-    func addSceneDescription(songId: String?, scene: String, completion: () -> Void)  {
+    func addSceneDescription(songId: String?, scene: String, completion: @escaping (_ result: Bool) -> Void)  {
         if let songId = songId  {
             var request = URLRequest(url: URL(string:"https://www.what-song.com/api/add-scene-description")!)
             request.addValue(DAKeychain.shared["accessToken"]!, forHTTPHeaderField: "Authorization")
@@ -106,9 +106,36 @@ class Service   {
                 "scene_description": scene
             ]
             request.httpBody = parameters.percentEscaped().data(using: .utf8)
-            URLSession.shared.dataTask(with: request) { (data, response, err) in
+            URLSession.shared.dataTask(with: request){ data, response, error in
+                guard(error == nil) else {
+                    completion(false)
+                    return
+                }
+                if let data = data {
+                    do {
+                        let parseResult = try JSONDecoder().decode(SignUpResponse.self, from: data)
+                        print(parseResult)
+                        if parseResult.success {
+                            completion(true)
+                        } else {
+                            completion( false)
+                        }
+                        
+                    } catch {
+                        completion( false)
+                    }
+                }
+                if let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                    completion(true)
+                    
+                } else {
+                    completion(false)
+                }
                 
-            }
+                }.resume()
+        }
+        else{
+              completion(false)
         }
     }
     

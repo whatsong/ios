@@ -25,6 +25,8 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         }
     }
     
+    var saveTextHandel:(String) -> Void = {_  in }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -44,7 +46,7 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         headingBackground.constrainHeight(constant: 70)
         headingBackground.addSubview(headingStackView)
         headingStackView.fillSuperview(padding: UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20))
-
+        
         // Middle Views
         let middleStackView = VerticalStackView(arrangedSubviews: [questionHeading, textView, contributorLabel])
         middleBackground.addSubview(middleStackView)
@@ -59,11 +61,13 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         
         //Final Combined StackView
         let stackView = VerticalStackView(arrangedSubviews: [headingBackground, middleBackground, footerBackground], spacing: 0)
-
+        
         addSubview(stackView)
         
         stackView.fillSuperview()
         
+        addSubview(activityIndicatorView)
+        activityIndicatorView.centerInSuperview()
     }
     
     //MARK: Setup Keyboard Listeners
@@ -183,7 +187,12 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         label.constrainHeight(constant: 65)
         return label
     }()
-    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView()
+        aiv.color = UIColor.brandLightGrey()
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
     let textView: UITextView = {
         let tv = UITextView()
         tv.attributedText = NSAttributedString(string: "Example - Mary and Tom go on their first date at the bowling alley.", attributes: [
@@ -227,8 +236,14 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
     }()
     
     @objc func saveText() {
-        Service.shared.addSceneDescription(songId: "\(song._id)", scene: textView.text) {
-            
+        self.endEditing(true)
+        let text = textView.text == "Example - Mary and Tom go on their first date at the bowling alley." ? "" : textView.text
+        if(text!.count > 0){
+            self.activityIndicatorView.startAnimating()
+            self.saveTextHandel(text!)
+        }
+        else{
+            self.showAlert(bgColor: .clear, text: "Please add scene description")
         }
     }
     

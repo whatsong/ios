@@ -9,11 +9,15 @@
 import UIKit
 import SDWebImage
 
+protocol SongDetailPopupControllerDelegate {
+    func refreshDetailScence()
+}
 class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "songId"
     var song: Song?
-    
+    var delegate:SongDetailPopupControllerDelegate?
+
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation    {
         return .slide
     }
@@ -192,8 +196,24 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             floatingEditView.layer.masksToBounds = true
             
             view.addSubview(floatingEditView)
-            
-            floatingEditView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: -380, right: 10), size: .init(width: 0, height: 380))
+            floatingEditView.saveTextHandel = { [weak self] text in
+                Service.shared.addSceneDescription(songId: "\(self!.song!._id)", scene: text) { (success) in
+                    DispatchQueue.main.async {
+                        if(success){
+                            
+                            self!.song?.scene_description = text
+                            self?.collectionView.reloadData()
+                            floatingEditView.handleDismissFloatingView()
+                            self?.delegate?.refreshDetailScence()
+                            
+                        }
+                        else{
+                            floatingEditView.activityIndicatorView.stopAnimating()
+                        }
+                    }
+                }
+            }
+            floatingEditView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: -380, right: 10), size: .init(width: 0, height: 370))
             
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
                 floatingEditView.transform = .init(translationX: 0, y: -380)

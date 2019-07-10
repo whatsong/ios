@@ -66,7 +66,7 @@ class SongDetailCell: UICollectionViewCell  {
         setupViews()
     }
     
-    func setupViews()   {
+    func setupViews()  {
         
         setupBackgroundGradient()
         
