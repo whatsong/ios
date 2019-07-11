@@ -175,6 +175,13 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
     }
     
     @objc func handleSkip()   {
+//        self.dismiss(animated: true, completion: {
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            appDelegate.window?.rootViewController = nil
+//            appDelegate.window?.rootViewController = MainTabBarMenuContainerController()
+//            appDelegate.window?.makeKeyAndVisible()
+        
+//        })
         self.dismiss(animated: true, completion: nil)
     }
     

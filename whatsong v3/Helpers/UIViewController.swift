@@ -70,7 +70,6 @@ extension UIViewController  {
         let tabBarView = (window?.rootViewController as! MainTabBarMenuContainerController).centerTabBarController as UITabBarController
         
         // If the floating player has already been initialised
-        
        
         if SongFloatingPlayer.tabBarContainPlayer() {
             let playerView = SongFloatingPlayer.getCurrentPlayerFromTabBar()
@@ -78,7 +77,7 @@ extension UIViewController  {
                 playerView?.song = song
                 playerView?.playSong()
             }
-            if(shouldAddToView){
+            if(shouldAddToView) {
 
                 if let mainWindow = window {
                     playerView!.anchor(top: tabBarView.tabBar.topAnchor, leading: mainWindow.leadingAnchor, bottom: nil, trailing: mainWindow.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -92,7 +91,7 @@ extension UIViewController  {
             }
             return
         }
-        if(shouldPlay){
+        if(shouldPlay)  {
             // Else -- first time being initialised
             let songPlayerView = SongFloatingPlayer()
             songPlayerView.song = song
@@ -123,6 +122,12 @@ extension UIViewController  {
         } else {
             return false
         }
+    }
+    
+    func userRoleIs() -> String {
+        let role = DAKeychain.shared["role"] ?? "Not authenticated"
+        print(role)
+        return role
     }
     
     func showAlert(bgColor: UIColor, text: String) {

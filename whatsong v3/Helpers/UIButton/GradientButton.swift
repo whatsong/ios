@@ -11,7 +11,6 @@ import UIKit
 class GradientButton: UIButton {
 
     override func draw(_ rect: CGRect) {
-        self.applyGradient(colorOne: .red, colorTwo: .blue)
+        self.applyGradient(colorOne: UIColor.init(white: 0, alpha: 0), colorTwo: UIColor.init(white: 0, alpha: 0.75), colorThree: UIColor.init(white: 0, alpha: 1))
     }
-
 }

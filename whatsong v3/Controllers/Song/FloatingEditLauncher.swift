@@ -9,7 +9,7 @@
 import UIKit
 
 class FloatingEditLauncher: UIView, UITextViewDelegate  {
-    
+        
     var song: Song! {
         didSet  {
             songTitle.text = song.title
@@ -20,12 +20,13 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
                 textView.textColor = UIColor.brandBlack()
             }
             if song.scene_description?.count ?? 0 > 3   {
-                contributorLabel.text = "This scene was added by \(song.user_scene ?? 0)"
+                contributorLabel.text = "This scene was added by another user."
+                //contributorLabel.text = "This scene was added by \(song.user_scene ?? 0)"
             }
         }
     }
     
-    var saveTextHandel:(String) -> Void = {_  in }
+    var handleSaveText: (String) -> Void = {_  in }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -240,7 +241,7 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         let text = textView.text == "Example - Mary and Tom go on their first date at the bowling alley." ? "" : textView.text
         if(text!.count > 0){
             self.activityIndicatorView.startAnimating()
-            self.saveTextHandel(text!)
+            self.handleSaveText(text!)
         }
         else{
             self.showAlert(bgColor: .clear, text: "Please add scene description")

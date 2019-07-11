@@ -118,7 +118,7 @@ class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayo
             fetchSongs()
         }
     }
-    func refreshDetailScence() {
+    func refreshDetailViewScene() {
         fetchSongs()
     }
 }

@@ -45,7 +45,7 @@ class AlbumController: BaseCvController, UICollectionViewDelegateFlowLayout, Son
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
     }
-    func refreshDetailScence() {
+    func refreshDetailViewScene() {
         
     }
 }

@@ -125,6 +125,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
             DAKeychain.shared["accessToken"] = nil
             
             guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarMenuContainerController else { return }
+            
             mainTabBarController.configureMainTabBarController()
             self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged out")
 
@@ -135,7 +136,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
 //                appDelegate.window?.rootViewController = MainTabBarMenuContainerController()
 //                appDelegate.window?.makeKeyAndVisible()
 //            })
-            
+//
             print("performed log out")
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

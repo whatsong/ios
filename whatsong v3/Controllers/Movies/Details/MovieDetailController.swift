@@ -9,7 +9,6 @@
 import UIKit
 
 class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayout, AlbumCellDelegate, SongCellDelegate, SongDetailPopupControllerDelegate   {
-  
     
     let infoCellId = "infoCellId"
     let albumsListCellId = "albumsCellId"
@@ -125,7 +124,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
     }
-    func refreshDetailScence() {
+    func refreshDetailViewScene() {
         let mId = self.movieId
         self.movieId = mId
     }

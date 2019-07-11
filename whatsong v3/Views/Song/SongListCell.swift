@@ -165,12 +165,11 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
             songPlayerView.playSong()
         }
         
-        // Adds floating view
+        // Adds floating player view
         tabBarView.view.insertSubview(songPlayerView, belowSubview: tabBarView.tabBar)
         if let mainWindow = window {
             songPlayerView.anchor(top: tabBarView.tabBar.topAnchor, leading: mainWindow.leadingAnchor, bottom: nil, trailing: mainWindow.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-            let widthConstraint = songPlayerView.widthAnchor.constraint(equalToConstant: tabBarView.view.frame.size.width)
-            songPlayerView.addConstraint(widthConstraint)
+            songPlayerView.constrainWidth(constant: frame.width)
         }
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
             songPlayerView.transform = .init(translationX: 0, y: -54)
@@ -179,8 +178,6 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         // Set icons on first appearing
         songPlayerView.setPlayPauseOnAppearing()
         
-//        songPlayerView.setIsFavouritedOnAppearing(isFavorited: song.is_favorited!)
-//        print("Is this song favourited", song.is_favorited)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -207,22 +204,6 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         if songCellDelegate != nil {
             songCellDelegate?.didSelectSongDetail(for: songsArray[indexPath.item])
         }
-
-//        // To present UIView (SongDetailPopup) Instead of UICollectionView (SongDetailView)
-//        let window: UIWindow? = UIApplication.shared.keyWindow
-//        let offsetY = (window?.frame.maxY)!
-//
-//        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
-//        window?.addSubview(songDetailView)
-//        showFloatingPlayer(song: songsArray[indexPath.item], shouldPlay: false)
-//        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-//            songDetailView.transform = .init(translationX: 0, y: -offsetY)
-//        }, completion: nil )
-//
-//        let song = self.songsArray[indexPath.item]
-//        songDetailView.song = song
-//        songDetailView.setPlayPauseOnAppearing()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

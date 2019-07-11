@@ -89,7 +89,7 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
         songDetailController.navigationItem.title = song.title
         self.navigationController?.present(songDetailController, animated: true, completion: nil)
     }
-    func refreshDetailScence() {
+    func refreshDetailViewScene() {
         if (episode != nil) {
             fetchEpisode()
         }

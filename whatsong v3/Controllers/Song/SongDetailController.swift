@@ -10,21 +10,13 @@ import UIKit
 import SDWebImage
 
 protocol SongDetailPopupControllerDelegate {
-    func refreshDetailScence()
+    func refreshDetailViewScene()
 }
 class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "songId"
     var song: Song?
     var delegate:SongDetailPopupControllerDelegate?
-
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation    {
-        return .slide
-    }
-    
-    override var prefersStatusBarHidden: Bool   {
-        return true
-    }
     
     let dismissButton: GradientButton = {
         let button = GradientButton()
@@ -41,7 +33,6 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
         collectionView.register(SongDetailCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.allowsSelection = false
         view.addSubview(dismissButton)
-        animateStatusBar()
         
         //collectionView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         
@@ -71,7 +62,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     
     @objc func dismissFunc()  {
         self.dismiss(animated: true) {
-            self.showFloatingPlayer(song: self.song!,shouldPlay: false,shouldAddToView: SongPlayer.shared.player.timeControlStatus == .paused ? false : true)
+            self.showFloatingPlayer(song: self.song!, shouldPlay: false, shouldAddToView: SongPlayer.shared.player.timeControlStatus == .paused ? false : true)
         }
     }
     
@@ -180,12 +171,11 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     
     @objc func handleEditTime()  {
         print("handling edit time")
-        
     }
     
     func setupFloatingView()    {
-//        let dimmedBackgroundView = UIView()
-//        dimmedBackgroundView.backgroundColor = UIColor.init(white: 0, alpha: 0)
+        
+        userRoleIs()
         
         if userLoggedIn()   {
             let floatingEditView = FloatingEditLauncher()
@@ -195,7 +185,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             floatingEditView.layer.masksToBounds = true
             
             view.addSubview(floatingEditView)
-            floatingEditView.saveTextHandel = { [weak self] text in
+            floatingEditView.handleSaveText = { [weak self] text in
                 Service.shared.addSceneDescription(songId: "\(self!.song!._id)", scene: text) { (success) in
                     DispatchQueue.main.async {
                         if(success){
@@ -203,7 +193,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
                             self!.song?.scene_description = text
                             self?.collectionView.reloadData()
                             floatingEditView.handleDismissFloatingView()
-                            self?.delegate?.refreshDetailScence()
+                            self?.delegate?.refreshDetailViewScene()
                             
                         }
                         else{
@@ -263,12 +253,6 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     @objc func handleShare(sender: UIButton)  {
         let activityController = UIActivityViewController(activityItems: ["Hey, check out this song"], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
-    }
-    
-    func animateStatusBar() {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }, completion: nil)
     }
     
     // MARK:-- Protocol Methods

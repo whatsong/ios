@@ -68,7 +68,8 @@ class SongDetailCell: UICollectionViewCell  {
     
     func setupViews()  {
         
-        setupBackgroundGradient()
+        //setupBackgroundGradient()
+        backgroundColor = .black
         
         let verticalStackView = UIStackView(arrangedSubviews: [songName, artistName])
         verticalStackView.axis = .vertical

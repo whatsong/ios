@@ -64,6 +64,7 @@ class SongFloatingPlayer: UIView {
     @objc func showActivityIndicator() {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+        activityIndicator.backgroundColor = .clear
         playPauseButton.isHidden = true
     }
     
@@ -73,19 +74,6 @@ class SongFloatingPlayer: UIView {
         playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
     }
     
-//    @objc func showSongInfoPopup() {
-//        let window: UIWindow? = UIApplication.shared.keyWindow
-//        let offsetY = (window?.frame.maxY)!
-//        let songDetailView = SongDetailPopup.init(frame: CGRect(x: 0, y: offsetY, width: (window?.bounds.width)!, height: (window?.bounds.height)!))
-//        window?.addSubview(songDetailView)
-//
-//        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-//            songDetailView.transform = .init(translationX: 0, y: -offsetY)
-//        }, completion: nil)
-//        songDetailView.song = song
-//        songDetailView.setPlayPauseOnAppearing()
-//    }
-    
     @objc func showSongDetailView() {
         
         let songDetailController = SongDetailPopupController()
@@ -93,7 +81,6 @@ class SongFloatingPlayer: UIView {
         songDetailController.song = song
         
         self.window?.rootViewController?.present(songDetailController, animated: true, completion: nil)
-
     }
     
     let view: UIView = {
@@ -135,7 +122,6 @@ class SongFloatingPlayer: UIView {
     }()
     
     let viewButton:UIButton = {
-        
         let button = UIButton()
         button.setTitle("", for: .normal)
         button.addTarget(self, action: #selector(showSongDetailView), for: .touchUpInside)

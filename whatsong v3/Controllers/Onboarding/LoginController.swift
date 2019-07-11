@@ -145,9 +145,6 @@ class LoginController: UIViewController {
                 DispatchQueue.main.async {
                     //reset app state after successful login
                 
-//                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-//                    mainTabBarController.setupLoggedInControllers()
-
                     self.view.window?.rootViewController?.dismiss(animated: true, completion: {
                         self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged in")
                         let appDelegate = UIApplication.shared.delegate as! AppDelegate
