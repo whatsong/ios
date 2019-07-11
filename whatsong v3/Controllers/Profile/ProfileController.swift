@@ -124,17 +124,11 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
         alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
             DAKeychain.shared["accessToken"] = nil
             
-            guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarMenuContainerController else { return }
-            mainTabBarController.configureMainTabBarController()
             self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged out")
-
-//            self.view.window?.rootViewController?.dismiss(animated: true, completion: {
-//                self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged out")
-//                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//                appDelegate.window?.rootViewController = nil
-//                appDelegate.window?.rootViewController = MainTabBarMenuContainerController()
-//                appDelegate.window?.makeKeyAndVisible()
-//            })
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window?.rootViewController = nil
+            appDelegate.window?.rootViewController = MainTabBarMenuContainerController()
+            appDelegate.window?.makeKeyAndVisible()
             
             print("performed log out")
         }))
