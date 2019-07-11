@@ -174,9 +174,11 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     }
     
     func setupFloatingView()    {
-        
-        userRoleIs()
-        
+        let dimmedBackgroundView = UIView()
+        dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.4454545)
+        view.addSubview(dimmedBackgroundView)
+        dimmedBackgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+      
         if userLoggedIn()   {
             let floatingEditView = FloatingEditLauncher()
             floatingEditView.song = song
@@ -185,7 +187,10 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             floatingEditView.layer.masksToBounds = true
             
             view.addSubview(floatingEditView)
-            floatingEditView.handleSaveText = { [weak self] text in
+            floatingEditView.closeTextHandel = { [weak self] in
+                dimmedBackgroundView.removeFromSuperview()
+            }
+            floatingEditView.saveTextHandel = { [weak self] text in
                 Service.shared.addSceneDescription(songId: "\(self!.song!._id)", scene: text) { (success) in
                     DispatchQueue.main.async {
                         if(success){

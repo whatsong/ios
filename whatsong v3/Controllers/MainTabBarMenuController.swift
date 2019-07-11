@@ -65,6 +65,11 @@ class MainTabBarMenuContainerController: UIViewController, MainTabBarControllerD
             }
         }
         animateStatusBar()
+        
+        if SongFloatingPlayer.tabBarContainPlayer() {
+            let playerView = SongFloatingPlayer.getCurrentPlayerFromTabBar()
+            playerView?.isHidden = shouldExpand
+        }
     }
     
     func didSelectMenuOption(menuOption: MenuOption)  {
