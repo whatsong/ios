@@ -26,10 +26,10 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
     }
     
     var saveTextHandel:(String) -> Void = {_  in }
+    var closeTextHandel:() -> Void = {}
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         textView.delegate = self
         
         setupViews()
@@ -40,7 +40,6 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
     //MARK: Setup Views
     
     func setupViews()   {
-        
         // Heading Views
         let headingStackView = VerticalStackView(arrangedSubviews: [songTitle, artistName])
         headingBackground.constrainHeight(constant: 70)
@@ -138,6 +137,7 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         }) { (_) in
             self.removeFromSuperview()
         }
+         self.closeTextHandel()
     }
     
     // MARK:- Views
