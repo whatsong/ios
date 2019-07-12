@@ -26,8 +26,9 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         }
     }
     
-    var saveTextHandel:(String) -> Void = {_  in }
-    var closeTextHandel:() -> Void = {}
+    var handleSaveText: (String) -> Void = {_  in }
+    var handleSaveInt: (Int) -> Void = {_ in }
+    var handleCloseText:() -> Void = {}
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -138,7 +139,7 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         }) { (_) in
             self.removeFromSuperview()
         }
-         self.closeTextHandel()
+         self.handleCloseText()
     }
     
     // MARK:- Views
@@ -178,7 +179,7 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         return label
     }()
     
-    let questionHeading: UILabel = {
+    var questionHeading: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "What scene did this song play in?", attributes: [
             NSAttributedString.Key.kern: -0.6
@@ -188,13 +189,15 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         label.constrainHeight(constant: 65)
         return label
     }()
+    
     let activityIndicatorView: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView()
         aiv.color = UIColor.brandLightGrey()
         aiv.hidesWhenStopped = true
         return aiv
     }()
-    let textView: UITextView = {
+    
+    var textView: UITextView = {
         let tv = UITextView()
         tv.attributedText = NSAttributedString(string: "Example - Mary and Tom go on their first date at the bowling alley.", attributes: [
             NSAttributedString.Key.kern: -0.6,

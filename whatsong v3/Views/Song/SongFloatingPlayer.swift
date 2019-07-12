@@ -22,7 +22,8 @@ class SongFloatingPlayer: UIView {
                 heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
                 print("not favorited")
             } else if song.is_favorited == true {
-                heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+                heartIcon.setImage(UIImage(named: "heart-icon-fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                heartIcon.tintColor = UIColor.brandPurple()
                 print("favorited")
             }
         }
@@ -217,7 +218,8 @@ class SongFloatingPlayer: UIView {
         let liked = userInfo["liked"] as! Bool
         song.is_favorited = liked
         if liked {
-            self.heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+            self.heartIcon.setImage(UIImage(named: "heart-icon-fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            self.heartIcon.tintColor = UIColor.brandPurple()
         } else {
             self.heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
         }
@@ -230,7 +232,8 @@ class SongFloatingPlayer: UIView {
             //MARK: PASS TYPE
             Service.shared.addTofavourite(songId: "\(song._id)", type: "song", like: true) { (success) in
                 DispatchQueue.main.async {
-                    self.heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
+                    self.heartIcon.setImage(UIImage(named: "heart-icon-fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                    self.heartIcon.tintColor = UIColor.brandPurple()
                     self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
                     self.song.is_favorited = true
                     NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
@@ -309,17 +312,6 @@ class SongFloatingPlayer: UIView {
     func setPlayPauseOnAppearing() {
         if SongPlayer.shared.doesPreviewExist(spotifyPreviewUrl: song.preview_url, iTunesPreviewUrl: song.spotifyPreviewUrl) == true   {
             playPauseButton.setImage(UIImage(named: "pause-icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        }
-    }
-    
-    func setIsFavouritedOnAppearing(isFavorited: Bool)   {
-        
-        if isFavorited == true    {
-            heartIcon.setImage(UIImage(named: "heart-icon-fill"), for: .normal)
-            print("favorited")
-        }   else  {
-            heartIcon.setImage(UIImage(named: "heart-icon"), for: .normal)
-            print("not favorited")
         }
     }
     

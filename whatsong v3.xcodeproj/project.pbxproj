@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -99,6 +99,7 @@
 		BBD0B02622CB15C4000579EF /* MainTabBarMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02522CB15C4000579EF /* MainTabBarMenuController.swift */; };
 		BBD0B02822CB3365000579EF /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02722CB3365000579EF /* MenuOption.swift */; };
 		BBD0B02A22D46784000579EF /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02922D46784000579EF /* UIButton.swift */; };
+		BBD0B02C22D82281000579EF /* FloatingEditTimeLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02B22D82281000579EF /* FloatingEditTimeLauncher.swift */; };
 		BBEB4357223F6DF200D54998 /* SongListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB4356223F6DF200D54998 /* SongListCell.swift */; };
 		BBEB435C224A24BF00D54998 /* SongDetailPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */; };
 		BBEDA28C221BDD9F007610DF /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */; };
@@ -231,6 +232,7 @@
 		BBD0B02522CB15C4000579EF /* MainTabBarMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarMenuController.swift; sourceTree = "<group>"; };
 		BBD0B02722CB3365000579EF /* MenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOption.swift; sourceTree = "<group>"; };
 		BBD0B02922D46784000579EF /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		BBD0B02B22D82281000579EF /* FloatingEditTimeLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingEditTimeLauncher.swift; sourceTree = "<group>"; };
 		BBEB4356223F6DF200D54998 /* SongListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCell.swift; sourceTree = "<group>"; };
 		BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailPopup.swift; sourceTree = "<group>"; };
 		BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 			children = (
 				BB74F7F522AE2868006AB7C1 /* SongDetailController.swift */,
 				BBD0AFE222C3052A000579EF /* FloatingEditLauncher.swift */,
+				BBD0B02B22D82281000579EF /* FloatingEditTimeLauncher.swift */,
 			);
 			path = Song;
 			sourceTree = "<group>";
@@ -968,6 +971,7 @@
 				BBD0AFE322C3052A000579EF /* FloatingEditLauncher.swift in Sources */,
 				BB1BF5762293AB44009FBC91 /* UserInfo.swift in Sources */,
 				BB74F7F422ADF017006AB7C1 /* MoviesController.swift in Sources */,
+				BBD0B02C22D82281000579EF /* FloatingEditTimeLauncher.swift in Sources */,
 				BB74F7F922AF5068006AB7C1 /* SongDetailCell.swift in Sources */,
 				BBCA3EDD224C51E200037DCF /* SongFloatingPlayer.swift in Sources */,
 			);

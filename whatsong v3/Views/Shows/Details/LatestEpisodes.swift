@@ -88,7 +88,7 @@ class LatestEpisode: UICollectionViewCell   {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont(name: "Montserrat-Regular", size: 15)
-        label.backgroundColor = UIColor(red: 121/255, green: 6/255, blue: 255/255, alpha: 1)
+        label.backgroundColor = UIColor.brandPurple()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

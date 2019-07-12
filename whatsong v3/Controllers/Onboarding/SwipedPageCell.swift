@@ -14,17 +14,25 @@ class SwipedPageCell: UICollectionViewCell  {
         super.init(frame: frame)
         
         backgroundColor = UIColor.backgroundGrey()
+        
     }
     
     let imageScreenshot: UIImageViewAligned = {
         let iv = UIImageViewAligned()
-        iv.alignTop = true
+      //  iv.alignTop = true
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
-    let logoText: UILabel = {
+    let logoImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "text-logo")
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    let headingText: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "whatsong", attributes: [
             NSAttributedString.Key.kern: -1.0
@@ -33,32 +41,35 @@ class SwipedPageCell: UICollectionViewCell  {
         label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
         label.numberOfLines = 1
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let subheading: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Discover music from the latest movies and television shows", attributes: [
-            NSAttributedString.Key.kern: -0.6
-            ])
         label.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         label.textColor = UIColor(red: 41/255, green: 45/255, blue: 51/255, alpha: 1)
         label.numberOfLines = 0
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+
         return label
     }()
     
     func setupViews(distribution: UIStackView.Distribution, alignment: UIStackView.Alignment, spacing: CGFloat)   {
         
-        let verticalStackView = VerticalStackView(arrangedSubviews: [imageScreenshot, logoText, subheading])
+        let verticalStackView = UIStackView(arrangedSubviews: [imageScreenshot, headingText, subheading])
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        verticalStackView.axis = .vertical
         verticalStackView.spacing = spacing
         verticalStackView.distribution = distribution
         verticalStackView.alignment = alignment
         verticalStackView.setCustomSpacing(20, after: imageScreenshot)
-
+        
         addSubview(verticalStackView)
         
-        verticalStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 10, right: 20))
+        //verticalStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 10, right: 20))
+        verticalStackView.fillSuperview()
         
     }
 

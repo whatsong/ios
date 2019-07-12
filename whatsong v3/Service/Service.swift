@@ -139,6 +139,49 @@ class Service   {
         }
     }
     
+    func addTimeDescription(songId: Int?, time: Int, completion: @escaping (_ result: Bool) -> Void)  {
+        if let songId = songId  {
+            var request = URLRequest(url: URL(string:"https://www.what-song.com/api/add-time-play")!)
+            request.addValue(DAKeychain.shared["accessToken"]!, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "POST"
+            let parameters: [String: Any] = [
+                "songID": songId,
+                "time_play": time
+            ]
+            request.httpBody = parameters.percentEscaped().data(using: .utf8)
+            URLSession.shared.dataTask(with: request){ data, response, error in
+                guard(error == nil) else {
+                    completion(false)
+                    return
+                }
+                if let data = data {
+                    do {
+                        let parseResult = try JSONDecoder().decode(SignUpResponse.self, from: data)
+                        print(parseResult)
+                        if parseResult.success {
+                            completion(true)
+                        } else {
+                            completion( false)
+                        }
+                        
+                    } catch {
+                        completion( false)
+                    }
+                }
+                if let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                    completion(true)
+                    
+                } else {
+                    completion(false)
+                }
+                
+                }.resume()
+        }
+        else{
+            completion(false)
+        }
+    }
+    
     func addTofavourite(songId: String?, type: String, like: Bool, completion: @escaping (_ result: Bool) -> Void) {
         if let songId = songId {
             var request = URLRequest(url:URL(string:"https://www.what-song.com/api/user-action/favourite")!)
@@ -257,22 +300,6 @@ class Service   {
     func fetchFeaturedShows(completion: @escaping (FeaturedShowsData?, Error?) -> Void)  {
         let urlString = "https://www.what-song.com/api/tv_shows/featured"
         fetchGenericJSONData(urlString: urlString, completion: completion)
-    }
-    
-    func fetchGenericJSONDataWithOutAuthToken<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
-            if let err = err    {
-                completion(nil, err)
-                return
-            }
-            do  {
-                let objects = try JSONDecoder().decode(T.self, from: data!)
-                completion(objects, nil)
-            } catch    {
-                completion(nil, error)
-            }
-            }.resume()
     }
     
     func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ())   {

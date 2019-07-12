@@ -16,7 +16,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     
     let cellId = "songId"
     var song: Song?
-    var delegate:SongDetailPopupControllerDelegate?
+    var delegate: SongDetailPopupControllerDelegate?
     
     let dismissButton: GradientButton = {
         let button = GradientButton()
@@ -126,6 +126,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             print("something else")
         }
     }
+    
     @objc func openWithYoutube(sender: UIButton)  {
         if let song = song {
             let youtubeId = song.youtube_id
@@ -170,16 +171,22 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     }
     
     @objc func handleEditTime()  {
-        print("handling edit time")
+        setupTimeFloatingView()
     }
     
     func setupFloatingView()    {
-        let dimmedBackgroundView = UIView()
-        dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.4454545)
-        view.addSubview(dimmedBackgroundView)
-        dimmedBackgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
-      
+        
         if userLoggedIn()   {
+            
+            let dimmedBackgroundView = UIView()
+            dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
+            
+            UIView.animate(withDuration: 1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+                self.view.addSubview(dimmedBackgroundView)
+                dimmedBackgroundView.anchor(top: self.view.topAnchor, leading: self.view.leadingAnchor, bottom: self.view.bottomAnchor, trailing: self.view.trailingAnchor)
+            })
+            
             let floatingEditView = FloatingEditLauncher()
             floatingEditView.song = song
             floatingEditView.backgroundColor = .white
@@ -187,26 +194,85 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             floatingEditView.layer.masksToBounds = true
             
             view.addSubview(floatingEditView)
-            floatingEditView.closeTextHandel = { [weak self] in
-                dimmedBackgroundView.removeFromSuperview()
+            floatingEditView.handleCloseText = { [weak self] in
+                UIView.animate(withDuration: 1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                    dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
+                }, completion: { (_) in
+                    dimmedBackgroundView.removeFromSuperview()
+                })
             }
-            floatingEditView.saveTextHandel = { [weak self] text in
+            
+            floatingEditView.handleSaveText = { [weak self] text in
                 Service.shared.addSceneDescription(songId: "\(self!.song!._id)", scene: text) { (success) in
                     DispatchQueue.main.async {
-                        if(success){
-                            
+                        if (success)    {
                             self!.song?.scene_description = text
                             self?.collectionView.reloadData()
                             floatingEditView.handleDismissFloatingView()
                             self?.delegate?.refreshDetailViewScene()
-                            
                         }
-                        else{
+                        else    {
                             floatingEditView.activityIndicatorView.stopAnimating()
                         }
                     }
                 }
             }
+            
+            floatingEditView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: -380, right: 10), size: .init(width: 0, height: 370))
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                floatingEditView.transform = .init(translationX: 0, y: -380)
+            
+            }, completion: nil)
+        }   else    {
+            showAlert(bgColor: UIColor.brandWarning(), text: "You must be logged in to edit a song")
+        }
+    }
+    
+    func setupTimeFloatingView()    {
+        
+        if userLoggedIn()   {
+            
+            let dimmedBackgroundView = UIView()
+            dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
+            
+            UIView.animate(withDuration: 1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+                self.view.addSubview(dimmedBackgroundView)
+                dimmedBackgroundView.anchor(top: self.view.topAnchor, leading: self.view.leadingAnchor, bottom: self.view.bottomAnchor, trailing: self.view.trailingAnchor)
+            })
+            
+            let floatingEditView = FloatingEditTimeLauncher()
+            floatingEditView.song = song
+            floatingEditView.backgroundColor = .white
+            floatingEditView.layer.cornerRadius = 12
+            floatingEditView.layer.masksToBounds = true
+            
+            view.addSubview(floatingEditView)
+            floatingEditView.handleCloseText = { [weak self] in
+                UIView.animate(withDuration: 1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                    dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
+                }, completion: { (_) in
+                    dimmedBackgroundView.removeFromSuperview()
+                })
+            }
+            
+            floatingEditView.handleSaveInt = { [weak self] text in
+                Service.shared.addTimeDescription(songId: self!.song!._id, time: text) { (success) in
+                    DispatchQueue.main.async {
+                        if (success)    {
+                            self!.song?.time_play = text
+                            self?.collectionView.reloadData()
+                            floatingEditView.handleDismissFloatingView()
+                            self?.delegate?.refreshDetailViewScene()
+                        }
+                        else    {
+                            floatingEditView.activityIndicatorView.stopAnimating()
+                        }
+                    }
+                }
+            }
+            
             floatingEditView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: -380, right: 10), size: .init(width: 0, height: 370))
             
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
@@ -219,11 +285,10 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
     }
     
     @objc func handleSongLike(_ sender: UITapGestureRecognizer) {
-        if let senderImage = sender.view as? UIImageView{
+        if let senderImage = sender.view as? UIImageView {
             print("handling like")
             if userLoggedIn() && song?.is_favorited == false  {
                 print("trying to like song")
-                //MARK: PASS TYPE
                 Service.shared.addTofavourite(songId: "\(song?._id ?? 0)", type: "song", like: true) { (success) in
                     DispatchQueue.main.async {
                         senderImage.image = UIImage(named: "heart-icon-fill")?.withRenderingMode(.alwaysTemplate)

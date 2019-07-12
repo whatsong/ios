@@ -110,16 +110,29 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
                 NSAttributedString.Key.kern: -0.6
                 ])
             cell.artistName.isHidden = false
+            
             cell.sceneDescription.attributedText = NSAttributedString(string: song.scene_description ?? "", attributes: [
                 NSAttributedString.Key.kern: -0.3
                 ])
             cell.sceneDescription.isHidden = false
 
-            if song.time_play == nil {
-                cell.timeHeard.text = ""
-                cell.minutesLabel.text = ""
-            } else  {
-                cell.timeHeard.text = "\(song.time_play ?? 0)"
+            if song.time_play != nil {
+                
+                let mutableString = NSMutableAttributedString()
+                let timeAttributes = [
+                    NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 14)!,
+                    NSAttributedString.Key.foregroundColor: UIColor.brandPurple(),
+                    NSAttributedString.Key.kern: -0.3
+                    ] as [NSAttributedString.Key : Any]
+                let sceneAttributes = [
+                    NSAttributedString.Key.kern: -0.3
+                ] as [NSAttributedString.Key : Any]
+                let time = NSAttributedString(string: "\(song.time_play ?? 0) min ", attributes: timeAttributes)
+                let scene = NSAttributedString(string: song.scene_description ?? "", attributes: sceneAttributes)
+                mutableString.append(time)
+                mutableString.append(scene)
+                
+                cell.sceneDescription.attributedText = mutableString
             }
             
             let moreButtonTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(moreButtonTap))
@@ -215,8 +228,8 @@ class SongCell: UICollectionViewCell    {
     
     let timeHeard: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Regular", size: 14)
-        label.textColor = UIColor.brandLightGrey()
+        label.font = UIFont(name: "Montserrat-SemiBold", size: 14)
+        label.textColor = UIColor.brandPurple()
         label.constrainWidth(constant: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
