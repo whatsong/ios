@@ -37,6 +37,8 @@ class SignUpController: UIViewController   {
             NSAttributedString.Key.kern: -0.2
         ]
         tf.attributedPlaceholder = NSAttributedString(string: "Username", attributes: attributes)
+        tf.returnKeyType = UIReturnKeyType.done
+        tf.resignFirstResponder()
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         tf.setBottomBorder(color: .white)
         return tf
@@ -71,6 +73,7 @@ class SignUpController: UIViewController   {
             NSAttributedString.Key.kern: -0.2
         ]
         tf.attributedPlaceholder = NSAttributedString(string: "Password", attributes: attributes)
+        tf.returnKeyType = UIReturnKeyType.done
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         tf.setBottomBorder(color: .white)
         return tf
@@ -78,13 +81,13 @@ class SignUpController: UIViewController   {
     
     let signUpButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(red: 174/255, green: 161/255, blue: 244/255, alpha: 1)
+        button.backgroundColor = UIColor.white.darker
         button.isEnabled = false
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.setTitle("Create Your Account", for: .normal)
         button.setTitleColor(UIColor.brandPurple(), for: .normal)
         button.layer.cornerRadius = 4
-         button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
     }()
     
@@ -108,7 +111,7 @@ class SignUpController: UIViewController   {
             signUpButton.backgroundColor = .white
         } else  {
             signUpButton.isEnabled = false
-            signUpButton.backgroundColor = UIColor(red: 174/255, green: 161/255, blue: 244/255, alpha: 1)
+            signUpButton.backgroundColor = UIColor.white.darker
             
         }
     }

@@ -181,7 +181,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             let dimmedBackgroundView = UIView()
             dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
             
-            UIView.animate(withDuration: 1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
                 dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
                 self.view.addSubview(dimmedBackgroundView)
                 dimmedBackgroundView.anchor(top: self.view.topAnchor, leading: self.view.leadingAnchor, bottom: self.view.bottomAnchor, trailing: self.view.trailingAnchor)
@@ -195,7 +195,7 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             view.addSubview(floatingEditView)
             
             floatingEditView.handleCloseText = { [weak self] in
-                UIView.animate(withDuration: 1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
                     dimmedBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
                 }, completion: { (_) in
                     dimmedBackgroundView.removeFromSuperview()

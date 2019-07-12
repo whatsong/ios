@@ -73,7 +73,7 @@ class LoginController: UIViewController {
     
     let loginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(red: 223/255, green: 219/255, blue: 245/255, alpha: 1)
+        button.backgroundColor = UIColor.brandPurple().lighter
         button.isEnabled = false
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.setTitle("Log in", for: .normal)
@@ -122,7 +122,7 @@ class LoginController: UIViewController {
             loginButton.backgroundColor = UIColor.brandPurple()
         } else  {
             loginButton.isEnabled = false
-            loginButton.backgroundColor = UIColor(red: 223/255, green: 219/255, blue: 245/255, alpha: 1)
+            loginButton.backgroundColor = UIColor.brandPurple().lighter
             
         }
     }

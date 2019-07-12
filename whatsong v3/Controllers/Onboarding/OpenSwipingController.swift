@@ -91,7 +91,6 @@ class OpenSwipingController: UIViewController, UICollectionViewDelegateFlowLayou
         collectionView.dataSource = self
         collectionView.register(SwipedPageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.isPagingEnabled = true
-        collectionView.backgroundColor = .red
         
         let buttonStackView = UIStackView(arrangedSubviews: [loginButton, registerButton])
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false

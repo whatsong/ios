@@ -39,7 +39,7 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,7 +49,7 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.titleLabel.attributedText = NSAttributedString(string: menuOption?.description ?? "", attributes: [
             NSAttributedString.Key.kern: -0.6
             ])
-        if indexPath.row == 7 {
+        if indexPath.row == 6 {
             cell.descLabel.text = menuOption?.rightDescription
             cell.isUserInteractionEnabled = false
         }

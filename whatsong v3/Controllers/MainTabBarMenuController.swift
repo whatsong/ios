@@ -75,8 +75,6 @@ class MainTabBarMenuContainerController: UIViewController, MainTabBarControllerD
     func didSelectMenuOption(menuOption: MenuOption)  {
         switch menuOption       {
             
-        case .About:
-            print("show about")
         case .ReportBug:
             showEmailComposer(subject: "Report Bug", bodyString: "Please outline the details of the bug below and one of our staff will review it ASAP. We appreciate you letting us know, so thanks")
         case .ReportListing:

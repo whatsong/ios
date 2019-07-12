@@ -8,7 +8,6 @@
 
 enum MenuOption: Int, CustomStringConvertible    {
     
-    case About
     case ReportBug
     case ReportListing
     case RequestMovie
@@ -19,7 +18,6 @@ enum MenuOption: Int, CustomStringConvertible    {
     
     var description: String {
         switch self {
-        case .About: return "About WhatSong"
         case .ReportBug: return "Report Bug"
         case .ReportListing: return "Report Listing"
         case .RequestMovie: return "Request Movie"

@@ -68,8 +68,7 @@ class SwipedPageCell: UICollectionViewCell  {
         
         addSubview(verticalStackView)
         
-        //verticalStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 10, right: 20))
-        verticalStackView.fillSuperview()
+        verticalStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 10, right: 20))
         
     }
 

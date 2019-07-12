@@ -14,22 +14,25 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         didSet  {
             songTitle.text = song.title
             artistName.text = song.artist.name
-            if(self.isEditTime){
+            if(self.isEditTime) {
                 if song.time_play != nil   {
                     print("time is not nil")
                     textTimeView.text = "\(song.time_play ?? 0)"
                     textTimeView.textColor = UIColor.brandBlack()
                     contributorLabel.text = "The time has already been added."
+                }   else    {
+                    contributorLabel.text = "Gain +2 points for adding a correct time stamp."
                 }
+                
             }
-            else{
+            else    {
                 if song.scene_description != nil && song.scene_description != ""   {
                     print("scene is not nil")
                     textView.text = song.scene_description
                     textView.textColor = UIColor.brandBlack()
                 }
                 if song.scene_description?.count ?? 0 > 3   {
-                    contributorLabel.text = "This scene was added by another user."
+                    contributorLabel.text = "This scene has already been added."
                     //contributorLabel.text = "This scene was added by \(song.user_scene ?? 0)"
                 }
             }

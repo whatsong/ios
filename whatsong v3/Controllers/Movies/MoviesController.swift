@@ -35,7 +35,9 @@ class MoviesController: ShowsController   {
     }
     
     fileprivate func fetchData() {
-        startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY))
+        DispatchQueue.main.async {
+            self.startActivityIndicator(center: CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY))
+        }
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         Service.shared.fetchMoviesBySchedule { (movieDays, err) in
