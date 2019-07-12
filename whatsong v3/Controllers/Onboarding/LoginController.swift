@@ -142,6 +142,7 @@ class LoginController: UIViewController {
             }
             if let model = loginModel {
                 DAKeychain.shared["accessToken"] = model.data.accessToken.value
+                DAKeychain.shared["role"] = model.data.accessToken.role
                 DispatchQueue.main.async {
                     //reset app state after successful login
                 

@@ -14,31 +14,47 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         didSet  {
             songTitle.text = song.title
             artistName.text = song.artist.name
-            if song.scene_description != nil && song.scene_description != ""   {
-                print("scene is not nil")
-                textView.text = song.scene_description
-                textView.textColor = UIColor.brandBlack()
+            if(self.isEditTime){
+                if song.time_play != nil   {
+                    print("time is not nil")
+                    textTimeView.text = "\(song.time_play ?? 0)"
+                    textTimeView.textColor = UIColor.brandBlack()
+                    contributorLabel.text = "The time has already been added."
+                }
             }
-            if song.scene_description?.count ?? 0 > 3   {
-                contributorLabel.text = "This scene was added by another user."
-                //contributorLabel.text = "This scene was added by \(song.user_scene ?? 0)"
+            else{
+                if song.scene_description != nil && song.scene_description != ""   {
+                    print("scene is not nil")
+                    textView.text = song.scene_description
+                    textView.textColor = UIColor.brandBlack()
+                }
+                if song.scene_description?.count ?? 0 > 3   {
+                    contributorLabel.text = "This scene was added by another user."
+                    //contributorLabel.text = "This scene was added by \(song.user_scene ?? 0)"
+                }
             }
+            
         }
     }
     
     var handleSaveText: (String) -> Void = {_  in }
     var handleSaveInt: (Int) -> Void = {_ in }
     var handleCloseText:() -> Void = {}
+    var isEditTime : Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+    }
+    
+    init(isEditTime: Bool) {
+        super.init(frame: .zero)
         textView.delegate = self
-        
+        textTimeView.delegate = self
+        self.isEditTime = isEditTime
         setupViews()
         setupKeyboardListeners()
         
     }
-    
     //MARK: Setup Views
     
     func setupViews()   {
@@ -49,7 +65,7 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         headingStackView.fillSuperview(padding: UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20))
         
         // Middle Views
-        let middleStackView = VerticalStackView(arrangedSubviews: [questionHeading, textView, contributorLabel])
+        let middleStackView = VerticalStackView(arrangedSubviews: [self.isEditTime ? questionTimeHeading : questionHeading, self.isEditTime ? textTimeView : textView, contributorLabel])
         middleBackground.addSubview(middleStackView)
         middleStackView.fillSuperview(padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
         
@@ -106,16 +122,20 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
     // MARK:- Methods, Functions
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.brandLightGrey() {
-            textView.text = nil
-            textView.textColor = UIColor.brandBlack()
+        if(textView == self.textView){
+            if textView.textColor == UIColor.brandLightGrey() {
+                textView.text = nil
+                textView.textColor = UIColor.brandBlack()
+            }
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Example - Mary and Tom go on their first date at the bowling alley."
-            textView.textColor = UIColor.brandLightGrey()
+        if(textView == self.textView){
+            if textView.text.isEmpty {
+                textView.text = "Example - Mary and Tom go on their first date at the bowling alley."
+                textView.textColor = UIColor.brandLightGrey()
+            }
         }
     }
     
@@ -125,11 +145,20 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
             textView.resignFirstResponder()
             return false
         }
+        else if(textView == self.textTimeView)
+        {
+            let inverseSet = NSCharacterSet(charactersIn:"0123456789").inverted
+            let components = text.components(separatedBy: inverseSet)
+            let filtered = components.joined(separator: "")
+            return text == filtered
+        }
         return true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         textView.resignFirstResponder()
+        textTimeView.resignFirstResponder()
+
     }
     
     @objc func handleDismissFloatingView()    {
@@ -196,6 +225,29 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
         aiv.hidesWhenStopped = true
         return aiv
     }()
+    var questionTimeHeading: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "How many minutes in did this song play?", attributes: [
+            NSAttributedString.Key.kern: -0.6
+            ])
+        label.font = UIFont(name: "Montserrat-Regular", size: 16)
+        label.textColor = UIColor.brandLightGrey()
+        label.constrainHeight(constant: 65)
+        return label
+    }()
+    var textTimeView: UITextView = {
+        let tv = UITextView()
+        tv.attributedText = NSAttributedString(string: "", attributes: [
+            NSAttributedString.Key.kern: -0.6,
+            NSAttributedString.Key.foregroundColor: UIColor.brandBlack()
+            ])
+        tv.font = UIFont(name: "Montserrat-Regular", size: 14)
+        tv.constrainHeight(constant: 110)
+        tv.backgroundColor = UIColor.backgroundGrey()
+        tv.returnKeyType = UIReturnKeyType.done
+        tv.keyboardType = UIKeyboardType.numberPad
+        return tv
+    }()
     
     var textView: UITextView = {
         let tv = UITextView()
@@ -241,14 +293,27 @@ class FloatingEditLauncher: UIView, UITextViewDelegate  {
     
     @objc func saveText() {
         self.endEditing(true)
-        let text = textView.text == "Example - Mary and Tom go on their first date at the bowling alley." ? "" : textView.text
-        if(text!.count > 0){
-            self.activityIndicatorView.startAnimating()
-            self.handleSaveText(text!)
+        if(self.isEditTime){
+            let text = textTimeView.text
+            if(text!.count > 0){
+                self.activityIndicatorView.startAnimating()
+                self.handleSaveInt(Int(text!)!)
+            }
+            else{
+                self.showAlert(bgColor: .clear, text: "Please add How many minutes in did this song play?")
+            }
         }
         else{
-            self.showAlert(bgColor: .clear, text: "Please add scene description")
+            let text = textView.text == "Example - Mary and Tom go on their first date at the bowling alley." ? "" : textView.text
+            if(text!.count > 0){
+                self.activityIndicatorView.startAnimating()
+                self.handleSaveText(text!)
+            }
+            else{
+                self.showAlert(bgColor: .clear, text: "Please add scene description")
+            }
         }
+      
     }
     
     required init?(coder aDecoder: NSCoder) {
