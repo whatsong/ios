@@ -7,11 +7,8 @@
 //
 
 import UIKit
-import SkeletonView
 
 class TvShowDetailsController: BaseCvController, UICollectionViewDelegateFlowLayout, SeasonCellDelegate, LatestEpisodeCellDelegate    {
-    
-    
     
     let infoCellId = "cellId"
     let latestEpisodeCellId = "latestEpisodesCellId"

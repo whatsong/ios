@@ -57,6 +57,7 @@ class MovieDetailController: BaseCvController, UICollectionViewDelegateFlowLayou
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         collectionView.register(MovieInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         collectionView.register(AlbumsList.self, forCellWithReuseIdentifier: albumsListCellId)

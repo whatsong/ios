@@ -23,7 +23,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         collectionView.register(UserInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         collectionView.register(UserStatsCell.self, forCellWithReuseIdentifier: statsCellId)
         collectionView.register(UserLibraryCell.self, forCellWithReuseIdentifier: libraryCellId)

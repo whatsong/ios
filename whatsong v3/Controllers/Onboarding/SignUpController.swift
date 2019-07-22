@@ -81,7 +81,7 @@ class SignUpController: UIViewController   {
     
     let signUpButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.white.darker
+        button.backgroundColor = UIColor.white
         button.isEnabled = false
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.setTitle("Create Your Account", for: .normal)
@@ -111,9 +111,12 @@ class SignUpController: UIViewController   {
             signUpButton.backgroundColor = .white
         } else  {
             signUpButton.isEnabled = false
-            signUpButton.backgroundColor = UIColor.white.darker
-            
+            signUpButton.backgroundColor = UIColor.white
         }
+    }
+    
+    @objc func showDelayedAlert() {
+        self.showAlert(bgColor: UIColor.brandSuccess(), text: "Succesfully created account. Please log in.")
     }
     
     @objc func handleSignUp() {
@@ -123,9 +126,8 @@ class SignUpController: UIViewController   {
                 if success {
                     DispatchQueue.main.async {
                         self.presentCustom(vc: LoginController(), animated: true)
-                        self.showAlert(bgColor: UIColor.brandWarning(), text: "Succesfully created account. Please log in.")
                         self.stopActivityIndicator()
-
+                        self.perform(#selector(self.showDelayedAlert), with: nil, afterDelay: 0.1)
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -134,10 +136,9 @@ class SignUpController: UIViewController   {
                             self.stopActivityIndicator()
                             
                         } else {
-                            self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong. Please try again.")
                             self.stopActivityIndicator()
+                            self.showAlert(bgColor: UIColor.brandWarning(), text: "Something went wrong. Please try again.")
                         }
-                        
                     }
                 }
             }

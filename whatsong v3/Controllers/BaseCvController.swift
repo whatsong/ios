@@ -20,6 +20,8 @@ class BaseCvController: UICollectionViewController  {
 }
 
 class BaseHorizontalCvController: UICollectionViewController  {
+    
+
     init() {
         let layout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: layout)

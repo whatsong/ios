@@ -33,13 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
         window = UIWindow()
         window?.makeKeyAndVisible()
         window?.rootViewController = MainTabBarMenuContainerController()
-        
-//        if DAKeychain.shared["accessToken"] != nil && (DAKeychain.shared["accessToken"]!).count > 0 {
-//            window?.rootViewController = MainTabBarController()
-//            
-//        } else {
-//            window?.rootViewController = OpenSwipingController()
-//        }
+
         return true
     }
 

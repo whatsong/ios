@@ -28,6 +28,8 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
         collectionView.register(EpisodeInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         collectionView.register(SongListCell.self, forCellWithReuseIdentifier: songsCellId)
         
+        setupRightBarButtonItem()
+        
         if (episode != nil) {
             fetchEpisode()
         }
@@ -50,6 +52,31 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
                 }
             }
         }
+    }
+    
+    func setupRightBarButtonItem()  {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(setupAddSongVC))
+    }
+    
+    @objc func setupAddSongVC()  {
+        let addSongVC = AddSongViewController()
+        addSongVC.navigationItem.title = "Add Song"
+        addSongVC.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAddSong))
+
+        let navController = UINavigationController(rootViewController: addSongVC)
+        navController.navigationBar.prefersLargeTitles = true
+        let navAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 28)!,
+            NSAttributedString.Key.kern: -0.6
+        ]
+        
+        navController.navigationBar.largeTitleTextAttributes = navAttributes
+
+        self.present(navController, animated: true)
+    }
+    
+    @objc func dismissAddSong() {
+        self.dismiss(animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

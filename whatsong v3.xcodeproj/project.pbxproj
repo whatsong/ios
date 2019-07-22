@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3EC0155890E531458E58846C /* Pods_whatsong_v3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46E02381DEC88006DBE4745 /* Pods_whatsong_v3Tests.framework */; };
+		2C616C0C7B1FD216C1AB78D4 /* Pods_whatsong_v3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BB49BFCECE3442D7262B14 /* Pods_whatsong_v3Tests.framework */; };
+		69F5619514C9259B403DD4D6 /* Pods_whatsong_v3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DED325D31AB503BE119BB07 /* Pods_whatsong_v3.framework */; };
 		8B23E17A22D09058005DC0F2 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B23E17922D09058005DC0F2 /* LoadingCell.swift */; };
 		8B39C18822D5D32A001F8D0D /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39C18722D5D32A001F8D0D /* GradientButton.swift */; };
 		96489684228E0C3800D8BCEE /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96489683228E0C3800D8BCEE /* LoginModel.swift */; };
@@ -15,7 +16,7 @@
 		9655E3E122B8261D000B02D0 /* RegistrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9655E3E022B8261D000B02D0 /* RegistrationModel.swift */; };
 		96C53B15229ACE75006937CB /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C53B14229ACE75006937CB /* SongPlayer.swift */; };
 		96D2C01422BAA1CE00E09AA7 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D2C01322BAA1CE00E09AA7 /* SettingsManager.swift */; };
-		AD4DFD7463EE8455359641C7 /* Pods_whatsong_v3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECEE79AFB406162BCDA692D /* Pods_whatsong_v3UITests.framework */; };
+		A8C72253BEF73F80D987EE7F /* Pods_whatsong_v3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3D09B7A7F1EAF300EE96887 /* Pods_whatsong_v3UITests.framework */; };
 		BB0CC21822826B4A008BC023 /* MovieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0CC21722826B4A008BC023 /* MovieInfoCell.swift */; };
 		BB0CC21A2282812D008BC023 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0CC2192282812D008BC023 /* SpotifyController.swift */; };
 		BB0CC21C2282A499008BC023 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0CC21B2282A499008BC023 /* SpotifyiOS.framework */; };
@@ -49,6 +50,7 @@
 		BB193C6E222F501C000EB8DB /* MoviesSingleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB193C6D222F501C000EB8DB /* MoviesSingleCell.swift */; };
 		BB193C70222F511F000EB8DB /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB193C6F222F511F000EB8DB /* UILabel.swift */; };
 		BB193C72222F5F5F000EB8DB /* LatestMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB193C71222F5F5F000EB8DB /* LatestMovies.swift */; };
+		BB1ABEAE22E5698700F0EA15 /* AddSongDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1ABEAD22E5698700F0EA15 /* AddSongDetailsViewController.swift */; };
 		BB1BF56A228CEB30009FBC91 /* OpenSwipingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1BF569228CEB30009FBC91 /* OpenSwipingController.swift */; };
 		BB1BF56C228CEF7D009FBC91 /* SwipedPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1BF56B228CEF7D009FBC91 /* SwipedPageCell.swift */; };
 		BB1BF56E228FC39C009FBC91 /* FatFrank.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB1BF56D228FC39C009FBC91 /* FatFrank.otf */; };
@@ -99,13 +101,14 @@
 		BBD0B02622CB15C4000579EF /* MainTabBarMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02522CB15C4000579EF /* MainTabBarMenuController.swift */; };
 		BBD0B02822CB3365000579EF /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02722CB3365000579EF /* MenuOption.swift */; };
 		BBD0B02A22D46784000579EF /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02922D46784000579EF /* UIButton.swift */; };
+		BBD0B02E22DDFA1E000579EF /* AddSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02D22DDFA1E000579EF /* AddSongViewController.swift */; };
+		BBD0B03022E14E43000579EF /* ItunesSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0B02F22E14E43000579EF /* ItunesSearchResult.swift */; };
 		BBEB4357223F6DF200D54998 /* SongListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB4356223F6DF200D54998 /* SongListCell.swift */; };
 		BBEB435C224A24BF00D54998 /* SongDetailPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */; };
 		BBEDA28C221BDD9F007610DF /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */; };
 		BBEDA290221C07A8007610DF /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEDA28F221C07A8007610DF /* UIView.swift */; };
 		BBEDA293221C13C9007610DF /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEDA292221C13C9007610DF /* Search.swift */; };
 		BBF751F9222FC9FC00640C92 /* HorizontalSnappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF751F8222FC9FC00640C92 /* HorizontalSnappingController.swift */; };
-		FACA9F683D5A49AEE14E7C61 /* Pods_whatsong_v3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 203FC8B017F0F85BB464DE5C /* Pods_whatsong_v3.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,21 +129,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D18B4C2FD12B34BFBF196FD /* Pods-whatsong v3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.debug.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3/Pods-whatsong v3.debug.xcconfig"; sourceTree = "<group>"; };
-		199D68A1F6F09F802F15B76E /* Pods-whatsong v3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3Tests/Pods-whatsong v3Tests.release.xcconfig"; sourceTree = "<group>"; };
-		203FC8B017F0F85BB464DE5C /* Pods_whatsong_v3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4AD36105E10CF89E29AD4BC9 /* Pods-whatsong v3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3UITests/Pods-whatsong v3UITests.release.xcconfig"; sourceTree = "<group>"; };
-		67718AD252349F46370F0E01 /* Pods-whatsong v3Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3Tests/Pods-whatsong v3Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		84072EC3401E37A0791CC1DE /* Pods-whatsong v3UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3UITests/Pods-whatsong v3UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		17022A80691556AB3B7C931B /* Pods-whatsong v3Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3Tests.debug.xcconfig"; path = "Target Support Files/Pods-whatsong v3Tests/Pods-whatsong v3Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		5B830CF52FD5A4B4B87FF533 /* Pods-whatsong v3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.release.xcconfig"; path = "Target Support Files/Pods-whatsong v3/Pods-whatsong v3.release.xcconfig"; sourceTree = "<group>"; };
+		81785434533078C981D37705 /* Pods-whatsong v3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.debug.xcconfig"; path = "Target Support Files/Pods-whatsong v3/Pods-whatsong v3.debug.xcconfig"; sourceTree = "<group>"; };
 		8B23E17922D09058005DC0F2 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		8B39C18722D5D32A001F8D0D /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
-		93F53D530C2B0E4E8671F333 /* Pods-whatsong v3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.release.xcconfig"; path = "Pods/Target Support Files/Pods-whatsong v3/Pods-whatsong v3.release.xcconfig"; sourceTree = "<group>"; };
+		8DED325D31AB503BE119BB07 /* Pods_whatsong_v3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96489683228E0C3800D8BCEE /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		96489685228E1D2700D8BCEE /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		9655E3E022B8261D000B02D0 /* RegistrationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationModel.swift; sourceTree = "<group>"; };
 		96C53B14229ACE75006937CB /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
 		96D2C01322BAA1CE00E09AA7 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
-		B46E02381DEC88006DBE4745 /* Pods_whatsong_v3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB0CC21722826B4A008BC023 /* MovieInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCell.swift; sourceTree = "<group>"; };
 		BB0CC2192282812D008BC023 /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 		BB0CC21B2282A499008BC023 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
@@ -175,6 +174,7 @@
 		BB193C6D222F501C000EB8DB /* MoviesSingleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesSingleCell.swift; sourceTree = "<group>"; };
 		BB193C6F222F511F000EB8DB /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		BB193C71222F5F5F000EB8DB /* LatestMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestMovies.swift; sourceTree = "<group>"; };
+		BB1ABEAD22E5698700F0EA15 /* AddSongDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongDetailsViewController.swift; sourceTree = "<group>"; };
 		BB1BF569228CEB30009FBC91 /* OpenSwipingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSwipingController.swift; sourceTree = "<group>"; };
 		BB1BF56B228CEF7D009FBC91 /* SwipedPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipedPageCell.swift; sourceTree = "<group>"; };
 		BB1BF56D228FC39C009FBC91 /* FatFrank.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FatFrank.otf; sourceTree = "<group>"; };
@@ -231,13 +231,21 @@
 		BBD0B02522CB15C4000579EF /* MainTabBarMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarMenuController.swift; sourceTree = "<group>"; };
 		BBD0B02722CB3365000579EF /* MenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOption.swift; sourceTree = "<group>"; };
 		BBD0B02922D46784000579EF /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		BBD0B02D22DDFA1E000579EF /* AddSongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongViewController.swift; sourceTree = "<group>"; };
+		BBD0B02F22E14E43000579EF /* ItunesSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchResult.swift; sourceTree = "<group>"; };
+		BBD0B03122E16558000579EF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBD0B03322E16558000579EF /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBEB4356223F6DF200D54998 /* SongListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCell.swift; sourceTree = "<group>"; };
 		BBEB435B224A24BF00D54998 /* SongDetailPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailPopup.swift; sourceTree = "<group>"; };
 		BBEDA28B221BDD9F007610DF /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		BBEDA28F221C07A8007610DF /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		BBEDA292221C13C9007610DF /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		BBF751F8222FC9FC00640C92 /* HorizontalSnappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSnappingController.swift; sourceTree = "<group>"; };
-		CECEE79AFB406162BCDA692D /* Pods_whatsong_v3UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD635972B1B69B97E44E69A3 /* Pods-whatsong v3UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3UITests.debug.xcconfig"; path = "Target Support Files/Pods-whatsong v3UITests/Pods-whatsong v3UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		CF27DB031F0AF9E62FCF0F53 /* Pods-whatsong v3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3Tests.release.xcconfig"; path = "Target Support Files/Pods-whatsong v3Tests/Pods-whatsong v3Tests.release.xcconfig"; sourceTree = "<group>"; };
+		E3D09B7A7F1EAF300EE96887 /* Pods_whatsong_v3UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E73216A6F2E853A6595EAFC6 /* Pods-whatsong v3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3UITests.release.xcconfig"; path = "Target Support Files/Pods-whatsong v3UITests/Pods-whatsong v3UITests.release.xcconfig"; sourceTree = "<group>"; };
+		E7BB49BFCECE3442D7262B14 /* Pods_whatsong_v3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,8 +253,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FACA9F683D5A49AEE14E7C61 /* Pods_whatsong_v3.framework in Frameworks */,
 				BB0CC21C2282A499008BC023 /* SpotifyiOS.framework in Frameworks */,
+				69F5619514C9259B403DD4D6 /* Pods_whatsong_v3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,7 +262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EC0155890E531458E58846C /* Pods_whatsong_v3Tests.framework in Frameworks */,
+				2C616C0C7B1FD216C1AB78D4 /* Pods_whatsong_v3Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,19 +270,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD4DFD7463EE8455359641C7 /* Pods_whatsong_v3UITests.framework in Frameworks */,
+				A8C72253BEF73F80D987EE7F /* Pods_whatsong_v3UITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D68D47CBF8206028B6BF481 /* Frameworks */ = {
+		08180ACEF1172527AAAF7981 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				203FC8B017F0F85BB464DE5C /* Pods_whatsong_v3.framework */,
-				B46E02381DEC88006DBE4745 /* Pods_whatsong_v3Tests.framework */,
-				CECEE79AFB406162BCDA692D /* Pods_whatsong_v3UITests.framework */,
+				BBD0B03122E16558000579EF /* Alamofire.framework */,
+				BBD0B03322E16558000579EF /* SDWebImage.framework */,
+				8DED325D31AB503BE119BB07 /* Pods_whatsong_v3.framework */,
+				E7BB49BFCECE3442D7262B14 /* Pods_whatsong_v3Tests.framework */,
+				E3D09B7A7F1EAF300EE96887 /* Pods_whatsong_v3UITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -287,17 +297,17 @@
 			path = UIButton;
 			sourceTree = "<group>";
 		};
-		B4EA3855144781C40241870D /* Pods */ = {
+		B3C6D4A4BD779D44A20EB550 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0D18B4C2FD12B34BFBF196FD /* Pods-whatsong v3.debug.xcconfig */,
-				93F53D530C2B0E4E8671F333 /* Pods-whatsong v3.release.xcconfig */,
-				67718AD252349F46370F0E01 /* Pods-whatsong v3Tests.debug.xcconfig */,
-				199D68A1F6F09F802F15B76E /* Pods-whatsong v3Tests.release.xcconfig */,
-				84072EC3401E37A0791CC1DE /* Pods-whatsong v3UITests.debug.xcconfig */,
-				4AD36105E10CF89E29AD4BC9 /* Pods-whatsong v3UITests.release.xcconfig */,
+				81785434533078C981D37705 /* Pods-whatsong v3.debug.xcconfig */,
+				5B830CF52FD5A4B4B87FF533 /* Pods-whatsong v3.release.xcconfig */,
+				17022A80691556AB3B7C931B /* Pods-whatsong v3Tests.debug.xcconfig */,
+				CF27DB031F0AF9E62FCF0F53 /* Pods-whatsong v3Tests.release.xcconfig */,
+				BD635972B1B69B97E44E69A3 /* Pods-whatsong v3UITests.debug.xcconfig */,
+				E73216A6F2E853A6595EAFC6 /* Pods-whatsong v3UITests.release.xcconfig */,
 			);
-			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		BB0CC226228A8456008BC023 /* Albums */ = {
@@ -466,6 +476,8 @@
 			children = (
 				BB74F7F522AE2868006AB7C1 /* SongDetailController.swift */,
 				BBD0AFE222C3052A000579EF /* FloatingEditLauncher.swift */,
+				BBD0B02D22DDFA1E000579EF /* AddSongViewController.swift */,
+				BB1ABEAD22E5698700F0EA15 /* AddSongDetailsViewController.swift */,
 			);
 			path = Song;
 			sourceTree = "<group>";
@@ -477,8 +489,8 @@
 				BB7D7078221BA2CF00CE8A9F /* whatsong v3Tests */,
 				BB7D7083221BA2CF00CE8A9F /* whatsong v3UITests */,
 				BB7D7062221BA2CD00CE8A9F /* Products */,
-				B4EA3855144781C40241870D /* Pods */,
-				0D68D47CBF8206028B6BF481 /* Frameworks */,
+				B3C6D4A4BD779D44A20EB550 /* Pods */,
+				08180ACEF1172527AAAF7981 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -648,6 +660,7 @@
 				BB66695422A0AF65002654A7 /* UserSongs.swift */,
 				96489683228E0C3800D8BCEE /* LoginModel.swift */,
 				BB637F402230D97B009FEFD7 /* MovieDetail.swift */,
+				BBD0B02F22E14E43000579EF /* ItunesSearchResult.swift */,
 				BBEDA292221C13C9007610DF /* Search.swift */,
 				BBCA3EE82256CC0100037DCF /* LatestShows.swift */,
 				BBCA3EEF225CB7F400037DCF /* TvShowInfo.swift */,
@@ -666,11 +679,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB7D7089221BA2CF00CE8A9F /* Build configuration list for PBXNativeTarget "whatsong v3" */;
 			buildPhases = (
-				D00F9CA6064F82F08E6509AE /* [CP] Check Pods Manifest.lock */,
+				16A6473E4E02DF6C7A6E5AD7 /* [CP] Check Pods Manifest.lock */,
 				BB7D705D221BA2CD00CE8A9F /* Sources */,
 				BB7D705E221BA2CD00CE8A9F /* Frameworks */,
 				BB7D705F221BA2CD00CE8A9F /* Resources */,
-				04A6993F70956C3E7BBAC42D /* [CP] Embed Pods Frameworks */,
+				6199BBEC67969E2858005F57 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -685,7 +698,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB7D708C221BA2CF00CE8A9F /* Build configuration list for PBXNativeTarget "whatsong v3Tests" */;
 			buildPhases = (
-				A779FDBA97D018B8247646BD /* [CP] Check Pods Manifest.lock */,
+				F4330F0D91B5B13CFB91D72A /* [CP] Check Pods Manifest.lock */,
 				BB7D7071221BA2CF00CE8A9F /* Sources */,
 				BB7D7072221BA2CF00CE8A9F /* Frameworks */,
 				BB7D7073221BA2CF00CE8A9F /* Resources */,
@@ -704,7 +717,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB7D708F221BA2CF00CE8A9F /* Build configuration list for PBXNativeTarget "whatsong v3UITests" */;
 			buildPhases = (
-				DA26A81CF13F4C9F5ADAFB27 /* [CP] Check Pods Manifest.lock */,
+				0FB9E2A28429B370777EA1D0 /* [CP] Check Pods Manifest.lock */,
 				BB7D707C221BA2CF00CE8A9F /* Sources */,
 				BB7D707D221BA2CF00CE8A9F /* Frameworks */,
 				BB7D707E221BA2CF00CE8A9F /* Resources */,
@@ -797,24 +810,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		04A6993F70956C3E7BBAC42D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-whatsong v3/Pods-whatsong v3-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-whatsong v3/Pods-whatsong v3-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-whatsong v3/Pods-whatsong v3-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A779FDBA97D018B8247646BD /* [CP] Check Pods Manifest.lock */ = {
+		0FB9E2A28429B370777EA1D0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -829,14 +825,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-whatsong v3Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-whatsong v3UITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D00F9CA6064F82F08E6509AE /* [CP] Check Pods Manifest.lock */ = {
+		16A6473E4E02DF6C7A6E5AD7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -858,7 +854,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DA26A81CF13F4C9F5ADAFB27 /* [CP] Check Pods Manifest.lock */ = {
+		6199BBEC67969E2858005F57 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-whatsong v3/Pods-whatsong v3-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-whatsong v3/Pods-whatsong v3-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-whatsong v3/Pods-whatsong v3-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F4330F0D91B5B13CFB91D72A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -873,7 +886,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-whatsong v3UITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-whatsong v3Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -900,6 +913,7 @@
 				BB1BF57022928161009FBC91 /* UIViewController.swift in Sources */,
 				BBCA3EEB2256E78000037DCF /* Date.swift in Sources */,
 				BB1661E722670F840077C2B0 /* TvShowEpisodeModel.swift in Sources */,
+				BBD0B02E22DDFA1E000579EF /* AddSongViewController.swift in Sources */,
 				BBEDA28C221BDD9F007610DF /* SearchResultCell.swift in Sources */,
 				BBCA3EE32254ED4500037DCF /* ShowsGroupCell.swift in Sources */,
 				BBCA3EDB224AF65F00037DCF /* UITextField.swift in Sources */,
@@ -920,6 +934,7 @@
 				96C53B15229ACE75006937CB /* SongPlayer.swift in Sources */,
 				BBF751F9222FC9FC00640C92 /* HorizontalSnappingController.swift in Sources */,
 				BB637F462230E7FE009FEFD7 /* VerticalStackView.swift in Sources */,
+				BBD0B03022E14E43000579EF /* ItunesSearchResult.swift in Sources */,
 				BB666943229AAE3E002654A7 /* MoviesHeader.swift in Sources */,
 				BB193C6A222EAB11000EB8DB /* BaseCvController.swift in Sources */,
 				BBD0B02A22D46784000579EF /* UIButton.swift in Sources */,
@@ -957,6 +972,7 @@
 				BB0CC223228A6A97008BC023 /* AlbumController.swift in Sources */,
 				BB637F3E2230AFFE009FEFD7 /* MovieDetailController.swift in Sources */,
 				BB66694C229B9929002654A7 /* UserLibraryCell.swift in Sources */,
+				BB1ABEAE22E5698700F0EA15 /* AddSongDetailsViewController.swift in Sources */,
 				9655E3E122B8261D000B02D0 /* RegistrationModel.swift in Sources */,
 				BB7D7096221BB2D600CE8A9F /* SearchController.swift in Sources */,
 				BBCA3EE92256CC0100037DCF /* LatestShows.swift in Sources */,
@@ -1123,7 +1139,7 @@
 		};
 		BB7D708A221BA2CF00CE8A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D18B4C2FD12B34BFBF196FD /* Pods-whatsong v3.debug.xcconfig */;
+			baseConfigurationReference = 81785434533078C981D37705 /* Pods-whatsong v3.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1139,23 +1155,19 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-framework",
-					"\"SDWebImage\"",
-					"-framework",
-					"\"SkeletonView\"",
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomandrew.whatsong-v3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "whatsong v3/Spotify-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		BB7D708B221BA2CF00CE8A9F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93F53D530C2B0E4E8671F333 /* Pods-whatsong v3.release.xcconfig */;
+			baseConfigurationReference = 5B830CF52FD5A4B4B87FF533 /* Pods-whatsong v3.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1171,23 +1183,19 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-framework",
-					"\"SDWebImage\"",
-					"-framework",
-					"\"SkeletonView\"",
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomandrew.whatsong-v3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "whatsong v3/Spotify-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		BB7D708D221BA2CF00CE8A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67718AD252349F46370F0E01 /* Pods-whatsong v3Tests.debug.xcconfig */;
+			baseConfigurationReference = 17022A80691556AB3B7C931B /* Pods-whatsong v3Tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1209,7 +1217,7 @@
 		};
 		BB7D708E221BA2CF00CE8A9F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 199D68A1F6F09F802F15B76E /* Pods-whatsong v3Tests.release.xcconfig */;
+			baseConfigurationReference = CF27DB031F0AF9E62FCF0F53 /* Pods-whatsong v3Tests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1231,7 +1239,7 @@
 		};
 		BB7D7090221BA2CF00CE8A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84072EC3401E37A0791CC1DE /* Pods-whatsong v3UITests.debug.xcconfig */;
+			baseConfigurationReference = BD635972B1B69B97E44E69A3 /* Pods-whatsong v3UITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1252,7 +1260,7 @@
 		};
 		BB7D7091221BA2CF00CE8A9F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4AD36105E10CF89E29AD4BC9 /* Pods-whatsong v3UITests.release.xcconfig */;
+			baseConfigurationReference = E73216A6F2E853A6595EAFC6 /* Pods-whatsong v3UITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

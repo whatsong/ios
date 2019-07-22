@@ -13,6 +13,7 @@ class SearchController: BaseCvController, UICollectionViewDelegateFlowLayout, UI
     
     let cellId = "cellId"
     fileprivate let searchController = UISearchController(searchResultsController: nil)
+    
     fileprivate let enterSearchLabel: UILabel = {
         let label = UILabel()
         label.text = "Please enter a search term above"

@@ -12,7 +12,7 @@ class LibrarySongs: SongListCell    {
     
     let librarySongId = "librarySongId"
     let loadingCellId = "loadingCellId"
-    var vc : LibrarySongsController! = nil
+    var vc: LibrarySongsController! = nil
 
     override func setupViews() {
         collectionView.register(LoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
@@ -32,10 +32,10 @@ class LibrarySongs: SongListCell    {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if(indexPath.row == (self.songsArray.count - 1) && self.vc.isDataFound){
+        if(indexPath.row == (self.songsArray.count - 1) && self.vc.isDataFound) {
             return CGSize(width: frame.width, height: 44)
         }
-        else{
+        else    {
            return CGSize(width: frame.width, height: 60)
         }
     }
@@ -46,7 +46,7 @@ class LibrarySongs: SongListCell    {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if(indexPath.row == (self.songsArray.count - 1) && self.vc.isDataFound){
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! LoadingCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! LoadingCell
             cell.activityIndicatorView.startAnimating()
             return cell
         }

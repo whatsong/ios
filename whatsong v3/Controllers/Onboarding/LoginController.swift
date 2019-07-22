@@ -73,7 +73,7 @@ class LoginController: UIViewController {
     
     let loginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.brandPurple().lighter
+        button.backgroundColor = UIColor.brandPurple()
         button.isEnabled = false
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
         button.setTitle("Log in", for: .normal)
@@ -122,7 +122,7 @@ class LoginController: UIViewController {
             loginButton.backgroundColor = UIColor.brandPurple()
         } else  {
             loginButton.isEnabled = false
-            loginButton.backgroundColor = UIColor.brandPurple().lighter
+            loginButton.backgroundColor = UIColor.brandPurple()
             
         }
     }
@@ -135,11 +135,13 @@ class LoginController: UIViewController {
                 // show error alert
                 return
             }
+            
             if errorMessage != nil {
                 self.displayAlert(userMessage: errorMessage!)
                 
                 return
             }
+            
             if let model = loginModel {
                 DAKeychain.shared["accessToken"] = model.data.accessToken.value
                 DAKeychain.shared["role"] = model.data.accessToken.role
@@ -147,11 +149,12 @@ class LoginController: UIViewController {
                     //reset app state after successful login
                 
                     self.view.window?.rootViewController?.dismiss(animated: true, completion: {
-                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged in")
                         let appDelegate = UIApplication.shared.delegate as! AppDelegate
                         appDelegate.window?.rootViewController = nil
                         appDelegate.window?.rootViewController = MainTabBarMenuContainerController()
                         appDelegate.window?.makeKeyAndVisible()
+                        self.showAlert(bgColor: UIColor.brandSuccess(), text: "You have successfully logged in")
+
                     })
                 }
             } else {

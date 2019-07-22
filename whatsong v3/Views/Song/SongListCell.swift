@@ -99,6 +99,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SongCell
         if songsArray.count == 0 {
+            cell.isUserInteractionEnabled = false
             cell.artistName.isHidden = true
             cell.moreButton.isHidden = true
             cell.sceneDescription.isHidden = true
@@ -108,6 +109,7 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
             cell.songTitle.numberOfLines = 2
             cell.songTitle.textAlignment = .center
         } else {
+            cell.isUserInteractionEnabled = true
             cell.backgroundColor = .white
             let song = songsArray[indexPath.item]
             cell.songTitle.attributedText = NSAttributedString(string: song.title, attributes: [

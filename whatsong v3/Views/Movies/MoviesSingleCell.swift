@@ -18,7 +18,6 @@ class MoviesSingleCell: UICollectionViewCell   {
         view.layer.shadowRadius = 4
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowOpacity = 0.7
-        view.isSkeletonable = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -32,7 +31,6 @@ class MoviesSingleCell: UICollectionViewCell   {
         iv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         iv.layer.cornerRadius = 6
         iv.clipsToBounds = true
-        iv.isSkeletonable = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
