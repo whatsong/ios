@@ -187,7 +187,7 @@ class SearchiTunesResultCell: UITableViewCell  {
         button.setTitle("SELECT", for: .normal)
         button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 12)
         button.setTitleColor(UIColor.brandPurple(), for: .normal)
-        button.constrainWidth(constant: 42)
+        button.constrainWidth(constant: 48)
         return button
     }()
     

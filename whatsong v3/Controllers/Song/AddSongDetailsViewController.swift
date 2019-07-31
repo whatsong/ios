@@ -28,6 +28,7 @@ class AddSongDetailsViewController: UITableViewController    {
     fileprivate func setupTableView()   {
         tableView.backgroundColor = UIColor.backgroundGrey()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -38,51 +39,87 @@ class AddSongDetailsViewController: UITableViewController    {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         cell.textLabel?.text = twoDimensionalArray[indexPath.section][indexPath.row]
         cell.textLabel?.font = UIFont(name: "Montserrat-Regular", size: 14)
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Link services"
-        } else {
-            return "When did this song play?"
+        
+        if cell.textLabel!.text == "Spotify" {
+            cell.backgroundColor = .red
+            
         }
+        
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            return configureHeaderView(string: "Link Streaming Services")
+        } else  {
+            return configureHeaderView(string: "When did this song play?")
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 70
+    }
+    
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView()
-        footerView.backgroundColor = .white
+        
+        if section == 0 {
+            return configureFooterView(string: "Link to Spotify and Youtube to allow for greater app features.")
+        } else {
+            return configureFooterView(string: "Add scene and time descriptions to help users easily find songs.")
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 70
+    }
+    
+    func configureHeaderView(string: String) -> UIView {
+        let view = UIView()
+        view.backgroundColor = UIColor.backgroundGrey()
+        
+        let label = UILabel()
+        label.font = UIFont(name: "Montserrat-Regular", size: 18)
+        label.textColor = UIColor.brandBlack()
+        let footerString = string
+        label.attributedText = NSAttributedString(string: footerString, attributes: [
+            NSAttributedString.Key.kern: -0.4
+            ])
+        
+        view.addSubview(label)
+        label.fillSuperview(padding: .init(top: 20, left: 16, bottom: 0, right: 16))
+        
+        return view
+    }
+    
+    func configureFooterView(string: String) -> UIView {
+        let view = UIView()
+        view.backgroundColor = .white
         
         let label = UILabel()
         label.font = UIFont(name: "Montserrat-Light", size: 13)
         label.textColor = UIColor.gray
-
-        if section == 0 {
-            label.attributedText = NSAttributedString(string: "Link to Spotify and Youtube to allow for greater app features.", attributes: [
-                NSAttributedString.Key.kern: -0.4
-                ])
-            label.numberOfLines = 2
-            footerView.addSubview(label)
-            label.fillSuperview(padding: .init(top: 0, left: 20, bottom: 40, right: 20))
-            return footerView
-        } else if section == 1  {
-            label.attributedText = NSAttributedString(string: "Add scene and time descriptions to help users easily find songs.", attributes: [
-                NSAttributedString.Key.kern: -0.4
-                ])
-            label.numberOfLines = 2
-            footerView.addSubview(label)
-            label.fillSuperview(padding: .init(top: 0, left: 16, bottom: 20, right: 16))
-            return footerView
-        }
-        return footerView
+        label.numberOfLines = 0
+        let footerString = string
+        label.attributedText = NSAttributedString(string: footerString, attributes: [
+            NSAttributedString.Key.kern: -0.4
+            ])
+        
+        let insets = tableView.separatorInset
+        let width = tableView.bounds.width - insets.left - insets.right
+        let sepFrame = CGRect(x: insets.left, y: -0.5, width: width, height: 0.5)
+        let seperator = CALayer()
+        seperator.frame = sepFrame
+        seperator.backgroundColor = tableView.separatorColor?.cgColor
+        view.layer.addSublayer(seperator)
+        
+        view.addSubview(label)
+        label.fillSuperview(padding: .init(top: 10, left: 16, bottom: 20, right: 16))
+        
+        return view
     }
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 70
-    }
-
 }
 
