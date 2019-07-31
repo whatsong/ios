@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double SkeletonViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char SkeletonViewVersionString[];
+FOUNDATION_EXPORT double AlamofireVersionNumber;
+FOUNDATION_EXPORT const unsigned char AlamofireVersionString[];
 

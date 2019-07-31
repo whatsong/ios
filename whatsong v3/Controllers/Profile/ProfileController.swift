@@ -40,13 +40,14 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
     }
     
     func fetchUserInfo()    {
-        Service.shared.getCurrentUserInfo { [unowned self] (userData, success) in
+        Service.shared.getCurrentUserInfo { [unowned self] (userData, success,error) in
             DispatchQueue.main.async {
             }
             if success {
                 self.userInfo = userData?.data
                 self.fetchSongs()
             } else {
+                print("getCurrentUserInfo Error: \(error.localizedDescription)")
                  DispatchQueue.main.async {
                     self.stopActivityIndicator()
                     self.showAlert(bgColor: .red, text: "Something went wrong. Please log in")
