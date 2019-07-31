@@ -158,12 +158,19 @@ class SongListCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UI
         return CGSize(width: frame.width, height: 100)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {        
-        let song = songsArray[indexPath.item]
-        if song.preview_url != nil || song.spotifyPreviewUrl != nil   {
-            showFloatingPlayer(song: self.songsArray[indexPath.row])
-        }   else    {
-            self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample.")
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if  (indexPath.row != songsArray.count) {
+            let song = songsArray[indexPath.item]
+            if song.preview_url != nil || song.spotifyPreviewUrl != nil   {
+                showFloatingPlayer(song: self.songsArray[indexPath.row])
+            }   else    {
+                self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample.")
+            }
+//        let song = songsArray[indexPath.item]
+//        if song.preview_url != nil || song.spotifyPreviewUrl != nil   {
+//            showFloatingPlayer(song: self.songsArray[indexPath.row])
+//        }   else    {
+//            self.showAlert(bgColor: UIColor.brandWarning(), text: "This song has no audio sample.")
         }
     }
     

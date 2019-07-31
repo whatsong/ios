@@ -19,7 +19,6 @@ class SongPlayer {
         return avPlayer
     }()
     
-    
     var observer:Any?
     var currentlyPlayingUrl: String?
     var previewUrl: String?
@@ -41,6 +40,14 @@ class SongPlayer {
     }
     
     func playSong()  {
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+        }
+        catch {
+            print("AVAudioSessionCategoryPlayback not work")
+        }
+        
         guard let url = URL(string: previewUrl ?? "") else { return }
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)

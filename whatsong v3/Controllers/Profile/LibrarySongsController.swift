@@ -48,11 +48,9 @@ class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayo
                 guard let userLibraryData = data else { return }
                 if(self.currentPage == 1){
                     self.userSongs.removeAll()
-                }
                 
-                if(self.currentPage == 1){
                     self.userSongs = userLibraryData.data
-                    if(self.userSongs.count < 1){
+                    if(self.userSongs.count < 10){
                         self.isDataFound = false
                     }
                 }
@@ -73,7 +71,6 @@ class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayo
                         self.isDataFound = false
                     }
                 }
-                self.currentPage += 1
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                     self.stopActivityIndicator()
@@ -115,6 +112,7 @@ class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayo
         
         let threhold = maximumOffset - currentOffset
         if threhold <= 10 && isDataFound {
+            self.currentPage += 1
             fetchSongs()
         }
     }
