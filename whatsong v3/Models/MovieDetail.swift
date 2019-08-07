@@ -43,16 +43,9 @@ struct Song: Decodable  {
     let track_number: Int?
     let spotify_uri: String?
     let youtube_id: String?
-    let user_scene: UserScene?
+    let user_scene: User?
     let contributor_user: User?
     var is_favorited: Bool?
-}
-
-struct UserScene: Decodable {
-    let _id: Int
-    let username: String
-    let scores: Int?
-    let role: String
 }
 
 struct Artist: Decodable    {
