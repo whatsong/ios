@@ -244,7 +244,7 @@ class Service   {
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
-    func getCurrentUserInfo(completion: @escaping(UserData?, _ success: Bool) -> ()) {
+    func getCurrentUserInfo(completion: @escaping(UserData?, _ success: Bool, _ error: Error) -> ()) {
         if let token = DAKeychain.shared["accessToken"] {
             var request = URLRequest(url:URL(string:"https://www.what-song.com/api/me")!)
             request.addValue("\(token)", forHTTPHeaderField: "Authorization")
@@ -252,18 +252,20 @@ class Service   {
             //http get
             URLSession.shared.dataTask(with: request){ data, response, error in
                 guard(error == nil) else {
-                    completion(nil, false)
+                    completion(nil, false,error!)
                     return
                 }
                 do {
                     let parseResult = try JSONDecoder().decode(UserData.self, from: data!)
-                    completion(parseResult, true)
+                    completion(parseResult, true,error!)
                 } catch {
-                    completion(nil, false)
+                    completion(nil, false,error)
                 }
                 }.resume()
         } else {
-            completion(nil, false)
+            let error: Error = NSLocalizedString("accessToken invalid", comment: "") as! Error
+
+            completion(nil, false,error)
         }
     }
     
