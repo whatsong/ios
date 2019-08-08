@@ -28,7 +28,7 @@ class TvShowEpisode: BaseCvController, UICollectionViewDelegateFlowLayout, SongC
         collectionView.register(EpisodeInfoCell.self, forCellWithReuseIdentifier: infoCellId)
         collectionView.register(SongListCell.self, forCellWithReuseIdentifier: songsCellId)
         
-        setupRightBarButtonItem()
+        //setupRightBarButtonItem()
         
         if (episode != nil) {
             fetchEpisode()

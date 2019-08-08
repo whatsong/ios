@@ -72,6 +72,7 @@ struct AlbumInfo: Decodable   {
 struct User: Decodable  {
     let _id: Int
     let username: String
-    let count_thanks: Int
+    let count_thanks: Int?
+    let score: Int?
     let role: String
 }
