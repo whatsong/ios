@@ -244,7 +244,7 @@ class Service   {
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
-    func getCurrentUserInfo(completion: @escaping(UserData?, _ success: Bool, _ error: Error) -> ()) {
+    func getCurrentUserInfo(completion: @escaping(UserData?, _ success: Bool, _ error: Error?) -> ()) {
         if let token = DAKeychain.shared["accessToken"] {
             var request = URLRequest(url:URL(string:"https://www.what-song.com/api/me")!)
             request.addValue("\(token)", forHTTPHeaderField: "Authorization")
@@ -256,8 +256,11 @@ class Service   {
                     return
                 }
                 do {
+                    if let returnData = String(data: data!, encoding: .utf8) {
+                        print("OUTPUT in String : \(returnData)");
+                    }
                     let parseResult = try JSONDecoder().decode(UserData.self, from: data!)
-                    completion(parseResult, true,error!)
+                    completion(parseResult, true,nil)
                 } catch {
                     completion(nil, false,error)
                 }

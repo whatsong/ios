@@ -47,7 +47,7 @@ class ProfileController: BaseCvController, UICollectionViewDelegateFlowLayout, L
                 self.userInfo = userData?.data
                 self.fetchSongs()
             } else {
-                print("getCurrentUserInfo Error: \(error.localizedDescription)")
+                print("getCurrentUserInfo Error: \(error!.localizedDescription)")
                  DispatchQueue.main.async {
                     self.stopActivityIndicator()
                     self.showAlert(bgColor: .red, text: "Something went wrong. Please log in")
