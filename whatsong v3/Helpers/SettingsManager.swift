@@ -14,4 +14,5 @@ extension Notification.Name {
     public static let wsNotificationPlayerFinishBuffer = Notification.Name(rawValue: "com.whatsong.bufferFinish")
 }
 
+let APP_DELEGATE = (UIApplication.shared.delegate as! AppDelegate)
 

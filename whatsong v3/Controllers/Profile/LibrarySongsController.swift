@@ -50,7 +50,7 @@ class LibrarySongsController: BaseCvController, UICollectionViewDelegateFlowLayo
                     self.userSongs.removeAll()
                 
                     self.userSongs = userLibraryData.data
-                    if(self.userSongs.count < 10){
+                    if(self.userSongs.count < 12){
                         self.isDataFound = false
                     }
                 }

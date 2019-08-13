@@ -32,7 +32,7 @@ class LibrarySongs: SongListCell    {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if(indexPath.row == (self.songsArray.count - 1) && self.vc.isDataFound) {
+        if(indexPath.row == (self.songsArray.count) && self.vc.isDataFound) {
             return CGSize(width: frame.width, height: 44)
         }
         else    {
@@ -53,7 +53,7 @@ class LibrarySongs: SongListCell    {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: librarySongId, for: indexPath) as! LibrarySongCell
         cell.backgroundColor = .white
-        let song = songsArray[indexPath.item]
+        let song = songsArray[indexPath.row]
         cell.songTitle.attributedText = NSAttributedString(string: "", attributes: [
             NSAttributedString.Key.kern: -0.8
             ])

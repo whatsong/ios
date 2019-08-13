@@ -30,8 +30,67 @@ class MoviesController: ShowsController   {
         
         collectionView.refreshControl = refreshControl
         self.extendedLayoutIncludesOpaqueBars = true
-        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
         fetchData()
+        
+        if let sessionObj:AnyObject = UserDefaults.standard.value(forKey: "SPOTIFY_SESSION_DATA") as AnyObject? {
+            let sessionDataObj = sessionObj as! Data
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+            appDelegate.session = firstTimeSession
+        }
+        if(appDelegate.session == nil){
+            let scope: SPTScope = [.appRemoteControl, .playlistReadPrivate, .playlistModifyPrivate,.playlistModifyPublic]
+            
+            if #available(iOS 11, *) {
+                appDelegate.sessionManager.alwaysShowAuthorizationDialog = true
+                // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
+                appDelegate.sessionManager.initiateSession(with: scope, options: .default)
+            } else {
+                // Use this on iOS versions < 11 to use SFSafariViewController
+                //            appDelegate.sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: self)
+            }
+        }
+        else if(!appDelegate.session.isExpired){
+            
+            SpotifyAPI.sharedSpotifyAPI.getCurrentSpotifyUserInfo { (data, success) in
+                if success {
+                   print(data!.id!)
+                    DAKeychain.shared["SpotifyUserId"] = data!.id!
+                    SpotifyAPI.sharedSpotifyAPI.getCurrentSpotifyUserPlaylist(completion: { (data, success) in
+                        if(success){
+                            if((data?.items.filter({$0.name == "WhatSong"}).count)! > 0){
+                                let objPlayList = data?.items.filter({$0.name == "WhatSong"}).first
+                                DAKeychain.shared["SpotifyPlaylistId"] = objPlayList?.id
+                                return
+                            }
+                            DAKeychain.shared["SpotifyPlaylistId"] = nil
+                        }
+                        if(DAKeychain.shared["SpotifyPlaylistId"] == nil){
+                            SpotifyAPI.sharedSpotifyAPI.createAPlaylist(name: "WhatSong", completion: { (success,id) in
+                                if(success){
+                                    print("Playlist created")
+                                    DAKeychain.shared["SpotifyPlaylistId"] = id
+                                }
+                            })
+                        }
+                    })
+                    
+                } else {
+                   // print("getCurrentUserInfo Error: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self.stopActivityIndicator()
+                        self.showAlert(bgColor: .red, text: "Something went wrong. Please log in")
+                    }
+                }
+            }
+            print("already authenticate")
+        }
+        else{
+            appDelegate.sessionManager.session = appDelegate.session
+            appDelegate.sessionManager.renewSession()
+        }
+        
     }
     
     fileprivate func fetchData() {

@@ -9,8 +9,11 @@
 /* Begin PBXBuildFile section */
 		2C616C0C7B1FD216C1AB78D4 /* Pods_whatsong_v3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BB49BFCECE3442D7262B14 /* Pods_whatsong_v3Tests.framework */; };
 		69F5619514C9259B403DD4D6 /* Pods_whatsong_v3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DED325D31AB503BE119BB07 /* Pods_whatsong_v3.framework */; };
+		8B09959022F46A680072F051 /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B09958F22F46A680072F051 /* SpotifyAPI.swift */; };
 		8B23E17A22D09058005DC0F2 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B23E17922D09058005DC0F2 /* LoadingCell.swift */; };
 		8B39C18822D5D32A001F8D0D /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39C18722D5D32A001F8D0D /* GradientButton.swift */; };
+		8B40195B22FB12F300A2461E /* CreatePlayListSpotifyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B40195A22FB12F300A2461E /* CreatePlayListSpotifyModel.swift */; };
+		8B40195D22FB159300A2461E /* SpotifyUserPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B40195C22FB159300A2461E /* SpotifyUserPlaylist.swift */; };
 		96489684228E0C3800D8BCEE /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96489683228E0C3800D8BCEE /* LoginModel.swift */; };
 		96489686228E1D2700D8BCEE /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96489685228E1D2700D8BCEE /* Keychain.swift */; };
 		9655E3E122B8261D000B02D0 /* RegistrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9655E3E022B8261D000B02D0 /* RegistrationModel.swift */; };
@@ -132,8 +135,11 @@
 		17022A80691556AB3B7C931B /* Pods-whatsong v3Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3Tests.debug.xcconfig"; path = "Target Support Files/Pods-whatsong v3Tests/Pods-whatsong v3Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5B830CF52FD5A4B4B87FF533 /* Pods-whatsong v3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.release.xcconfig"; path = "Target Support Files/Pods-whatsong v3/Pods-whatsong v3.release.xcconfig"; sourceTree = "<group>"; };
 		81785434533078C981D37705 /* Pods-whatsong v3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsong v3.debug.xcconfig"; path = "Target Support Files/Pods-whatsong v3/Pods-whatsong v3.debug.xcconfig"; sourceTree = "<group>"; };
+		8B09958F22F46A680072F051 /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		8B23E17922D09058005DC0F2 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		8B39C18722D5D32A001F8D0D /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		8B40195A22FB12F300A2461E /* CreatePlayListSpotifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayListSpotifyModel.swift; sourceTree = "<group>"; };
+		8B40195C22FB159300A2461E /* SpotifyUserPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyUserPlaylist.swift; sourceTree = "<group>"; };
 		8DED325D31AB503BE119BB07 /* Pods_whatsong_v3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsong_v3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96489683228E0C3800D8BCEE /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		96489685228E1D2700D8BCEE /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -356,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				BB193C4C222D4B92000EB8DB /* Service.swift */,
+				8B09958F22F46A680072F051 /* SpotifyAPI.swift */,
 				96C53B14229ACE75006937CB /* SongPlayer.swift */,
 				96489685228E1D2700D8BCEE /* Keychain.swift */,
 			);
@@ -668,6 +675,8 @@
 				BB1661E622670F840077C2B0 /* TvShowEpisodeModel.swift */,
 				9655E3E022B8261D000B02D0 /* RegistrationModel.swift */,
 				BBD0B02722CB3365000579EF /* MenuOption.swift */,
+				8B40195A22FB12F300A2461E /* CreatePlayListSpotifyModel.swift */,
+				8B40195C22FB159300A2461E /* SpotifyUserPlaylist.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -933,6 +942,7 @@
 				BB7D7093221BA31000CE8A9F /* MainTabBarController.swift in Sources */,
 				96C53B15229ACE75006937CB /* SongPlayer.swift in Sources */,
 				BBF751F9222FC9FC00640C92 /* HorizontalSnappingController.swift in Sources */,
+				8B09959022F46A680072F051 /* SpotifyAPI.swift in Sources */,
 				BB637F462230E7FE009FEFD7 /* VerticalStackView.swift in Sources */,
 				BBD0B03022E14E43000579EF /* ItunesSearchResult.swift in Sources */,
 				BB666943229AAE3E002654A7 /* MoviesHeader.swift in Sources */,
@@ -952,6 +962,7 @@
 				BB0CC21A2282812D008BC023 /* SpotifyController.swift in Sources */,
 				BB193C60222E2A61000EB8DB /* UIColor.swift in Sources */,
 				BBEDA290221C07A8007610DF /* UIView.swift in Sources */,
+				8B40195D22FB159300A2461E /* SpotifyUserPlaylist.swift in Sources */,
 				BB0CC21822826B4A008BC023 /* MovieInfoCell.swift in Sources */,
 				BB0CC22122890005008BC023 /* LoginController.swift in Sources */,
 				BB1661DE22656C510077C2B0 /* Episodes.swift in Sources */,
@@ -979,6 +990,7 @@
 				BB666945229AAF70002654A7 /* MoviesHeaderHorizontalController.swift in Sources */,
 				BBCA3EDF2254E85500037DCF /* ShowsController.swift in Sources */,
 				BB1661D3225D667E0077C2B0 /* ShowInfoCell.swift in Sources */,
+				8B40195B22FB12F300A2461E /* CreatePlayListSpotifyModel.swift in Sources */,
 				BBD0B02822CB3365000579EF /* MenuOption.swift in Sources */,
 				BBD0B02022CA3BC9000579EF /* MenuController.swift in Sources */,
 				BBD0AFE322C3052A000579EF /* FloatingEditLauncher.swift in Sources */,

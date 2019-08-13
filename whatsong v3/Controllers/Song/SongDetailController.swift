@@ -250,11 +250,17 @@ class SongDetailPopupController: BaseCvController, UICollectionViewDelegateFlowL
             print("handling like")
             if userLoggedIn() && song?.is_favorited == false  {
                 print("trying to like song")
+                
                 Service.shared.addTofavourite(songId: "\(song?._id ?? 0)", type: "song", like: true) { (success) in
                     DispatchQueue.main.async {
                         senderImage.image = UIImage(named: "heart-icon-fill")?.withRenderingMode(.alwaysTemplate)
                         senderImage.tintColor = UIColor.brandPurple()
-                        
+                        if(self.song?.spotify_uri != nil){
+                            SpotifyAPI.sharedSpotifyAPI.addSoongToPlayList(playlist_id: DAKeychain.shared["SpotifyPlaylistId"], uris: self.song?.spotify_uri, completion: { (success) in
+                                print(success)
+                            })
+                        }
+                      
                         self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
                         self.song?.is_favorited = true
                         

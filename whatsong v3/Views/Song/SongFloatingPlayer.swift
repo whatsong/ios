@@ -235,6 +235,11 @@ class SongFloatingPlayer: UIView {
                     self.heartIcon.setImage(UIImage(named: "heart-icon-fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
                     self.heartIcon.tintColor = UIColor.brandPurple()
                     self.showAlert(bgColor: UIColor.brandSuccess(), text: "Successfully saved song to library")
+                    if(self.song?.spotify_uri != nil){
+                        SpotifyAPI.sharedSpotifyAPI.addSoongToPlayList(playlist_id: DAKeychain.shared["SpotifyPlaylistId"], uris: self.song?.spotify_uri, completion: { (success) in
+                            print(success)
+                        })
+                    }
                     self.song.is_favorited = true
                     NotificationCenter.default.post(name: .wsNotificationLikeSong, object: nil, userInfo: ["liked" : true,
                                    "songId" : self.song._id])
