@@ -2,7 +2,7 @@
 //  SongPlayer.swift
 //  whatsong v3
 //
-//  Created by Andrii Shchudlo on 26/05/2019.
+//  Created by Tom Andrew on 26/05/2019.
 //  Copyright © 2019 Tom Andrew. All rights reserved.
 //
 

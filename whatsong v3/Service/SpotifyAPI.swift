@@ -2,7 +2,7 @@
 //  SpotifyAPI.swift
 //  whatsong v3
 //
-//  Created by Developer iOS on 02/08/19.
+//  Created by Tom Andrew on 02/08/19.
 //  Copyright © 2019 Tom Andrew. All rights reserved.
 //
 
